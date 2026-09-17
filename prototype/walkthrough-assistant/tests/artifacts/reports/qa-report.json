@@ -1,0 +1,543 @@
+{
+  "when": "2026-09-17T14:25:23.159Z",
+  "durationMs": 127695,
+  "total": 89,
+  "passed": 89,
+  "failed": 0,
+  "results": [
+    {
+      "suite": "journeys",
+      "name": "A1 rail → Floor Plans list renders",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "A1 list heading is \"Floor Plans\"",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "A2 Venue → Floor Plans link renders list",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "A3 venue sub-nav (Basic Info) routes to Venue screen",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "A4 \"shift settings\" link routes to Service screen",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "A* no console/network errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "B1 editor modal opens on New Floor Plan",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "B2 title is CREATE A FLOOR PLAN",
+      "pass": true,
+      "detail": "CREATE A FLOOR PLAN"
+    },
+    {
+      "suite": "journeys",
+      "name": "B3 Add Table button present in left panel",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "B4 empty-state illustration present",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "B5 table appears on canvas",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "B6 panel switches to Edit table",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "B6 panel title is \"Edit table\"",
+      "pass": true,
+      "detail": "Edit table"
+    },
+    {
+      "suite": "journeys",
+      "name": "B7 modal closes after Save",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "B8 new plan appears in list",
+      "pass": true,
+      "detail": "3→4"
+    },
+    {
+      "suite": "journeys",
+      "name": "B* no console/network errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "C1 selecting a table opens Edit table panel",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "C2 Table ID field shows 54",
+      "pass": true,
+      "detail": "54"
+    },
+    {
+      "suite": "journeys",
+      "name": "C3 rotation dot visible on selected table",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "C4 eight selection handles",
+      "pass": true,
+      "detail": "8"
+    },
+    {
+      "suite": "journeys",
+      "name": "C5 Table ID edit updates canvas label",
+      "pass": true,
+      "detail": "54A"
+    },
+    {
+      "suite": "journeys",
+      "name": "C6 duplicate Table ID rejected",
+      "pass": true,
+      "detail": "54A"
+    },
+    {
+      "suite": "journeys",
+      "name": "C7 Max stepper updates capacity label",
+      "pass": true,
+      "detail": "1-3"
+    },
+    {
+      "suite": "journeys",
+      "name": "C8 shape change to circle applies",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "C9 table type change sticks",
+      "pass": true,
+      "detail": "Bar"
+    },
+    {
+      "suite": "journeys",
+      "name": "C10 drag moves table",
+      "pass": true,
+      "detail": "{\"before\":{\"x\":\"60px\",\"y\":\"100px\"},\"after\":{\"x\":\"150px\",\"y\":\"160px\"}}"
+    },
+    {
+      "suite": "journeys",
+      "name": "C11 undo restores position",
+      "pass": true,
+      "detail": "60px vs 60px"
+    },
+    {
+      "suite": "journeys",
+      "name": "C12 redo reapplies move",
+      "pass": true,
+      "detail": "150px vs 150px"
+    },
+    {
+      "suite": "journeys",
+      "name": "C13 Escape deselects back to Add panel (modal still open)",
+      "pass": true,
+      "detail": "Floor Plan"
+    },
+    {
+      "suite": "journeys",
+      "name": "C14 Delete Table removes it from canvas",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "C* no console/network errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "D1 Create Combo hidden with 1 selected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "D2 multi-select opens Selected Tables panel",
+      "pass": true,
+      "detail": "Selected Tables"
+    },
+    {
+      "suite": "journeys",
+      "name": "D3 Create Combo visible with 2 selected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "D4 alignment tools visible with 2 selected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "D5 align-left equalizes x positions",
+      "pass": true,
+      "detail": "60px,60px"
+    },
+    {
+      "suite": "journeys",
+      "name": "D6 Create Combo opens Edit Combo panel",
+      "pass": true,
+      "detail": "Edit Combo"
+    },
+    {
+      "suite": "journeys",
+      "name": "D7 combo marquee drawn around members",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "D8 combo persisted after save",
+      "pass": true,
+      "detail": "1"
+    },
+    {
+      "suite": "journeys",
+      "name": "D9 member table shows combo chip in Edit panel",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "D10 combo removable via chip ✕",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "D* no console/network errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "E1/E2 dismissing unsaved-changes confirm keeps editor open",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "E3 change persists across page reload",
+      "pass": true,
+      "detail": "3"
+    },
+    {
+      "suite": "journeys",
+      "name": "E* no console/network errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "F1 Add Decor opens dropdown",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "F2 Patio section expands",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "F3 decor added to canvas (2 walls + 1 new)",
+      "pass": true,
+      "detail": "3"
+    },
+    {
+      "suite": "journeys",
+      "name": "F4 new decor opens Edit Decor panel",
+      "pass": true,
+      "detail": "Edit Decor"
+    },
+    {
+      "suite": "journeys",
+      "name": "F5 decor deleted",
+      "pass": true,
+      "detail": "2"
+    },
+    {
+      "suite": "journeys",
+      "name": "F6 Cancel closes editor",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "F7 back at Floor Plans list",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "F8 row ellipsis opens menu",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "F9 duplicate creates a copy",
+      "pass": true,
+      "detail": "Dining Room (copy)|Dining Room|The Tavern|Private Dining Room"
+    },
+    {
+      "suite": "journeys",
+      "name": "F10 Show Inactive reveals hidden plans",
+      "pass": true,
+      "detail": "5"
+    },
+    {
+      "suite": "journeys",
+      "name": "F* no console/network errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "G1 shift floor-plan selects present on Service screen",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "G2 dinner shift floor plan change sticks",
+      "pass": true,
+      "detail": "fp-2"
+    },
+    {
+      "suite": "journeys",
+      "name": "G* no console/network errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "H1 plan deletable via row menu",
+      "pass": true,
+      "detail": "The Tavern|Private Dining Room"
+    },
+    {
+      "suite": "journeys",
+      "name": "H2 empty plan saves and closes",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "H3 empty Table ID reverts to previous value",
+      "pass": true,
+      "detail": "\"1\""
+    },
+    {
+      "suite": "journeys",
+      "name": "H4 max stepper floor is min",
+      "pass": true,
+      "detail": "1-1"
+    },
+    {
+      "suite": "journeys",
+      "name": "H5 min above max pushes max up",
+      "pass": true,
+      "detail": "2-2"
+    },
+    {
+      "suite": "journeys",
+      "name": "H6 rubber-band selects multiple tables",
+      "pass": true,
+      "detail": "2"
+    },
+    {
+      "suite": "journeys",
+      "name": "H7 Delete key removes selection",
+      "pass": true,
+      "detail": "0"
+    },
+    {
+      "suite": "journeys",
+      "name": "H* no console/network errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "P1 rail→list→new→add→save",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "P2 venue→list→edit→modify→save→reopen",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "P3 edit→modify→cancel(discard)→verify unchanged",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "P4 new→add 2→multi→combo→save→list",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "P5 edit→duplicate→delete copy→save",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "P6 edit→Escape→Escape closes editor",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "P7 refresh mid-edit preserves saved data",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "journeys",
+      "name": "P8 combo chip → Edit Combo → Delete Combo",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "audit",
+      "name": "audit: DOM control scan (671 buttons, 20 links, 240 inputs, 100 selects, 0 images)",
+      "pass": true,
+      "detail": "671 buttons verified"
+    },
+    {
+      "suite": "audit",
+      "name": "audit: zero console errors",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "audit",
+      "name": "audit: zero page exceptions",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "audit",
+      "name": "audit: zero failed requests",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "audit",
+      "name": "audit: zero HTTP 4xx/5xx",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "audit",
+      "name": "audit: walkthrough anchors resolve",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "visual",
+      "name": "V1 floor plan list captured",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "visual",
+      "name": "V2 create-empty editor captured",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "visual",
+      "name": "V3 edit-table state captured",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "visual",
+      "name": "V4 full-layout editor captured",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "visual",
+      "name": "V5 add-decor dropdown captured",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "visual",
+      "name": "V6 multi-select state captured",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "visual",
+      "name": "V7 edit-combo state captured",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "suite": "visual",
+      "name": "V* zero console errors during captures",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

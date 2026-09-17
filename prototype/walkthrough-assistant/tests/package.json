@@ -1,0 +1,14 @@
+{
+  "name": "walkthrough-assistant-tests",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Browser-level QA for the Resy floor-plan journey prototype",
+  "scripts": {
+    "test": "node run.js",
+    "test:e2e": "node run.js",
+    "baseline": "node baseline.js"
+  },
+  "dependencies": {
+    "playwright": "^1.49.0"
+  }
+}

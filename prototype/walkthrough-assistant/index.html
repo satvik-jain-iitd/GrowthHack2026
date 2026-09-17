@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Resy OS — How-to assistant (demo)</title>
 <link rel="stylesheet" href="css/resy-system.css">
+<link rel="stylesheet" href="css/floorplan-editor.css">
 </head>
 <body>
 <div class="app">
@@ -12,14 +13,14 @@
   <header class="topbar">
     <div class="logotype"><span class="resy">RESY</span> <span class="os">OS</span></div>
     <div class="divider"></div>
-    <div class="venue-name">Parivar Bistro</div>
+    <div class="venue-name">Gramercy Tavern</div>
     <div class="spacer"></div>
-    <div class="tonight"><b>Thursday, Sep 17</b><span>Dinner · 5:00–10:30 PM · 42 covers</span></div>
-    <div class="avatar">PB</div>
+    <div class="tonight"><b>Thursday, Sep 17</b><span>Dinner · 5:00–9:30 PM · 96 covers</span></div>
+    <div class="avatar">GT</div>
   </header>
 
   <nav class="rail" id="rail">
-    <div class="rail-label">Parivar Bistro</div>
+    <div class="rail-label">Gramercy Tavern</div>
     <button class="rail-item active" data-screen="timeline" data-guide="rail-timeline"><span class="glyph">▤</span><span class="txt">Timeline</span></button>
     <button class="rail-item" data-screen="floorplan" data-guide="rail-floorplan"><span class="glyph">◌</span><span class="txt">Floor Plan</span></button>
     <button class="rail-item" data-screen="service" data-guide="rail-service"><span class="glyph">◷</span><span class="txt">Service</span></button>
@@ -36,18 +37,18 @@
 
     <!-- Timeline -->
     <section class="screen active" data-screen="timeline">
-      <div class="screen-head"><h2>Timeline</h2><span class="sub">Thursday, Sep 17 · Dinner shift · Tuesday replicating to all weekdays</span></div>
+      <div class="screen-head"><h2>Timeline</h2><span class="sub">Thursday, Sep 17 · Dinner shift · replicating to all Sun–Thu evenings</span></div>
       <div class="card">
         <table class="grid">
           <thead><tr><th>Time</th><th>Party</th><th>Size</th><th>Table</th><th>Turns</th><th>Status</th></tr></thead>
           <tbody>
-            <tr><td>5:30 PM</td><td>Gupta, Priya</td><td>4</td><td>T4</td><td>1</td><td><span class="chip ok">Seated</span></td></tr>
-            <tr><td>6:00 PM</td><td>Patel, Rohan</td><td>6</td><td>T8</td><td>1</td><td><span class="chip blue">Arrived</span></td></tr>
-            <tr><td>6:15 PM</td><td>Mehta, Anika</td><td>2</td><td>T2</td><td>2</td><td><span class="chip grey">Booked</span></td></tr>
-            <tr><td>6:30 PM</td><td>Shah, Karan</td><td>4</td><td>T5</td><td>1</td><td><span class="chip grey">Booked</span></td></tr>
-            <tr><td>6:45 PM</td><td>Kakkar, Sunita</td><td>2</td><td>T3</td><td>2</td><td><span class="chip grey">Booked</span></td></tr>
-            <tr><td>7:00 PM</td><td>Iyer, Arjun</td><td>4</td><td>T7</td><td>2</td><td><span class="chip grey">Booked</span></td></tr>
-            <tr><td>7:30 PM</td><td>Singh, Amrit</td><td>8</td><td>T1</td><td>1</td><td><span class="chip blue">Walk-in</span></td></tr>
+            <tr><td>5:30 PM</td><td>Sullivan, Margaret</td><td>4</td><td>T4</td><td>1</td><td><span class="chip ok">Seated</span></td></tr>
+            <tr><td>6:00 PM</td><td>Whitfield, James</td><td>6</td><td>T8</td><td>1</td><td><span class="chip blue">Arrived</span></td></tr>
+            <tr><td>6:15 PM</td><td>Bennett, Claire</td><td>2</td><td>T2</td><td>2</td><td><span class="chip grey">Booked</span></td></tr>
+            <tr><td>6:30 PM</td><td>Delgado, Marcus</td><td>4</td><td>T5</td><td>1</td><td><span class="chip grey">Booked</span></td></tr>
+            <tr><td>6:45 PM</td><td>Nakamura, Yuki</td><td>2</td><td>T3</td><td>2</td><td><span class="chip grey">Booked</span></td></tr>
+            <tr><td>7:00 PM</td><td>Rosenberg, Daniel</td><td>4</td><td>T7</td><td>2</td><td><span class="chip grey">Booked</span></td></tr>
+            <tr><td>7:30 PM</td><td>O'Brien, Patrick</td><td>8</td><td>T1</td><td>1</td><td><span class="chip blue">Walk-in</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -59,32 +60,30 @@
 
     <!-- Floor Plan -->
     <section class="screen" data-screen="floorplan">
-      <div class="screen-head"><h2>Floor Plan</h2><span class="sub">Dining room tonight · circles = seating capacity</span></div>
-      <div class="floor">
-        <div class="station">
-          <div class="station-label">WINDOW · T1–T4</div>
-          <div class="tables">
-            <div class="table"><span class="table-label">T1</span><span class="dots"></span><span class="muted">4</span></div>
-            <div class="table"><span class="table-label">T2</span><span class="dot"></span><span class="muted">2</span></div>
-            <div class="table"><span class="table-label">T3</span><span class="dot"></span><span class="muted">2</span></div>
-            <div class="table"><span class="table-label">T4</span><span class="dots"></span><span class="muted">4</span></div>
+      <div class="fp-screen active" data-fp-screen="list">
+        <div class="fpl-wrap">
+          <aside class="fpl-sidenav">
+            <div class="fpl-sidenav-head">Venue</div>
+            <button class="fpl-vnav" data-vnav="basic">Basic Info</button>
+            <button class="fpl-vnav" data-vnav="profile">Profile</button>
+            <button class="fpl-vnav active" data-vnav="floorplans">Floor Plans</button>
+            <button class="fpl-vnav" data-vnav="prepaid">Prepaid Items</button>
+            <button class="fpl-vnav" data-vnav="transactions">Transaction Settings</button>
+          </aside>
+          <div class="fpl-main">
+            <div class="fpl-head">
+              <div class="fpl-head-text">
+                <h1>Floor Plans</h1>
+                <p>Go to <a href="#" id="fpl-goto-shifts">shift settings</a> to apply a floor plan to a shift.</p>
+              </div>
+              <button class="fpl-new" id="fp-new-btn" data-guide="fp-new-btn">New Floor Plan</button>
+            </div>
+            <div class="fpl-table-wrap" id="fp-list-container"></div>
+            <div class="fpl-more">
+              <button class="fpl-show-inactive" id="fpl-show-inactive">Show Inactive Floor Plans <span class="chev">⌄</span></button>
+            </div>
           </div>
         </div>
-        <div class="station">
-          <div class="station-label">DINING ROOM · T5–T9</div>
-          <div class="tables">
-            <div class="table"><span class="table-label">T5</span><span class="dots"></span><span class="muted">4</span></div>
-            <div class="table mixed" title="Held in-house for tonight"><span class="table-label">T6</span><span class="dots"></span><span class="muted">4</span></div>
-            <div class="table"><span class="table-label">T7</span><span class="dot"></span><span class="muted">2</span></div>
-            <div class="table"><span class="table-label">T8</span><span class="dots"></span><span class="muted">6</span></div>
-            <div class="table full"><span class="table-label">T9</span><span class="muted">closed</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="legend">
-        <span><b class="ink">●</b> min guests</span>
-        <span><b class="ink">○</b> max guests</span>
-        <span style="color:var(--blue)">dashed = held in-house</span>
       </div>
     </section>
 
@@ -95,14 +94,39 @@
       <div class="card" id="shift-rows">
         <div class="shift-row">
           <div style="font-weight:700;min-width:64px">Lunch</div>
-          <div class="shift-bar"><span class="range">11:00 AM – 2:30 PM</span> · pacing 15 min · turn 75 min</div>
-          <div class="inv-chips"><span class="chip ok">Online</span><span class="chip grey">In-house</span></div>
+          <div class="shift-bar"><span class="range">Tue–Fri · 11:30 AM – 2:00 PM</span> · pacing 15 min · turn 75 min</div>
+          <div class="inv-chips"><span class="chip ok">Online</span><span class="chip grey">In-house</span><span class="chip blue" style="cursor:pointer" title="Floor plan active">FP: Dining Room</span></div>
         </div>
         <div class="shift-row">
           <div style="font-weight:700;min-width:64px">Dinner</div>
-          <div class="shift-bar"><span class="range">5:00 PM – 10:30 PM</span> · pacing 15 min · turn 90 min (T6 held in-house)</div>
-          <div class="inv-chips"><span class="chip ok">Online</span><span class="chip blue">Walk-in</span></div>
+          <div class="shift-bar"><span class="range">Sun–Thu · 5:00 PM – 9:30 PM</span> · pacing 15 min · turn 90 min</div>
+          <div class="inv-chips"><span class="chip ok">Online</span><span class="chip blue">Walk-in</span><span class="chip blue" style="cursor:pointer" title="Floor plan active">FP: Dining Room</span></div>
         </div>
+      </div>
+      <div class="head-row" style="margin-top:18px"><h3>Floor Plan Activation</h3></div>
+      <div class="card">
+        <p class="muted" style="font-size:13px;margin:0 0 10px">Select which floor plan each shift uses. A saved floor plan <b>does not</b> serve guests until activated in a shift.</p>
+        <div class="fp-activate" style="font-size:12px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div><label class="field">Lunch shift</label>
+              <select id="fp-shift-lunch" style="font-size:12px" onchange="window.FloorPlanEditor && FloorPlanEditor.showToast('Floor plan updated for Lunch', 'ok')">
+                <option value="fp-1" selected>Dining Room</option>
+                <option value="fp-2">The Tavern</option>
+                <option value="fp-3">Private Dining Room</option>
+                <option value="">— None —</option>
+              </select>
+            </div>
+            <div><label class="field">Dinner shift</label>
+              <select id="fp-shift-dinner" style="font-size:12px" onchange="window.FloorPlanEditor && FloorPlanEditor.showToast('Floor plan updated for Dinner', 'ok')">
+                <option value="fp-1" selected>Dining Room</option>
+                <option value="fp-2">The Tavern</option>
+                <option value="fp-3">Private Dining Room</option>
+                <option value="">— None —</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="tip" style="margin-top:10px;font-size:12px">🚀 <b>Hidden step:</b> A floor plan can be fully saved yet invisible to guests. It only goes live when selected in a shift above.</div>
       </div>
       <div class="card" style="margin-top:14px">
         <b class="ink">Pacing and table access work together</b>
@@ -115,16 +139,16 @@
       <div class="screen-head"><h2>Guests</h2><span class="sub">Phone numbers are unique guest IDs</span></div>
       <div class="head-row">
         <input type="text" placeholder="Search guest by name or phone…" style="max-width:340px">
-        <span class="chip blue">1,248 guests</span>
+        <span class="chip blue">8,412 guests</span>
       </div>
       <div class="card">
         <table class="grid">
           <thead><tr><th>Guest</th><th>Phone</th><th>Visits</th><th>Tags</th><th>Last visit</th></tr></thead>
           <tbody>
-            <tr><td>Gupta, Priya</td><td>+91 98112 44501</td><td>12</td><td class="guest-tags"><span class="chip warn">regular</span><span class="chip blue">prefers corner</span></td><td>Aug 29</td></tr>
-            <tr><td>Mehta, Anika</td><td>+91 99100 22672</td><td>4</td><td class="guest-tags"><span class="chip red">birthday</span></td><td>Sep 11</td></tr>
-            <tr><td>Shah, Karan</td><td>+91 98200 11890</td><td>9</td><td class="guest-tags"></td><td>Sep 6</td></tr>
-            <tr><td>Kakkar, Sunita</td><td>+91 98339 88210</td><td>21</td><td class="guest-tags"><span class="chip ok">VIP</span></td><td>Sep 12</td></tr>
+            <tr><td>Sullivan, Margaret</td><td>+1 212-555-0148</td><td>12</td><td><div class="guest-tags"><span class="chip warn">regular</span><span class="chip blue">prefers corner</span></div></td><td>Aug 29</td></tr>
+            <tr><td>Bennett, Claire</td><td>+1 917-555-0112</td><td>4</td><td><div class="guest-tags"><span class="chip red">birthday</span></div></td><td>Sep 11</td></tr>
+            <tr><td>Delgado, Marcus</td><td>+1 646-555-0173</td><td>9</td><td><div class="guest-tags"></div></td><td>Sep 6</td></tr>
+            <tr><td>Nakamura, Yuki</td><td>+1 212-555-0196</td><td>21</td><td><div class="guest-tags"><span class="chip ok">VIP</span></div></td><td>Sep 12</td></tr>
           </tbody>
         </table>
       </div>
@@ -136,29 +160,29 @@
 
     <!-- Venue -->
     <section class="screen" data-screen="venue">
-      <div class="screen-head"><h2>Venue Settings</h2><span class="sub">Listing · Profile · Floor Plans · Prepaid Items · Transaction Settings</span></div>
+      <div class="screen-head"><h2>Venue Settings</h2><span class="sub">Listing · Profile · <a href="#" id="venue-to-floorplans" style="color:var(--blue);text-decoration:underline">Floor Plans</a> · Prepaid Items · Transaction Settings</span></div>
       <div class="venue-cols">
         <div class="card">
           <h3 style="margin:0 0 14px">Basic Info</h3>
           <div class="form-grid">
-            <div><label class="field">Restaurant name</label><input type="text" value="Parivar Bistro"></div>
+            <div><label class="field">Restaurant name</label><input type="text" value="Gramercy Tavern"></div>
             <div><label class="field">Business type</label><select><option>Restaurants &amp; bars</option><option>Wineries</option><option>Hotels</option><option>Hospitality groups</option></select></div>
-            <div class="span2"><label class="field">Address</label><input type="text" value="21 Carter Road, Bandra West, Mumbai"></div>
-            <div><label class="field">Phone</label><input type="text" value="+91 22 4000 2200"></div>
-            <div><label class="field">Website</label><input type="text" value="parivarbistro.in"></div>
-            <div class="span2"><label class="field">Hours shown to guests</label><input type="text" value="Lunch 11:30–2:30 · Dinner 5:00–10:30, closed Mondays"></div>
+            <div class="span2"><label class="field">Address</label><input type="text" value="42 E 20th Street, New York, NY 10003"></div>
+            <div><label class="field">Phone</label><input type="text" value="(212) 477-0777"></div>
+            <div><label class="field">Website</label><input type="text" value="gramercytavern.com"></div>
+            <div class="span2"><label class="field">Hours shown to guests</label><input type="text" value="Dining Room · Sun–Thu 5:00–9:30 PM, Fri–Sat 5:00–10:00 PM · Tavern daily from 11:30 AM"></div>
           </div>
         </div>
         <div class="card" data-guide="golive-1">
           <h3 style="margin:0 0 12px">Listing preview</h3>
           <div class="preview">
-            <div class="hero"><span class="tag">OPEN NOW</span><div class="name">Parivar Bistro</div></div>
+            <div class="hero"><span class="tag">OPEN NOW</span><div class="name">Gramercy Tavern</div></div>
             <div class="body">
-              <div style="font-weight:700">Modern North Indian · Bandra West, Mumbai</div>
+              <div style="font-weight:700">Contemporary American · Flatiron, New York</div>
               <div class="muted" style="margin-top:6px;font-size:12px">
-                <div>€€ · Dinner today 5:30–10:30 PM</div>
+                <div>$$$$ · Dinner tonight 5:00–9:30 PM</div>
                 <div>Next open booking — tonight, 6:15 PM</div>
-                <div style="margin-top:6px">📍 21 Carter Road &nbsp;·&nbsp; map</div>
+                <div style="margin-top:6px">📍 42 E 20th Street &nbsp;·&nbsp; map</div>
                 <div>IG · FB · Website — links connected</div>
               </div>
               <div class="book-row"><span class="chip ok">Available online</span><button class="widget-book">Book a Table</button></div>
@@ -211,9 +235,9 @@
         <table class="grid">
           <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Settings access</th><th>Status</th></tr></thead>
           <tbody id="users-rows">
-            <tr><td>Aarav Malhotra</td><td>aarav@parivarbistro.in</td><td><span class="role-pill admin">Admin</span></td><td>Full</td><td><span class="chip ok">Active</span></td></tr>
-            <tr><td>Devika Rao</td><td>devika@parivarbistro.in</td><td><span class="role-pill manager">Manager</span></td><td>Venue &amp; shifts</td><td><span class="chip ok">Active</span></td></tr>
-            <tr><td>Imran Shaikh</td><td>imran@parivarbistro.in</td><td><span class="role-pill">Host</span></td><td>None</td><td><span class="chip grey">Invited</span></td></tr>
+            <tr><td>Laura Bennett</td><td>laura@gramercytavern.com</td><td><span class="role-pill admin">Admin</span></td><td>Full</td><td><span class="chip ok">Active</span></td></tr>
+            <tr><td>Michael Torres</td><td>michael@gramercytavern.com</td><td><span class="role-pill manager">Manager</span></td><td>Venue &amp; shifts</td><td><span class="chip ok">Active</span></td></tr>
+            <tr><td>Emily Chen</td><td>emily@gramercytavern.com</td><td><span class="role-pill">Host</span></td><td>None</td><td><span class="chip grey">Invited</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -244,8 +268,8 @@
           <p>Confirm the widget is installed correctly and guests are able to book from it.</p>
           <div class="widget-shell">
             <div class="fake-site">
-              <div class="fake-nav">parivarbistro.in — shared hosting</div>
-              <div class="fake-body">Roti &amp; radhuni, since 2014. Sunday brunch, family thalis, craft lassi…</div>
+              <div class="fake-nav">gramercytavern.com</div>
+              <div class="fake-body">Seasonal American cooking from the Union Square Greenmarket, since 1994. Wood-burning grill in the Tavern, five-course menus in the Dining Room…</div>
               <div class="fake-book"><button class="widget-book" data-guide="golive-widget">Book a Table — Resy</button></div>
             </div>
           </div>
@@ -295,6 +319,60 @@
   </main>
 </div>
 
+<!-- Floor Plan Editor (full-screen modal) -->
+<div class="fpm" id="fp-modal" hidden>
+  <div class="fpm-head">
+    <div class="fpm-title" id="fpm-title" data-guide="fp-editor-title">CREATE A FLOOR PLAN</div>
+    <button class="fpm-close" id="fp-editor-close" aria-label="Close">&times;</button>
+  </div>
+  <div class="fpm-tools">
+    <div class="fpm-tools-left">
+      <div class="fpm-decor-wrap">
+        <button class="fpm-tool" id="fp-add-decor-btn">Add Decor <span class="chev">▾</span></button>
+        <div class="fpm-decor-menu" id="fp-decor-menu" hidden>
+          <p class="fpm-decor-hint">Click on the desired decor below to add it to the floor plan.</p>
+          <div class="fpm-decor-sec">Shapes</div>
+          <div class="fpm-decor-shapes">
+            <button class="fpm-decor-item" data-decor="line" title="Wall / divider"><span class="di di-line"></span></button>
+            <button class="fpm-decor-item" data-decor="rect" title="Rectangle"><span class="di di-rect"></span></button>
+            <button class="fpm-decor-item" data-decor="circle" title="Circle"><span class="di di-circle"></span></button>
+          </div>
+          <button class="fpm-decor-patio" id="fp-decor-patio-toggle">Patio <span class="chev">⌄</span></button>
+          <div class="fpm-decor-shapes" id="fp-decor-patio" hidden>
+            <button class="fpm-decor-item" data-decor="umbrella" title="Umbrella"><span class="di di-umbrella"></span></button>
+            <button class="fpm-decor-item" data-decor="plant" title="Plant"><span class="di di-plant"></span></button>
+          </div>
+        </div>
+      </div>
+      <button class="fpm-tool" id="fp-duplicate-btn" disabled><span class="ic">⧉</span> Duplicate</button>
+      <button class="fpm-tool primary" id="fp-create-combo-btn" hidden>Create Combo</button>
+      <div class="fpm-align" id="fp-align-tools" hidden>
+        <button data-align="left" title="Align left">⇤</button>
+        <button data-align="hcenter" title="Align center">⬌</button>
+        <button data-align="right" title="Align right">⇥</button>
+        <button data-align="top" title="Align top">⤒</button>
+        <button data-align="vcenter" title="Align middle">⬍</button>
+        <button data-align="bottom" title="Align bottom">⤓</button>
+      </div>
+    </div>
+    <div class="fpm-tools-right">
+      <button class="fpm-tool ghost" id="fp-redo" disabled><span class="ic">↷</span> Redo</button>
+      <button class="fpm-tool ghost" id="fp-undo" disabled><span class="ic">↶</span> Undo</button>
+    </div>
+  </div>
+  <div class="fpm-body">
+    <aside class="fpm-panel" id="fp-panel"></aside>
+    <div class="fpm-canvas-wrap" id="fp-canvas-wrap">
+      <div class="fpm-canvas" id="fp-canvas" data-guide="fp-canvas"></div>
+      <div class="fpm-actions">
+        <button class="fpm-cancel" id="fp-cancel-btn">Cancel</button>
+        <button class="fpm-save" id="fp-save-btn" data-guide="fp-save-btn">Save</button>
+      </div>
+    </div>
+    <aside class="fpm-tips" id="fp-tips"></aside>
+  </div>
+</div>
+
 <!-- Shift wizard -->
 <dialog id="wizard">
   <div class="dialog-head">
@@ -315,7 +393,7 @@
         <div><label class="field">Shift name</label><input type="text" data-guide="wizard-basics" id="w-name" placeholder="Dinner" value=""></div>
         <div><label class="field">Repeats</label><select><option>Weekly — Mon to Sun</option><option>Weekly — weekdays</option><option>Weekly — weekends</option><option>One-time</option></select></div>
         <div><label class="field">Start time</label><input type="time" value="17:00"></div>
-        <div><label class="field">End time</label><input type="time" value="22:30"></div>
+        <div><label class="field">End time</label><input type="time" value="21:30"></div>
       </div>
     </div>
 
@@ -355,7 +433,7 @@
     <div class="wstep" data-wstep="4">
       <div class="form-grid">
         <div class="span2"><label class="field">Cancellation window</label><select data-guide="wizard-policy" id="w-policy"><option selected>No cancellation policy</option><option>More than 4 hours</option><option>More than 24 hours</option></select></div>
-        <div class="span2"><label class="field">Deposit per head</label><input type="number" placeholder="₹500 for parties of 6+" style="max-width:220px"></div>
+        <div class="span2"><label class="field">Deposit per head</label><input type="number" placeholder="$75 for parties of 6+" style="max-width:220px"></div>
         <div class="span2 muted" style="font-size:12px">Policies apply to online bookings and show guests before they confirm.</div>
       </div>
     </div>
@@ -377,7 +455,7 @@
   <div class="dialog-body">
     <div class="form-grid">
       <div><label class="field">Name</label><input type="text" data-guide="user-name" id="u-name" placeholder="First &amp; last name"></div>
-      <div><label class="field">Work email</label><input type="email" data-guide="user-email" id="u-email" placeholder="name@parivarbistro.in"></div>
+      <div><label class="field">Work email</label><input type="email" data-guide="user-email" id="u-email" placeholder="name@gramercytavern.com"></div>
       <div><label class="field">Role</label><select data-guide="user-role" id="u-role"><option>Host</option><option>Server</option><option>Manager</option><option>Admin</option></select></div>
       <div class="tag-toggle"><input type="checkbox" data-guide="user-settings" id="u-settings" checked><span style="font-size:13px">Can edit venue &amp; shift settings</span></div>
     </div>
@@ -413,6 +491,7 @@
 <script src="js/walkthrough.js"></script>
 <script src="js/docs.js"></script>
 <script src="js/assistant.js"></script>
+<script src="js/floorplan-editor.js"></script>
 <script>
 (function () {
   const $ = id => document.getElementById(id);
@@ -481,7 +560,7 @@
     const row = document.createElement('div');
     row.className = 'shift-row';
     row.innerHTML = '<div style="font-weight:700;min-width:64px">' + name + '</div>' +
-      '<div class="shift-bar"><span class="range">Weekly · 5:00 PM – 10:30 PM</span> · pacing 15 min · off-market ' + $('w-offmarket').value + '</div>' +
+      '<div class="shift-bar"><span class="range">Sun–Thu · 5:00 PM – 9:30 PM</span> · pacing 15 min · off-market ' + $('w-offmarket').value + '</div>' +
       '<div class="inv-chips"><span class="chip ok">Online</span></div>';
     wrap.prepend(row);
     App.closeWizard();
@@ -497,7 +576,7 @@
     const role = $('u-role').value;
     const pill = { 'Admin': ' admin', 'Manager': ' manager' }[role] || '';
     row.innerHTML = '<td>' + ($('u-name').value || 'New teammate') + '</td>' +
-      '<td>' + ($('u-email').value || 'team@parivarbistro.in') + '</td>' +
+      '<td>' + ($('u-email').value || 'team@gramercytavern.com') + '</td>' +
       '<td><span class="role-pill' + pill + '">' + role + '</span></td>' +
       '<td>' + ($('u-settings').checked ? 'Venue &amp; shifts' : 'None') + '</td>' +
       '<td><span class="chip blue">Invited</span></td>';
@@ -530,9 +609,19 @@
   App.setScreen('timeline');
   Docs.render();
   Assistant.init();
+
+  // Venue → Floor Plans link
+  $('venue-to-floorplans').onclick = (e) => {
+    e.preventDefault();
+    App.setScreen('floorplan');
+    if (window.FloorPlanEditor) {
+      window.FloorPlanEditor.showList();
+    }
+  };
+
   window.selfcheck = () => {
     const missing = Walkthrough.checkAnchors();
-    console.assert(intents.INTENTS.length === 11, 'intents loaded');
+    console.assert(intents.INTENTS.length === 12, 'intents loaded');
     console.assert(missing.length === 0, 'missing anchors', missing);
     return missing;
   };

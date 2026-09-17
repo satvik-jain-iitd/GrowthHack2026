@@ -75,6 +75,13 @@
       action: { type: 'journey', value: 'create-shift', label: 'Walk me through it' }
     },
     {
+      id: 'floorplan',
+      ask: 'How do I create a floor plan?',
+      match: ['floor plan', 'floorplan', 'floor-plan', 'edit floor', 'new floor', 'add table', 'table layout', 'create layout', 'seating chart', 'floor layout', 'restaurant layout'],
+      answer: 'Go to Venue > Floor Plans to create and manage layouts. Add tables, set their IDs and types, define capacities, and create table combinations. Remember: a saved floor plan does NOT serve guests until you activate it in a Shift setting.',
+      action: { type: 'journey', value: 'create-floorplan', label: 'Walk me through it' }
+    },
+    {
       id: 'support',
       ask: 'Talk to a person',
       match: ['support', 'human', 'contact', 'email', 'phone', 'help', 'agent', 'resysupport'],
@@ -109,6 +116,17 @@
         { anchor: 'golive-3', type: 'click', mark: 3, title: 'Review shifts & table inventory', body: 'Check the availability flag per table — Online, In-house or Walk-in — and pacing for the shift.' },
         { anchor: 'golive-4', type: 'click', mark: 4, title: 'Review your floor plan in ResyOS', body: 'Check seating capacities. Black dots are the minimum guests, ring dots the maximum that can book a table.' },
         { anchor: 'golive-5', type: 'click', mark: 5, title: 'Review date closures', body: 'Close holidays and scheduled closed dates so guests cannot book them — via the calendar icon on the iPad or Service > Calendar in the Dashboard.' }
+      ]
+    },
+    'create-floorplan': {
+      id: 'create-floorplan',
+      title: 'Create a floor plan',
+      slug: 'create-floorplan',
+      steps: [
+        { screen: 'floorplan', anchor: 'rail-floorplan', type: 'click', title: 'Open Floor Plans', body: 'Click Floor Plan in the left rail to open the floor plan settings.' },
+        { anchor: 'fp-new-btn', type: 'click', title: 'Create a new floor plan', body: 'Click "New Floor Plan" to start building your restaurant layout.' },
+        { anchor: 'fp-canvas', type: 'hint', title: 'The floor plan editor', body: 'This is the editor canvas. Use the toolbar to add tables, define rooms, and arrange your layout.' },
+        { anchor: 'fp-editor-title', type: 'hint', title: 'Name your floor plan', body: 'Your floor plan appears here. Use the editor toolbar to add tables to the canvas.' },
       ]
     },
     'invite-team': {
@@ -155,8 +173,10 @@
       ['how do I change my password', 'password'],
       ['invite my new host', 'team'],
       ['going live tomorrow', 'golive'],
-      ['create a dinner shift', 'createshift'],
-      ['please connect me with support', 'support']
+['create a dinner shift', 'createshift'],
+       ['how do i create a new floor plan', 'floorplan'],
+       ['i need to add tables to my floor layout', 'floorplan'],
+       ['please connect me with support', 'support']
     ];
     for (const [text, expectId] of cases) {
       assert.strictEqual(matchIntent(text) && matchIntent(text).id, expectId, 'query: ' + text);

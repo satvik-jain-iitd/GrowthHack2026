@@ -18,3 +18,7 @@ __pycache__/
 .venv/
 .ruff_cache/
 .pytest_cache/
+
+# Personal files (not project)
+Resume/
+Resume.zip
