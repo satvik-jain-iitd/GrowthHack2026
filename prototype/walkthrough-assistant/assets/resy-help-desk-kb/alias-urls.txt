@@ -1,0 +1,8 @@
+# Legacy Resy help-desk URLs that resolve to an article already in this KB.
+# Same Kustomer article id, different slug. Not scraped separately (would be a
+# near-duplicate in embeddings). Format: alias_url<TAB>canonical_url<TAB>title
+https://helpdesk.resy.com/en_us/event-cancellation-faq-rJye6_36Y	https://helpdesk.resy.com/en_us/event-cancellation-rJye6_36Y	Event Cancellation
+https://helpdesk.resy.com/en_us/how-to-create-a-general-admission-event-ByNFbwm8u	https://helpdesk.resy.com/en_us/general-admission-event-ByNFbwm8u	General Admission Event
+https://helpdesk.resy.com/en_us/how-to-edit-table-availability-and-pacing-in-a-shift-S1T3bPXLd	https://helpdesk.resy.com/en_us/availability-and-pacing-updates-S1T3bPXLd	Availability and Pacing Updates
+https://helpdesk.resy.com/en_us/how-to-use-exclusive-online-booking-channels-BkihvQIO	https://helpdesk.resy.com/en_us/exclusive-groups-feature-BkihvQIO	Exclusive Groups Feature
+https://helpdesk.resy.com/en_us/resy-os-pos-reporting-SJRv9oy2O	https://helpdesk.resy.com/en_us/resyos-and-pos-reporting-SJRv9oy2O	ResyOS and POS Reporting
