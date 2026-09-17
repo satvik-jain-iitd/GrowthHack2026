@@ -1,0 +1,29 @@
+export const EARB_PENDING_UUIDS: Set<string> = new Set([
+    '8b600406-0142-45b3-b812-2d810d578c05',
+    'e1f179c3-1fca-4be9-97c3-4b98302b5c1c',
+    '175ff245-453d-4c8b-be06-91b17b1e011d',
+    'e4ff064c-865a-4f51-9b4b-1296b5d20c8b',
+    '6443ec08-0d97-45fa-9fe6-e56489b593bd',
+    '26c89511-0feb-4b92-8402-730f4035f9eb',
+    '27124f40-7adf-42c2-8a18-a44b75d8bc2d',
+    '2890e278-8750-4da7-9ef2-b0c0e874fd3e',
+    '083240ad-6a4b-4d89-87b5-b5dea31c4e26',
+    '76702523-1261-4a68-b2ac-43753628580f',
+    '1d438ee9-f81c-4e64-9dca-37cc34ce5f76',
+    'c75676d1-0196-4c5c-b3f9-80986e452765',
+    '95f4c937-ec13-408f-9ac7-6f19de2b256f',
+    '59997997-753e-492a-b41d-79b4ebfd5b41',
+    'a57ef2c3-ad6d-4542-b9a0-3059254beecf',
+    '0ef9de97-3ee2-4b53-922a-ba5857ec3315',
+    '4109a002-fe4b-4b0d-82e9-df99d1bae586',
+    '0199f60b-0619-4bb6-b79b-375c776d3516',
+    '01f9da41-5440-47a2-b8a4-920022d2b507',
+    '285ebf24-4915-4fd1-957a-04d68e959e82',
+    '3d2a82f4-2f57-426d-8248-ed120ce82fa0',
+    '867acb29-aee1-4abd-b66c-8d946ab3d222',
+    'b6dce835-889d-4d68-895e-9cd7c5350d9e',
+    '887b869b-4112-417c-96d3-7198254e8ee9',
+    '1e0bf494-7cfb-420c-8934-b6c6f1437f73'
+])
+
+export const EARB_APPROVED_UUIDS: Set<string> = new Set([])

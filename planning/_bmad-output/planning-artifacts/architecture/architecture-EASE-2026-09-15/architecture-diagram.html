@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EASE — Architecture | GrowthHack 2026</title>
+
+<!-- American Express Design Language System v7.15.0 — official CDN stylesheets.
+     All colour, typography, spacing, border, elevation and layout below comes from
+     these sheets as documented utility classes. Nothing is re-styled or overridden. -->
+<link rel="stylesheet" href="https://www.aexp-static.com/cdaas/dls/packages/@americanexpress/dls/7.15.0/stylesheets/dls-core.min.css">
+<link rel="stylesheet" href="https://www.aexp-static.com/cdaas/dls/packages/@americanexpress/dls/7.15.0/stylesheets/dls-components.min.css">
+
+<style>
+  /* CUSTOM CODE — the minimum DLS has no utility for. See the Custom Code Audit
+     in the architecture spine. No colour is hardcoded anywhere: connectors inherit
+     currentColor from a DLS colour utility class on their parent element. */
+  .ease-page { max-width: 76rem; }
+  .ease-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.5rem; }
+  .ease-grid-tight { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
+  .ease-connector { display: block; width: 100%; height: 2.5rem; overflow: visible; }
+  .ease-node { cursor: pointer; text-align: left; border: none; background: none; padding: 0; width: 100%; font: inherit; }
+  .ease-node:focus-visible { outline: 0.1875rem solid currentColor; outline-offset: 0.1875rem; }
+  @media print { .ease-noprint { display: none; } }
+</style>
+</head>
+
+<body class="color-surface-bg">
+
+<main class="container ease-page pad-3">
+
+  <!-- ============================ HEADER ============================ -->
+  <header class="margin-4-b">
+    <p class="label-2 color-text-brand margin-1-b">GrowthHack 2026 &middot; Team EASE</p>
+    <h1 class="heading-6 color-text-emphasis margin-2-b">EASE — Solution Architecture</h1>
+    <p class="body-1 color-text-regular margin-2-b">
+      A guided-execution layer that helps a Resy restaurant owner build and activate a floor plan —
+      resolving intent, pointing at the right control, and proving each step actually completed.
+    </p>
+    <p class="legal-1 color-text-subtle">
+      Feature-altitude architecture spine &middot; 13 invariants &middot; conformant to the AmEx Architecture Portal
+      &middot; rendered in Design Language System v7.15.0
+    </p>
+  </header>
+
+  <!-- ============================ LEGEND ============================ -->
+  <section class="margin-4-b" aria-label="Legend">
+    <div class="flex flex-row flex-wrap">
+      <p class="label-3 color-status-text-neutral margin-3-r margin-1-b">■ Simulation fixture — not an Amex surface</p>
+      <p class="label-3 color-text-brand margin-3-r margin-1-b">■ Amex-built product surface (DLS v7)</p>
+      <p class="label-3 color-status-text-information margin-3-r margin-1-b">■ Server-side service</p>
+      <p class="label-3 color-text-subtle margin-1-b">■ Storage</p>
+    </div>
+    <p class="legal-1 color-text-subtle margin-2-t ease-noprint">Select any block to see the invariants and requirements it carries.</p>
+  </section>
+
+  <!-- ============================ BROWSER BAND ============================ -->
+  <section class="margin-4-b" aria-labelledby="band-browser">
+    <h2 id="band-browser" class="heading-4 color-text-subtle margin-2-b">Browser — one tab, two brands</h2>
+
+    <div class="ease-grid">
+
+      <!-- Host App Skin -->
+      <div class="card">
+        <div class="card-content pad-3">
+          <p class="label-3 color-status-text-neutral margin-1-b">Simulation fixture</p>
+          <h3 class="heading-3 color-text-emphasis margin-1-b">Host App Skin</h3>
+          <p class="body-3 color-text-regular margin-2-b">
+            A mocked ResyOS Dashboard standing in for a partner product. Deliberately not DLS-branded —
+            an Amex-looking host app would break the premise that EASE guides someone through
+            <em>someone else's</em> software.
+          </p>
+          <div class="flex flex-column">
+            <button type="button" class="ease-node margin-1-b" data-node="fixture-dashboard">
+              <span class="body-3 color-text-link">Mocked Dashboard</span>
+            </button>
+            <button type="button" class="ease-node margin-1-b" data-node="fixture-planeditor">
+              <span class="body-3 color-text-link">Floor Plan Editor &middot; Steps 1–5</span>
+            </button>
+            <button type="button" class="ease-node" data-node="fixture-shifteditor">
+              <span class="body-3 color-text-link">Shift Editor &middot; Step 6</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bridge -->
+      <div class="flex flex-column flex-justify-center flex-align-items-center color-graphic-brand">
+        <svg class="ease-connector" viewBox="0 0 200 40" role="img" aria-label="Bridge Contract connects the Host App Skin and the EASE Chrome Layer in both directions">
+          <defs>
+            <marker id="arw" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="currentColor"></path>
+            </marker>
+          </defs>
+          <line x1="8" y1="14" x2="192" y2="14" stroke="currentColor" stroke-width="2" marker-end="url(#arw)"></line>
+          <line x1="192" y1="28" x2="8" y2="28" stroke="currentColor" stroke-width="2" marker-end="url(#arw)"></line>
+        </svg>
+        <button type="button" class="ease-node margin-2-t" data-node="bridge">
+          <span class="label-3 color-text-brand">AD-10 · Bridge Contract</span>
+        </button>
+        <p class="legal-2 color-text-subtle margin-1-t text-align-center">versioned selectors<br>+ closed event list</p>
+      </div>
+
+      <!-- EASE Chrome Layer -->
+      <div class="card">
+        <div class="card-content pad-3">
+          <p class="label-3 color-text-brand margin-1-b">Amex-built · DLS v7 · One App</p>
+          <h3 class="heading-3 color-text-emphasis margin-1-b">EASE Chrome Layer</h3>
+          <p class="body-3 color-text-regular margin-2-b">
+            The actual product: what EASE says and shows. A One App Single Module —
+            the platform the enterprise ADR prescribes for exactly this kind of app.
+          </p>
+          <div class="flex flex-column">
+            <button type="button" class="ease-node margin-1-b" data-node="intentbar"><span class="body-3 color-text-link">IntentBar</span></button>
+            <button type="button" class="ease-node margin-1-b" data-node="spotlight"><span class="body-3 color-text-link">SpotlightRing</span></button>
+            <button type="button" class="ease-node margin-1-b" data-node="progress"><span class="body-3 color-text-link">ProgressPanel</span></button>
+            <button type="button" class="ease-node margin-1-b" data-node="validationmsg"><span class="body-3 color-text-link">ValidationMessage</span></button>
+            <button type="button" class="ease-node margin-1-b" data-node="guidecard"><span class="body-3 color-text-link">MicroGuideCard</span></button>
+            <button type="button" class="ease-node" data-node="reviewcard"><span class="body-3 color-text-link">SpecialistReviewCard</span></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- vertical connector -->
+  <div class="flex flex-justify-center color-graphic-regular margin-2-b" aria-hidden="true">
+    <svg width="24" height="40" viewBox="0 0 24 40" class="display-block">
+      <line x1="12" y1="0" x2="12" y2="32" stroke="currentColor" stroke-width="2" marker-end="url(#arw)"></line>
+    </svg>
+  </div>
+
+  <!-- ============================ SERVER BAND ============================ -->
+  <section class="margin-4-b" aria-labelledby="band-server">
+    <h2 id="band-server" class="heading-4 color-text-subtle margin-2-b">Server — the brain, kept out of the browser</h2>
+
+    <div class="ease-grid">
+
+      <div class="card">
+        <div class="card-content pad-3">
+          <p class="label-3 color-status-text-information margin-1-b">Service</p>
+          <h3 class="heading-3 color-text-emphasis margin-1-b">EASE Core Service</h3>
+          <p class="body-3 color-text-regular margin-2-b">
+            Owns every decision that has to be right. The Chrome Layer renders what this says —
+            it never decides for itself.
+          </p>
+          <div class="flex flex-column">
+            <button type="button" class="ease-node margin-1-b" data-node="validator"><span class="body-3 color-text-link">Validation Engine — pure</span></button>
+            <button type="button" class="ease-node margin-1-b" data-node="telemetry"><span class="body-3 color-text-link">Telemetry Writer — sole writer</span></button>
+            <button type="button" class="ease-node" data-node="generator"><span class="body-3 color-text-link">Micro-Guide Generator</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-content pad-3">
+          <p class="label-3 color-status-text-information margin-1-b">Service · Safechain pattern</p>
+          <h3 class="heading-3 color-text-emphasis margin-1-b">LLM Boundary Service</h3>
+          <p class="body-3 color-text-regular margin-2-b">
+            The only place a model is ever called — and it only ever <em>advises</em>.
+            Two jobs: understand what the user asked for, and guess where they are.
+          </p>
+          <button type="button" class="ease-node" data-node="llm">
+            <span class="body-3 color-text-link">FR-1 intent · FR-2 step inference</span>
+          </button>
+          <p class="legal-1 color-status-text-caution margin-2-t">
+            Advisory only. If it disagrees with validation, validation wins.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- vertical connector -->
+  <div class="flex flex-justify-center color-graphic-regular margin-2-b" aria-hidden="true">
+    <svg width="24" height="40" viewBox="0 0 24 40" class="display-block">
+      <line x1="12" y1="0" x2="12" y2="32" stroke="currentColor" stroke-width="2" marker-end="url(#arw)"></line>
+    </svg>
+  </div>
+
+  <!-- ============================ STORAGE BAND ============================ -->
+  <section class="margin-4-b" aria-labelledby="band-storage">
+    <h2 id="band-storage" class="heading-4 color-text-subtle margin-2-b">Storage — two shapes, one identity</h2>
+
+    <div class="ease-grid">
+      <div class="card">
+        <div class="card-content pad-3">
+          <p class="label-3 color-text-subtle margin-1-b">Relational · ACID</p>
+          <h3 class="heading-3 color-text-emphasis margin-1-b">Journey &amp; Micro-Guide store</h3>
+          <p class="body-3 color-text-regular">
+            Workflow state that has to be correct: where the owner is, and whether a generated guide is
+            waiting for review, approved, or rejected.
+          </p>
+          <button type="button" class="ease-node margin-2-t" data-node="sql"><span class="body-3 color-text-link">AD-5 · why relational</span></button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content pad-3">
+          <p class="label-3 color-text-subtle margin-1-b">Append-only log</p>
+          <h3 class="heading-3 color-text-emphasis margin-1-b">Telemetry Event log</h3>
+          <p class="body-3 color-text-regular">
+            Every moment of the run, in order — started, step completed, validation failed, abandoned,
+            completed. The raw material the Micro-Guide is built from.
+          </p>
+          <button type="button" class="ease-node margin-2-t" data-node="jsonl"><span class="body-3 color-text-link">AD-6 · event shape</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ DETAIL PANEL ============================ -->
+  <section class="margin-4-b ease-noprint" aria-labelledby="detail-h" aria-live="polite">
+    <h2 id="detail-h" class="heading-4 color-text-emphasis margin-2-b">Details</h2>
+    <div class="card">
+      <div class="card-content pad-4">
+        <p id="detail-kicker" class="label-3 color-text-brand margin-1-b">Select a block above</p>
+        <h3 id="detail-title" class="heading-4 color-text-emphasis margin-2-b">Nothing selected yet</h3>
+        <p id="detail-body" class="body-2 color-text-regular margin-3-b">
+          Every block in this diagram is governed by at least one written invariant. Choose one to see
+          which rules bind it and which requirements it delivers.
+        </p>
+        <div class="flex flex-row flex-wrap">
+          <div class="margin-4-r margin-2-b">
+            <p class="label-3 color-text-subtle margin-1-b">Governed by</p>
+            <p id="detail-ads" class="body-3 color-text-emphasis">—</p>
+          </div>
+          <div class="margin-2-b">
+            <p class="label-3 color-text-subtle margin-1-b">Delivers</p>
+            <p id="detail-frs" class="body-3 color-text-emphasis">—</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ ADR CONFORMANCE ============================ -->
+  <section class="margin-4-b" aria-labelledby="adr-h">
+    <h2 id="adr-h" class="heading-4 color-text-emphasis margin-1-b">Conformance to the AmEx Architecture Portal</h2>
+    <p class="body-2 color-text-regular margin-3-b">
+      Every prescriptive ADR that could apply was checked. Nothing here is a silent departure —
+      where the demo does something different, it says so and names the production path.
+    </p>
+
+    <div class="ease-grid-tight">
+
+      <div class="card"><div class="card-content pad-3">
+        <p class="label-3 color-status-text-success margin-1-b">Conforms</p>
+        <h3 class="heading-3 color-text-emphasis margin-1-b">One App</h3>
+        <p class="body-3 color-text-regular">The ADR prescribes One App for dynamic, high-interaction, multi-step journeys. The Chrome Layer is a One App Single Module. No exemption needed.</p>
+      </div></div>
+
+      <div class="card"><div class="card-content pad-3">
+        <p class="label-3 color-status-text-success margin-1-b">Conforms</p>
+        <h3 class="heading-3 color-text-emphasis margin-1-b">Design Language System</h3>
+        <p class="body-3 color-text-regular">All Amex-built UI is DLS v7. The non-DLS surface is a simulation fixture representing a partner product, so the ADR's scope does not reach it.</p>
+      </div></div>
+
+      <div class="card"><div class="card-content pad-3">
+        <p class="label-3 color-status-text-success margin-1-b">Conforms in pattern</p>
+        <h3 class="heading-3 color-text-emphasis margin-1-b">AI / ML</h3>
+        <p class="body-3 color-text-regular">A real-time, request-response GenAI microservice, as the ADR prescribes. The batch, no-code alternative was considered and rejected as a poor fit for an interactive flow.</p>
+      </div></div>
+
+      <div class="card"><div class="card-content pad-3">
+        <p class="label-3 color-status-text-success margin-1-b">Conforms in type selection</p>
+        <h3 class="heading-3 color-text-emphasis margin-1-b">Database</h3>
+        <p class="body-3 color-text-regular">The ADR asks for the data <em>type</em> to be chosen before the platform: relational for workflow state, append-only log for events. Both followed; the demo platforms are fixtures.</p>
+      </div></div>
+
+      <div class="card"><div class="card-content pad-3">
+        <p class="label-3 color-status-text-caution margin-1-b">Scoped exception</p>
+        <h3 class="heading-3 color-text-emphasis margin-1-b">Observability</h3>
+        <p class="body-3 color-text-regular">There is no deployed environment to observe, so the demo logs locally. Bounded by keeping every event enterprise-compatible in shape — production wiring becomes configuration, not a rewrite.</p>
+      </div></div>
+
+      <div class="card"><div class="card-content pad-3">
+        <p class="label-3 color-status-text-neutral margin-1-b">Not applicable</p>
+        <h3 class="heading-3 color-text-emphasis margin-1-b">API &amp; Integration Platforms</h3>
+        <p class="body-3 color-text-regular">Both services are loopback-only processes on one laptop, not exposed or enterprise-consumed APIs. Re-classify before anything is exposed beyond the demo machine.</p>
+      </div></div>
+
+      <div class="card"><div class="card-content pad-3">
+        <p class="label-3 color-status-text-neutral margin-1-b">Not applicable</p>
+        <h3 class="heading-3 color-text-emphasis margin-1-b">Event Brokers &amp; Messaging</h3>
+        <p class="body-3 color-text-regular">The bridge event bus is in-browser and the telemetry log is a local file. Neither is the inter-service messaging this ADR governs.</p>
+      </div></div>
+
+      <div class="card"><div class="card-content pad-3">
+        <p class="label-3 color-status-text-success margin-1-b">Conforms</p>
+        <h3 class="heading-3 color-text-emphasis margin-1-b">Build vs Buy</h3>
+        <p class="body-3 color-text-regular">Below all three formal triggers. Buy the rails — One App, DLS, the model, the datastore. Build the intelligence — the journey model, the validation rules, the telemetry.</p>
+      </div></div>
+
+    </div>
+  </section>
+
+  <!-- ============================ FOOTER ============================ -->
+  <footer class="margin-4-t pad-3-t color-border-subtle border-t">
+    <p class="legal-1 color-text-subtle">
+      Rendered from <code>ARCHITECTURE-SPINE.md</code> &middot; Team EASE &middot; September 2026.
+      The spine is the contract; this page is a view of it. Where the two ever differ, the spine wins.
+    </p>
+  </footer>
+
+</main>
+
+<script>
+(function () {
+  var DETAIL = {
+    'fixture-dashboard': ['Simulation fixture','Mocked ResyOS Dashboard','Where the owner starts. Pre-authenticated — no login is modelled. Everything the owner physically clicks lives here, not in EASE.','AD-1, AD-2, AD-8','UJ-1 entry state'],
+    'fixture-planeditor': ['Simulation fixture','Floor Plan Editor','Steps 1 to 5: open the editor, name and lay out the plan, configure each table, combine tables, save. EASE points at these controls but never clicks them for the owner.','AD-2, AD-10','FR-3, FR-5, FR-6'],
+    'fixture-shifteditor': ['Simulation fixture','Shift Editor','Step 6 — and the moment the whole demo turns on. Saving a plan does not make it live; it has to be activated inside a Shift. Most people never find this.','AD-2, AD-10','FR-7'],
+    'bridge': ['AD-10','The Bridge Contract','One file both sides agree on: a versioned list of which control belongs to which step, and a closed list of events. Both sides check it when the app starts and fail loudly if it has drifted — so a ring never silently points at nothing.','AD-1, AD-10','FR-2, FR-3'],
+    'intentbar': ['EASE Chrome Layer','IntentBar','Where the owner says what they want in their own words — "help me create a floor plan". Always visible, because the promise is proactive guidance, not help-on-demand.','AD-3, AD-9, AD-11','FR-1'],
+    'spotlight': ['EASE Chrome Layer','SpotlightRing','Highlights exactly one control at a time. Never zero, never two. It points — it does not intercept the click, and it re-anchors when the page scrolls or resizes.','AD-10, AD-11','FR-3'],
+    'progress': ['EASE Chrome Layer','ProgressPanel','Six steps, always visible, always honest. The step it shows is the step the Validation Engine says the owner is on — never one the interface guessed.','AD-4, AD-9','FR-4'],
+    'validationmsg': ['EASE Chrome Layer','ValidationMessage','Names the exact missing field and what to do about it. "Missing: maximum party size for Table 4" — never "something went wrong".','AD-11, AD-12','FR-8'],
+    'guidecard': ['EASE Chrome Layer','MicroGuideCard','The how-to guide EASE writes by itself from the run that just succeeded — including the save-versus-activate catch, if it fired.','AD-5, AD-9','FR-10'],
+    'reviewcard': ['EASE Chrome Layer','SpecialistReviewCard','Where a human stays accountable. An Implementation Specialist approves or rejects the generated guide before it becomes the one the next owner sees.','AD-5, AD-9','FR-11, UJ-2'],
+    'validator': ['EASE Core Service','Validation Engine','The reason this is not a chatbot. Plain, deterministic rules — no model involved — deciding whether a step genuinely completed. It is also the only thing allowed to move the owner forward.','AD-4, AD-13','FR-5, FR-6, FR-7, FR-8'],
+    'telemetry': ['EASE Core Service','Telemetry Writer','The single writer of events, so nothing is ever recorded twice or missed. Off the critical path: if writing fails, the owner keeps going.','AD-6, AD-12','FR-9'],
+    'generator': ['EASE Core Service','Micro-Guide Generator','Joins the run record to its event stream and turns them into a step-by-step guide. It waits until both sides are safely written — a half-recorded run is reported, never half-rendered.','AD-5','FR-10'],
+    'llm': ['LLM Boundary Service','The only model call site','Two narrow jobs: turn a sentence into a journey, and guess which step the screen is showing. Nothing else in the codebase may call a model. If it times out, the demo degrades and keeps running.','AD-3, AD-12, AD-13','FR-1, FR-2'],
+    'sql': ['Storage','Why relational','Workflow state needs to be exactly right: one journey, one guide, one review outcome. The run identity is minted once, here, and carried everywhere — so the two stores can never disagree about which run they describe.','AD-5','FR-4, FR-11'],
+    'jsonl': ['Storage','Why an append-only log','Events are high-volume and their shape will keep changing, so they get a log rather than a table. Ordered by a per-run counter, not the clock, so two events in the same millisecond stay in order.','AD-5, AD-6','FR-9, FR-10']
+  };
+
+  var kicker = document.getElementById('detail-kicker');
+  var title = document.getElementById('detail-title');
+  var body = document.getElementById('detail-body');
+  var ads = document.getElementById('detail-ads');
+  var frs = document.getElementById('detail-frs');
+
+  document.querySelectorAll('[data-node]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      var d = DETAIL[el.getAttribute('data-node')];
+      if (!d) { return; }
+      kicker.textContent = d[0];
+      title.textContent = d[1];
+      body.textContent = d[2];
+      ads.textContent = d[3];
+      frs.textContent = d[4];
+      document.getElementById('detail-h').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

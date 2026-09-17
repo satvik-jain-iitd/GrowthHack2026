@@ -1,0 +1,66 @@
+[project]
+name = "ease-gh2026"
+version = "0.0.0"
+description = "EASE — dev tooling manifest (docs-and-prototype repo; no first-party Python yet)"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.uv]
+package = false
+
+[[tool.uv.index]]
+name = "amex-artifactory"
+url = "https://artifactory.aexp.com/artifactory/api/pypi/pypi/simple"
+default = true
+
+[dependency-groups]
+dev = [
+  "pre-commit>=4.0",
+  "pytest>=8.3.4",
+  "ruff>=0.14",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 99
+indent-width = 4
+# Only ~3% of tracked files are first-party; everything below is vendored,
+# upstream-owned, or machine-generated. Unscoped, ruff reports 92 errors in
+# planning/_bmad alone. Note "planning/_bmad" does not match the sibling
+# "planning/_bmad-output" — both have to be listed. `ruff format` reads the
+# Markdown in _bmad-output too (it formats Python blocks inside .md), and one
+# generated file there is not valid UTF-8, which aborts the run with exit 2.
+extend-exclude = [
+  "architecture/architecture-portal",
+  "planning/_bmad",
+  "planning/_bmad-output",
+  "**/.agents",
+  "**/.claude",
+  "archived",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I001"]
+extend-select = [
+  "UP",                             # pyupgrade
+  "D213",                           # format docstrings to start on line after first set of quotes
+]
+fixable = ["ALL"]                   # fix for all enabled rules (when `--fix`) is provided
+unfixable = []
+ignore = ["D212"]                   # don't require docstring summaries on same line as first quotes
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+exclude = ["*.pyi"]
+
+[tool.pytest.ini_options]
+minversion = "8.3.4"
+# test_render_skill.py wants planning/_bmad/assets/config.template.toml, which is not
+# vendored here. Expected, not a bug to fix.
+addopts = "--ignore=planning/_bmad/scripts/tests/test_render_skill.py"
+testpaths = ["planning/_bmad/scripts/tests"]
+console_output_style = "progress"

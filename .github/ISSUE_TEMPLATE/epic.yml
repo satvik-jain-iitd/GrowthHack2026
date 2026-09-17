@@ -1,0 +1,86 @@
+name: Epic
+description: A larger body of work made up of multiple Stories. Written in User Voice.
+title: "[Epic]: "
+labels:
+  - "type:epic"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **How to fill this out:** write each box in **English first**. Then, on the next line,
+        add the same thing again in *italic Romanised Hindi*, using `> *...*` (a quote + italics) —
+        do NOT put Hindi in a code block. Every box below already shows you the pattern.
+
+        New to this? See the step-by-step picture-guide:
+        `.github/HOW_TO_CREATE_EPICS_AND_STORIES.md`
+  - type: textarea
+    id: user-voice
+    attributes:
+      label: User Voice
+      description: Who is this for, what do they want, and why — classic user-story format.
+      value: |
+        As a <type of user>, I want <capability>, so that <benefit>.
+
+        > *🗣️ Hindi: Ek <user type> hone ke naate, main <capability> chahta/chahti hoon, taaki <benefit> mil sake.*
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal / Why this Epic exists
+      description: 2-3 lines on the outcome this Epic delivers and why it matters now.
+      value: |
+        <Explain the outcome in a few lines.>
+
+        > *🗣️ Hindi: <Wahi baat Romanised Hindi mein.>*
+    validations:
+      required: true
+  - type: textarea
+    id: in-scope
+    attributes:
+      label: In Scope
+      description: What this Epic explicitly covers.
+      value: |
+        -
+    validations:
+      required: false
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of Scope
+      description: What this Epic explicitly does NOT cover (prevents scope creep).
+      value: |
+        -
+    validations:
+      required: false
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: Other Epics, teams, systems, or decisions this depends on.
+      value: |
+        -
+    validations:
+      required: false
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks
+      description: What could block or derail this Epic.
+      value: |
+        -
+    validations:
+      required: false
+  - type: textarea
+    id: stories
+    attributes:
+      label: Stories
+      description: >
+        Native Sub-issues are confirmed available in this repo — after creating this Epic,
+        click "Create sub-issue" (or "Add sub-issue") under its description to add Stories.
+        GitHub will track completion progress automatically. Only use this box as a fallback list
+        if that button is ever missing.
+      value: |
+        _(Add Stories as sub-issues instead — see "Create sub-issue" below this Epic once it exists.)_
+    validations:
+      required: false

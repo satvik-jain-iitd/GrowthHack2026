@@ -1,0 +1,106 @@
+.domainOwners {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.userDisplayContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 30px;
+    flex: 1;
+    justify-content: center;
+    border-right: 1px solid #e0e0e0;
+    flex-basis: max-content;
+    margin-right: 0;
+    padding: 0px 15px 10px 15px;
+}
+
+.userDisplayContainer:last-child {
+    padding: 0px 0px 10px 24px;
+    border-right: none;
+}
+
+.userDisplayContainer:first-child {
+    padding: 0px 24px 10px 0px;
+}
+
+.userDisplayContainer .imageContainer {
+    flex: 0 0 30px;
+    height: 30px;
+    overflow: hidden;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.userDisplayContainer .textContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.userDisplayContainer .textName {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+.popoverTrigger:hover {
+    cursor: pointer;
+}
+
+.popOver {
+    .userDisplayContainer {
+        justify-content: normal !important;
+        border-right: none !important;
+        flex-basis: max-content !important;
+        padding: 10px;
+    }
+
+    .userDisplayContainer:last-child {
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .domainOwners {
+        flex-direction: column;
+    }
+    .userDisplayContainer {
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+        justify-content: normal;
+        padding: none;
+    }
+
+    .userDisplayContainer:first-child {
+        padding: 0px 15px 10px 15px;
+    }
+
+    .userDisplayContainer:last-child {
+        border-bottom: none;
+        overflow: hidden;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1200px) {
+    .domainOwners {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        padding: 0px 15px 10px 15px;
+    }
+    .userDisplayContainer {
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+        justify-content: normal;
+        padding: none;
+    }
+
+    .userDisplayContainer:first-child {
+        padding: 0px 15px 10px 15px;
+    }
+}

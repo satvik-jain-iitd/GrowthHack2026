@@ -1,0 +1,60 @@
+$api-docs-font-size: 14px;
+
+:global(html.dark) .searchIcon svg {
+    fill: #c8c9c7 !important;
+}
+
+.apiDocs {
+    .leftNav {
+        border-right: 0.5px solid #d8dee4;
+
+        @media (max-width: 1000px) {
+            display: none;
+        }
+    }
+
+    .centerContent {
+        flex: 2;
+        padding: 0 0 16px 0;
+    }
+
+    .endpointsHeader {
+        font-size: 14px;
+        padding: 8px 12px;
+        border-bottom: solid 1px #d8dee4;
+        position: sticky;
+        z-index: 2;
+        background: #ecedee;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.apiDocsFontSize {
+    font-size: $api-docs-font-size;
+}
+
+// Lazily-loaded operation sections grow after mount; scroll anchoring would
+// fight the re-assert in OperationSection.
+:global(.content-section) {
+    overflow-anchor: none;
+}
+
+.endpointItem {
+    font-family: 'Source Code Pro', Menlo, Monaco, monospace !important;
+}
+
+:global(#intro-section) {
+    :global(#intro-section-content) {
+        > h3 {
+            color: white;
+        }
+        > p {
+            color: white;
+        }
+        :global(#intro-section-content-metrics-title) {
+            color: white;
+        }
+    }
+}

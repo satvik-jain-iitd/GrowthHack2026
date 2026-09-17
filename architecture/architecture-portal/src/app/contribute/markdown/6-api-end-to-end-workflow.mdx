@@ -1,0 +1,250 @@
+---
+title: API End-to-End Workflow Lifecycle
+description: Overview of the Internal Type A/B API workflow from definition to certification.
+---
+# Training Video
+
+<video width="100%" height="auto" controls>
+  <source src="https://cdaas.aexp.com/enterprise-architecture/Api-end-to-end-workflow.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
+## Reference Links
+
+- <a href="https://architecture1.aexp.com/company-domains" target="_blank">Company Domains</a>
+- <a href="https://architecture1.aexp.com/resources/metrics/2370f164-af18-411b-92e1-5f5213b07c82" target="_blank">Metrics Dashboard</a>
+- <a href="https://github.aexp.com/pages/amex-eng/one-explorer-docs/docs/apis/api-onboarding" target="_blank">Publish APIs in Explorer</a>
+- <a href="https://github.aexp.com/pages/amex-eng/one-explorer-docs/docs/apis/api-quality-scorer" target="_blank">API Quality Scorer</a>
+- <a href="https://github.aexp.com/pages/amex-eng/one-explorer-docs/docs/apis/api-design-certification-sa" target="_blank">Design Certification</a>
+- <a href="https://github.aexp.com/pages/amex-eng/one-explorer-docs/docs/apis/api-production-certification" target="_blank">Production Certification</a>
+
+---
+
+# API Certification Workflow – End-to-End Lifecycle
+
+The API Operation Workflow defines the complete lifecycle an API operation (endpoint) must follow to achieve enterprise certification and production readiness. This lifecycle spans two integrated enterprise platforms:
+
+- **Architecture Portal** – governs definition and approvals  
+- **Explorer (API Catalog)** – manages implementation alignment and certification validation  
+
+The workflow applies specifically at the **operation level**, ensuring each endpoint is independently reviewed, validated, and certified.
+
+---
+
+## 1. Proposal
+
+**System: Architecture Portal**
+
+The lifecycle begins in the Architecture Portal, where the API Stakeholder initiates the creation and definition of the API operation.
+
+The first step involves selecting the appropriate **Company Domain** that owns the business capability being exposed. Company Domain selection establishes accountability, determines governance routing, and ensures alignment with domain strategy.
+
+Within the selected company domain, navigate to **“2.3 – Company Domain APIs”**, the authoritative location for defining domain-level APIs.
+
+If the API bundle does not already exist, create a new API with:
+
+- A unique API name  
+- A concise business description  
+- Identification of consumer and provider domains  
+
+Once the API bundle is created, define one or more operations (endpoints), including:
+
+- Operation name  
+- API type classification (Type A or Type B)  
+- Associated customer journey reference  
+- Intended markets  
+- Input and output specifications  
+
+After completing required metadata, select **“Propose Operation”**, transitioning the status from **Draft → Proposed** and formally initiating governance review.
+
+### API & Operation Naming Standards Guidelines
+
+This guide defines the naming conventions for **API names**, **operation names**, and **approved terminology**. Follow these rules to ensure consistency across services.
+
+---
+
+#### API Name Guidelines
+
+##### ✅ Do
+
+| # | Guideline | Example |
+|---|----------|---------|
+| 1 | Capitalize every word ((first letter)| **Credit Risk Assessments** |
+| 2 | Use noun-based names (not verbs) | **Transactions** |
+| 3 | Prefer plural names (if applicable) | **Transactions** |
+| 4 | API name should reflect the underlying resource | **Demographics** for /demographics |
+| 5 | Use business/domain terminology | **Transaction Processing** (instead of Txn Processor Service)|
+| 6 | Keep names concise and meaningful | **Transaction Processing** (instead of Customer Payment Transaction Processing Service)|
+| 7 | Use consistent naming across APIs | **Payments** (used consistently) (instead of Payment Request, Payment Info)|
+
+---
+
+##### ❌ Don’t
+
+| # | Guideline | Example |
+|---|----------|---------|
+| 1 | Do not use verbs in API names | **Get Transactions** |
+| 2 | Do not use singular when plural is expected | **Transaction** |
+| 3 | Do not use technical or implementation names | **Txn Processor Service** |
+| 4 | Do not use overly long names | **Customer Payment Transaction Processing Service** |
+| 5 | Do not add unnecessary suffixes (API, Service, Module) | **Disputes API** |
+| 6 | Do not use abbreviations | **Acct Ref** |
+| 7 | Do not use inconsistent naming | **Payment Request**, **Payment Info** (mixed usage) |
+| 8 | Do not use vague or generic names | **Data**, **Info** |
+| 9 | Do not use acronyms or brand terms that may change anytime | **FIN**, **One exposure** |
+
+---
+
+#### Operation Name Guidelines
+
+##### ✅ Do
+
+| # | Guideline | Example |
+|---|----------|---------|
+| 1 | Capitalize only the first word (first letter)| **Retrieve payment authorization transactions** |
+| 2 | Prefer (if applicable) avoiding repetition from API name | **Update PIN** (instead of Update Debit Card PIN when API name already has Debit Card)|
+| 3 | Use **Retrieve** instead of **Get/Read/Download/Check**| **Retrieve fraud transactions**, **Retrieve dispute documents**, **Retrieve case eligibility** |
+| 4 | Use **Delete** where applicable | **Delete status codes** |
+| 5 | Use **Update** where applicable | **Update customer information** |
+| 6 | Use **Create** where applicable | **Create payment request** |
+| 7 | Keep names concise and clean | **Retrieve statement savings summary** |
+
+---
+
+##### ❌ Don’t
+
+| # | Guideline | Example |
+|---|----------|---------|
+| 1 | Do not lowercase the first word | **retrieve payment authorization transactions** |
+| 2 | Do not repeat API name unnecessarily | **Update Debit Card PIN** |
+| 3 | Do not use Get/Read/Download/Check | **Get fraud transactions**, **Read fraud transactions**, **Download dispute documents**, **Check case eligibility** |
+| 4 | Do not use Remove → use Delete instead (where applicable)| **Remove status codes** |
+| 5 | Do not use unnecessary words like “details” or extra symbols | **Retrieve statement savings summary-details** |
+| 6 | Do not use Fetch → use Retrieve instead | **Fetch provider metadata** |
+
+---
+
+#### Key Takeaways
+
+- Prefer **"Retrieve"** as the standard verb for read operations.
+- Keep API names **noun-based and business-focused**.
+- Keep operation names **action-oriented and concise**.
+- Avoid redundancy between API name and operation name.
+- Maintain **consistency and clarity** across all APIs.
+
+---
+
+## 2. Domain / UCIO Approval (ARB Approval)
+
+**System: Architecture Portal**
+
+Once proposed, the operation enters **Domain Architecture Review Board (ARB)** review to ensure balanced validation from architecture and engineering leadership.
+
+Approval requires:
+
+- **One architectural approval** (Principal Architect or Assigned Delegate)  
+- **One engineering approval** (Head Engineer or Unit CIO Delegate or Assigned Delegate)  
+
+During this stage:
+
+- Architecture validates design alignment, standards compliance, and approved patterns.  
+- Engineering confirms technical feasibility and delivery alignment.  
+
+Order of approvals does not impact progression.
+
+If both approvals are secured, the operation becomes **ARB Approved**.
+
+If rejected, the operation returns to **Draft** with feedback and must be remediated before resubmission.
+
+---
+
+## 3. EARB Approval
+
+**System: Architecture Portal**
+
+Following ARB approval, the operation advances to **Enterprise Architecture Review Board (EARB)** evaluation.
+
+During the EARB session:
+
+- Cross-domain impact is reviewed  
+- Strategic alignment is evaluated  
+- Enterprise governance compliance is validated  
+- Risks and dependencies are assessed  
+
+A **single EARB approval vote** is required.
+
+Upon approval, the operation transitions to **EARB Approved**.
+
+If rejected, the operation returns to **Draft** and must re-enter the workflow.
+
+---
+
+## 4. Catalog Onboarding
+
+**System Interaction: Architecture Portal → Explorer**
+
+After EARB approval, the operation moves to onboarding within **Explorer (API Catalog)** to align governance records with implementation artifacts.
+
+This stage includes:
+
+- Transmission of operation details from Architecture Portal to Explorer  
+- Generation of a unique onboarding link  
+- Mapping of the EARB Approved operation to its corresponding implementation endpoint  
+
+Once linkage is complete, the operation status becomes **Onboarded to Catalog**, enabling enterprise discoverability and reuse.
+
+---
+
+## 5. Design Certification
+
+**System: Explorer**
+
+Design Certification validates compliance with enterprise API design standards and schema quality requirements.
+
+During this stage:
+
+- OpenAPI schema undergoes structural validation  
+- Naming conventions, resource modeling, and metadata standards are verified  
+- Contract integrity and consistency are assessed  
+- Automated quality scoring may be applied  
+
+If criteria are met, the operation achieves **Design Certified** status.
+
+If gaps are identified, remediation is required before certification.
+
+Design Certification ensures enterprise design compliance prior to operational validation.
+
+---
+
+## 6. Production Certification
+
+**System: Explorer**
+
+Production Certification represents the final lifecycle stage and confirms operational readiness at enterprise scale.
+
+Validation includes:
+
+- Verification of Non-Functional Requirements (NFRs)  
+  - Performance  
+  - Availability  
+  - Resiliency  
+- Error rate and scalability validation  
+- Security compliance confirmation  
+- Final production readiness attestation  
+
+Upon successful validation, the operation becomes **Production Certified**, indicating enterprise readiness for production consumption.
+
+---
+
+# Complete Lifecycle Flow
+
+The API Operation lifecycle progresses through the following structured stages:
+
+→ Proposal  
+→ Domain / UCIO (ARB) Approval  
+→ EARB Approval  
+→ Catalog Onboarding  
+→ Design Certification  
+→ Production Certification
+
+---

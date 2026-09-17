@@ -1,0 +1,291 @@
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.4) translateY(30px);
+    }
+    70% {
+        transform: scale(1.08) translateY(-4px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes pulseRing {
+    0% {
+        transform: scale(0.92);
+        opacity: 0.7;
+    }
+    60% {
+        transform: scale(1.18);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1.18);
+        opacity: 0;
+    }
+}
+
+@keyframes typingDot {
+    0% {
+        opacity: 0.25;
+        transform: translateY(0);
+    }
+    30% {
+        opacity: 1;
+        transform: translateY(-4px);
+    }
+    60% {
+        opacity: 0.6;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0.25;
+        transform: translateY(0);
+    }
+}
+
+/* Only the animation and its pulse pseudo-element — everything else is Chakra props */
+.toggle {
+    position: relative;
+    animation: bounceIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.toggle::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2.5px solid rgba(11, 116, 222, 0.5);
+    animation: pulseRing 2.4s ease-out infinite;
+    pointer-events: none;
+}
+
+/* Only the animation + stagger — sizing/color are Chakra props */
+.typingDot {
+    animation: typingDot 1s infinite ease-in-out;
+}
+
+.typingDot:nth-child(1) {
+    animation-delay: 0s;
+}
+.typingDot:nth-child(2) {
+    animation-delay: 0.12s;
+}
+.typingDot:nth-child(3) {
+    animation-delay: 0.24s;
+}
+
+@keyframes statusFade {
+    0% {
+        opacity: 0;
+        transform: translateY(2px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.statusText {
+    animation: statusFade 0.3s ease;
+}
+
+/* Descendant-selector typography for arbitrary ReactMarkdown output */
+.markdownContent {
+    p {
+        margin: 0.35rem 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0.6rem 0 0.35rem;
+        line-height: 1.25;
+        font-weight: 700;
+    }
+
+    h1 {
+        font-size: 1rem;
+    }
+
+    h2 {
+        font-size: 0.95rem;
+    }
+
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-size: 0.9rem;
+    }
+
+    ul,
+    ol {
+        margin: 0.4rem 0 0.4rem 1rem;
+        padding-left: 0.6rem;
+    }
+
+    ul {
+        list-style-type: disc;
+    }
+
+    ol {
+        list-style-type: decimal;
+    }
+
+    li {
+        margin: 0.2rem 0;
+        display: list-item;
+    }
+
+    code {
+        font-family:
+            ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+            'Liberation Mono', 'Courier New', monospace;
+        font-size: 0.82rem;
+        background: var(--chakra-colors-bg-muted);
+        border-radius: 6px;
+        padding: 0.08rem 0.3rem;
+    }
+
+    pre {
+        margin: 0.45rem 0;
+        padding: 0.55rem 0.7rem;
+        border-radius: 8px;
+        background: var(--chakra-colors-bg-muted);
+        overflow-x: auto;
+
+        code {
+            background: transparent;
+            padding: 0;
+        }
+    }
+
+    a {
+        color: #0b74de;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        font-weight: 500;
+        &:hover {
+            color: #0058b0;
+        }
+    }
+
+    blockquote {
+        margin: 0.45rem 0;
+        padding: 0.35rem 0.6rem;
+        border-left: 3px solid var(--chakra-colors-border-regular);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0.5rem 0;
+        font-size: 0.85rem;
+        display: block;
+        overflow-x: auto;
+    }
+
+    th,
+    td {
+        border: 1px solid var(--chakra-colors-border-inverted);
+        padding: 0.3rem 0.5rem;
+        text-align: left;
+    }
+
+    th {
+        font-weight: 700;
+        background: var(--chakra-colors-bg-emphasized);
+    }
+
+    :global(.mermaid) {
+        display: block;
+        overflow-x: auto;
+        margin: 0.5rem 0;
+
+        svg {
+            max-width: none;
+        }
+    }
+}
+
+.mermaidWrapper {
+    cursor: pointer;
+    overflow-x: auto;
+    margin: 0.5rem 0;
+
+    svg {
+        max-width: none;
+    }
+}
+
+.mermaidControls {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    z-index: 2;
+    cursor: default;
+}
+
+.mermaidControlsHoverOnly {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+
+    .mermaidWrapper:hover &,
+    .tableWrapper:hover & {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+.tableWrapper {
+    position: relative;
+}
+
+.botBubble {
+    ::selection {
+        background-color: #8ec6fa;
+        color: #0f1724;
+    }
+
+    ::-moz-selection {
+        background-color: #8ec6fa;
+        color: #0f1724;
+    }
+}
+
+.inlineLink {
+    color: #0b74de;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    word-break: break-word;
+    &:hover {
+        color: var(--chakra-colors-interactive-primary-hover);
+    }
+}
+
+/* No theme breakpoint matches 768px, so this one media query stays here */
+@media (max-width: 768px) {
+    .container {
+        bottom: 16px;
+        right: 16px;
+    }
+
+    .widget {
+        bottom: 12px;
+        right: 12px;
+        width: calc(100vw - 24px);
+        height: min(88vh, 760px);
+    }
+
+    .widgetExpanded {
+        inset: 8px;
+        border-radius: 10px;
+    }
+}

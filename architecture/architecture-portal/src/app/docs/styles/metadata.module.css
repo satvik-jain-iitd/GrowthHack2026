@@ -1,0 +1,422 @@
+.tag,
+.editableTag {
+    margin: 0 0.4rem 0.5rem 0;
+    display: inline-block;
+    list-style-type: none;
+    word-break: normal;
+    max-width: 100%;
+    white-space: normal;
+}
+
+.tag {
+    margin-top: 0 !important;
+}
+
+.editableTag {
+    list-style-type: none;
+}
+
+.editableTag > div > span {
+    display: flex;
+}
+
+.editableTag > div > span > img {
+    height: 60%;
+    width: auto;
+    padding-right: 5px;
+}
+
+.button,
+.saveButton {
+    margin: 5px;
+    padding: 10px;
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    height: 35px !important;
+    background-color: #006fcf !important;
+}
+
+.heading {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.tagsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-bottom: -20px;
+    height: fit-content;
+    color: #060606 !important;
+}
+
+.tagsList,
+.tagsListEditable {
+    width: 73%;
+    flex: 1 1 auto;
+    ul {
+        padding-left: 6px;
+    }
+}
+
+.tagsList > ul,
+.tagsListEditable > ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.metadataDropdown {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.metadataCategory {
+    color: #333333 !important;
+    font-size: 12px !important;
+    line-height: 24px !important;
+    min-height: 32px !important;
+    margin: 5px;
+}
+
+.metadataUpperSection {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 5px;
+}
+
+.metadataContent {
+    margin-top: 5px;
+    margin-bottom: 25px;
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    padding-bottom: 35px;
+    border: 1px solid lightgray;
+}
+
+.metadataContent > p,
+.helperText {
+    margin: 5px;
+}
+
+.metadataTags {
+    margin: 16px 0px !important;
+    display: flex;
+    align-items: center;
+    gap: 8px !important;
+
+    .categoryLabel {
+        min-width: 200px;
+        border: 1px solid #2563eb;
+        background: #b3d4fc;
+        color: black;
+        border-radius: 8px;
+        padding: 6px 14px;
+    }
+}
+@media (max-width: 770px) {
+    .metadataTags {
+        display: inline-block;
+        align-items: stretch;
+    }
+    .metadataTags .categoryLabel {
+        min-width: unset;
+        width: fit-content;
+        margin: 5px;
+    }
+    .metadataTags .addButton {
+        margin: 5px;
+    }
+}
+
+.showMore {
+    background-color: #ecf5fd !important;
+    color: #333333 !important;
+    font-size: 12px !important;
+    line-height: 24px !important;
+    min-height: 32px !important;
+    margin: 5px;
+}
+
+.editKeywords {
+    margin-top: 5px;
+    color: #006fcf;
+}
+
+.metadataTagsList {
+    font-size: 12px !important;
+    line-height: 24px !important;
+    min-height: 32px !important;
+    margin-top: 5px;
+}
+
+.formContainer {
+    flex-basis: 100%;
+    display: flex;
+    flex-direction: row;
+    > div:first-child {
+        flex: 1;
+    }
+    button {
+        margin-left: 22px;
+    }
+}
+
+.metadataLabels {
+    display: flex;
+    gap: 5px;
+    width: fit-content;
+    margin-top: 10px;
+    .metadataLabelsText {
+        font-size: 12px;
+        color: #808080;
+        font-style: italic;
+        margin-top: 3px;
+    }
+}
+
+#recentPointsIcon {
+    margin-top: 5px;
+}
+
+.tagLabel {
+    margin-top: 8px;
+    height: 24px;
+    max-width: 230px;
+    padding: unset !important;
+    word-break: break-word;
+    max-width: 100%;
+    line-height: 1.2;
+}
+
+.tagsButton {
+    max-width: 230px;
+    padding: unset;
+    cursor: pointer;
+    text-decoration: underline;
+    color: #006fcf;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.closeButton,
+.tagCloseButton {
+    color: rgb(251, 4, 4);
+}
+
+.showTags {
+    display: inline !important;
+    margin: 0 0.4rem 1rem 0;
+}
+
+.globalIcon {
+    padding-right: 8px !important;
+    font-size: 16px !important;
+}
+
+.techStackMetadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    .selectField {
+        width: 300px;
+        height: fit-content;
+    }
+}
+
+.techStackSelectFields {
+    margin-left: 10px;
+    padding-right: 5px;
+    display: inline-flex;
+    gap: 5px;
+    width: 100%;
+
+    .selectField {
+        width: 100%;
+        height: fit-content;
+    }
+}
+
+.button {
+    background-color: white !important;
+    color: #006fcf;
+}
+
+.keywordBtnGroup {
+    width: 100%;
+}
+
+.addButton,
+.cancelButton {
+    min-width: 100px !important;
+    font-weight: bold !important;
+    margin-left: 10px !important;
+    background-color: white !important;
+    color: #060606 !important;
+}
+
+.saveCategoryButton {
+    min-width: 100px !important;
+    font-weight: 'bold' !important;
+    background: #006fcf !important;
+}
+
+.techStackData {
+    display: 'flex' !important;
+    justify-content: 'space-between' !important;
+    align-items: 'center' !important;
+    padding: '8px 12px' !important;
+
+    .techStackAddButton {
+        color: '#2563eb' !important;
+        font-weight: 'bold' !important;
+    }
+}
+
+.selectForm {
+    display: block;
+    width: 100%;
+}
+
+.categoryForm {
+    margin: 10px 0px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.categoryFormButtonGroup {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}
+
+.categoryFormButtonGroup button {
+    width: auto !important;
+    min-width: 100px !important;
+}
+
+@media (max-width: 900px) {
+    .categoryForm {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .categoryFormButtonGroup {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        justify-content: flex-start;
+    }
+    .categoryFormButtonGroup button {
+        width: auto !important;
+        min-width: 100px !important;
+        max-width: 250px;
+        align-self: flex-start;
+    }
+}
+
+@media (max-width: 900px) {
+    .categoryForm {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.categoryCheckBoxes {
+    margin-right: 8px;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc;
+    border-radius: 2px;
+    background-color: white;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+}
+.categoryCheckBoxes:checked {
+    background-color: #006fcf;
+    border-color: #006fcf;
+}
+.categoryCheckBoxes:checked::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.selectedCheckboxesText {
+    color: black;
+    font-weight: 'semibold';
+}
+.marketsMargin {
+    margin-bottom: 10px;
+}
+.metadataTagsListFlag {
+    height: 30px !important;
+    display: flex !important;
+    margin-top: 5px !important;
+    width: fit-content;
+}
+
+.flagAlign {
+    font-size: 12px;
+}
+
+.flagAlignList {
+    margin-left: 0.5em;
+}
+
+@media (max-width: 448px) {
+    .metadataLabels {
+        flex-direction: row;
+        align-items: flex-start;
+        margin-bottom: 2.5rem;
+    }
+
+    .metadataDropdown {
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 1172px) and (min-width: 772px) {
+    .techStackSelectFields {
+        display: block;
+
+        .selectField {
+            margin-bottom: 3px;
+        }
+    }
+}
+
+.metadataDropdownButton {
+    background: transparent;
+    color: #006fcf;
+    border: 1px solid lightgray;
+}
+
+.dialogPositioner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+}
+
+.techStackLabel {
+    padding-left: 3px;
+}
+
+.cascadeSelectBox {
+    color: black;
+}

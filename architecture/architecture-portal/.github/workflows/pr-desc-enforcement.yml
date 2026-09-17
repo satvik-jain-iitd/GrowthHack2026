@@ -1,0 +1,82 @@
+name: 'PR description filled check'
+
+on:
+    pull_request:
+        types: [opened, edited, reopened, synchronize]
+
+permissions:
+    contents: read
+
+jobs:
+    check-pr-description:
+        runs-on: aexp-ubuntu-latest-medium
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 1
+
+            - name: Check PR description vs template
+              uses: actions/github-script@v6
+              with:
+                  script: |
+                      const fs = require('fs');
+
+                      const TEMPLATE_PATH = '.github/pull_request_template.md';
+                      const MIN_LENGTH = parseInt(process.env.MIN_LENGTH || '50', 10);
+
+                      function normalize(text) {
+                        if (!text) return '';
+                        text = text.replace(/<!--[\s\S]*?-->/g, '');
+                        text = text.replace(/\s+/g, ' ').trim();
+                        return text;
+                      }
+
+                      if (typeof context === 'undefined' || !context.payload) {
+                        core.setFailed('This action expects to run for pull_request events (no payload available).');
+                        return;
+                      }
+
+                      const pr = context.payload.pull_request;
+                      if (!pr) {
+                        core.setFailed('No pull_request found in the event payload. Make sure this runs on pull_request events.');
+                        return;
+                      }
+
+                      const prBodyRaw = pr.body || '';
+                      const prBody = normalize(prBodyRaw);
+
+                      let templateExists = false;
+                      let templateRaw = '';
+                      try {
+                        if (fs.existsSync(TEMPLATE_PATH)) {
+                          templateExists = true;
+                          templateRaw = fs.readFileSync(TEMPLATE_PATH, { encoding: 'utf8' });
+                        }
+                      } catch (err) {
+                        core.info(`Failed to read template from ${TEMPLATE_PATH}: ${err.message}`);
+                      }
+
+                      if (templateExists) {
+                        const templateNormalized = normalize(templateRaw);
+
+                        if (!prBody) {
+                          core.setFailed('PR description is empty. Please fill out the PR description (the template alone is not enough).');
+                          return;
+                        }
+
+                        if (prBody === templateNormalized) {
+                          core.setFailed(`PR description appears unchanged from ${TEMPLATE_PATH}. Please add a meaningful description.`);
+                          return;
+                        }
+
+                        core.info('PR description differs from the template — OK.');
+                        return;
+                      }
+
+                      if (prBody.length < MIN_LENGTH) {
+                        core.setFailed(`PR description is too short (${prBody.length} chars). Please provide at least ${MIN_LENGTH} characters of detail.`);
+                        return;
+                      }
+
+                      core.info('PR description passes the minimum-length check.');

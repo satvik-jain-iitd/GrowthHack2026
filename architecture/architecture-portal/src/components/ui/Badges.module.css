@@ -1,0 +1,41 @@
+.success {
+    background-color: #00875a;
+    border-color: #00875a;
+}
+
+.info {
+    background-color: #0052cc;
+    border-color: #0052cc;
+}
+
+.warn {
+    background-color: #ff991f;
+    border-color: #ff991f;
+}
+
+.danger {
+    background-color: #bf2600;
+    border-color: #bf2600;
+}
+
+.default {
+    background-color: #42526e;
+    border-color: #42526e;
+}
+
+.badge {
+    border: 0 solid;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    margin: 10px 0;
+    padding: 3px 5px 3px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    min-width: 76px;
+    display: block;
+    width: 100px;
+}

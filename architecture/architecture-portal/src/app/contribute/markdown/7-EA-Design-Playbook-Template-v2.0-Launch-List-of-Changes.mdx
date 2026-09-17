@@ -1,0 +1,63 @@
+# EA Design Playbook Template v2.0 Launch – List of Changes
+
+## ✨ ADR Types & Context Mapping
+
+- Authors can specify the ADR Type from the choices: 'architecture', 'buildvsbuy', 'process', 'prescriptive', 'ftcloudadoption'
+- In the ## Context & Problem Statement section, authors can list the relevant ETPs / Company Domains / Central IDs / Standards (if applicable)
+- Link: https://github.aexp.com/amex-eng/ea-design-playbook/blob/main/architecturedecisionrecord/template.md
+
+## ✨ 2.1 Business Architecture (Level 0)
+
+- In the ## Business Principles section, added ShiftReg Principle Checklist to ensure teams have considered these principles in the early stages of design
+- Link: https://github.aexp.com/amex-eng/ea-design-playbook/blob/main/workproducts/2-business-architecture/2.1-business-arch-level0/template.md
+
+## ✨ 2.2 Customer Journeys & Use Cases
+
+- In the ## Customer Journey Definitions section, added tables to define personas and customer journey statements
+- In the ## Customer Journey Visualizations section, provided new Customer Journey Flow diagram templates/examples. It also illustrates how to embed NFR/security considerations.
+- Link: https://github.aexp.com/amex-eng/ea-design-playbook/blob/main/workproducts/2-business-architecture/2.2-customer-journeys-use-cases/template.md
+
+## ✨ 2.3 Domain APIs, 3.3 Internal Domain APIs
+
+- Aligned templates with API Strategy
+- For Company Domains, Type A/B APIs should be registered in the Architecture Portal (https://architecture.aexp.com/architecture-docs/company-domains)
+- For ETPs introducing new Type A/B APIs or to document which APIs are consumed in a solution, 2.3 Domain APIs template can still be used
+- Link: https://github.aexp.com/amex-eng/ea-design-playbook/blob/main/workproducts/2-business-architecture/2.3-domain-apis/template.md
+- 3.3 Internal Domain APIs template is used to document Type C APIs
+- Link: https://github.aexp.com/amex-eng/ea-design-playbook/blob/main/workproducts/3-technical-architecture/3.3-internal-domain-apis/template.md
+
+## ✨ 4.1 Detailed Design (Level 2)
+
+- Added ## Application/Component Decommissioning Plan to document decommissioning details (if applicable)
+- Link: https://github.aexp.com/amex-eng/ea-design-playbook/blob/main/workproducts/4-detailed-design/4.1-detailed-design-level2/template.md
+
+## ✨ 5.1 Data Architecture & Data Life Cycle Management
+
+- In the ## Data Architecture Data Flow Diagram section, included Data Flow Templates (Excel) as input to generate Data Architecture Data Flow diagrams
+- Added ## Data Management Tools section to list standard catalog/lineage tools being used
+- Link: https://github.aexp.com/amex-eng/ea-design-playbook/blob/main/workproducts/5-information-architecture/5.1-data-arch-data-life-cycle-mgmt/template.md
+
+## ✨ 5.2 Logical Data Design
+
+- In the ## Logical Data Model Diagram section, included Conceptual Data Model Template (Excel) as input to generate Conceptual Data Model diagrams
+- Link: https://github.aexp.com/amex-eng/ea-design-playbook/blob/main/workproducts/5-information-architecture/5.2-logical-data-design/template.md
+
+## ✨ 6.1 Infrastructure Architecture
+
+- Added ## Infrastructure Architecture Diagram section to document design choices for on-prem and cloud infrastructure. On-Prem, Hybrid Cloud, and AWS diagram examples are provided using draw.io (specialized shapes for AWS/GCP/Azure).
+- Link: https://github.aexp.com/amex-eng/ea-design-playbook/blob/main/workproducts/6-operational-architecture/6.1-infrastructure-architecture/template.md
+
+## ✨ 6.3 Change Management & Supportability
+
+- Added ## Holiday Support Coverage section primarily to be used by FT teams. For year-end freeze period, this provides a consistent way for FT teams to link out to their support schedules (to avoid duplication).
+- Link: https://github.aexp.com/amex-eng/ea-design-playbook/blob/main/workproducts/6-operational-architecture/6.3-change-management-supportability/template.md
+
+## ✨ All
+
+- Cleaned up heading titles/levels and field labels
+- Increased clarity on instructions
+- Diagram template/example filenames (in the /img folders) have '-template'/'-example' suffixes to differentiate from user created diagrams
+- Diagram template/example images have watermark labels added
+- Using [!TIP] quote block to highlight and delineate example diagrams/tables. During grading, these areas will be filtered out before the AI inference step.
+- Artifacts with [Application/Component Name] (i.e. 4.x – 7.x) in the title will also ask for Relevant Central IDs (if applicable)
+    - Not intended to require a separate design artifact file for each application. Central IDs should be grouped logically based on shared design characteristics, avoiding unnecessary duplication and ensuring the design artifacts remain maintainable over time

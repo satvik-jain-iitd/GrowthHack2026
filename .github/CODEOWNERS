@@ -1,0 +1,7 @@
+# Code owners for EASE-GH2026.
+#
+# Once "Require review from Code Owners" is enabled on the main branch ruleset,
+# at least one of these people must approve every PR. Each handle must have
+# write access to this repo, or GitHub silently ignores the entry.
+
+* @adhin @sanan111 @sjain480 @sjha86 @skwadhwa @yyashwa

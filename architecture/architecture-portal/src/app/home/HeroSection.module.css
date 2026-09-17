@@ -1,0 +1,14 @@
+.hero-section {
+    background-size: 100% 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    height: auto;
+}
+
+:global(html.light) .hero-section {
+    background-image: url('https://cdaas.aexp.com/enterprise-architecture/HeroSectionBkg.png');
+}
+
+:global(html.dark) .hero-section {
+    background-image: url('https://cdaas.aexp.com/enterprise-architecture/DarkHeroSectionBkg300.png');
+}

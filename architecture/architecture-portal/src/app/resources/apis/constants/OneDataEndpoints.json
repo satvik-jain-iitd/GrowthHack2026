@@ -1,0 +1,591 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Architecture Portal APIs"
+    },
+    "servers": [
+        {
+            "url": "https://functions-dev.aexp.com/api/v1/",
+            "description": "Dev"
+        },
+        {
+            "url": "https://functions-qa.aexp.com/api/v1/",
+            "description": "QA"
+        },
+        {
+            "url": "https://functions.aexp.com/api/v1",
+            "description": "Prod"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ],
+    "paths": {
+        "/companyDomains": {
+            "get": {
+                "tags": ["Company Domain APIs"],
+                "summary": "Get all company domains",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of company domains",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Company Domain List retrieved successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "8b600406-0142-45b3-b812-2d810d578c05"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "MYCA - Web"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "Company Domain Description."
+                                                    },
+                                                    "shortName": {
+                                                        "type": "string",
+                                                        "example": "myca-web"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/companyDomains/{domainId}": {
+            "get": {
+                "tags": ["Company Domain APIs"],
+                "summary": "Get details for a specific company domain",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "domainId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Company domain details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Company Domain Details Fetched Successfully"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "12345"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Domain 1"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Domain Description"
+                                                },
+                                                "unitCIO": {
+                                                    "type": "string",
+                                                    "example": "Domain Unit CIO"
+                                                },
+                                                "techOwnerEmail": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "example": [
+                                                        "Domain Tech Owner Email"
+                                                    ]
+                                                },
+                                                "unitCIODelegateEmail": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "example": [
+                                                        "Domain Unit CIO Delegate Email"
+                                                    ]
+                                                },
+                                                "enterpriseArchitectEmail": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "example": [
+                                                        "Domain EA Architect Email"
+                                                    ]
+                                                },
+                                                "headEngineerEmail": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "example": [
+                                                        "Domain Head Engineer Email"
+                                                    ]
+                                                },
+                                                "principalArchitectEmail": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "example": [
+                                                        "Domain Principal Architect Email"
+                                                    ]
+                                                },
+                                                "mappedApplicationCount": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "example": {
+                                        "message": "Company Domain Details Fetched Successfully",
+                                        "data": {
+                                            "id": "12345",
+                                            "name": "Domain 1",
+                                            "description": "Domain Description",
+                                            "unitCIO": "Domain Unit CIO",
+                                            "techOwnerEmail": [
+                                                "Domain Tech Owner Email"
+                                            ],
+                                            "unitCIODelegateEmail": [
+                                                "Domain Unit CIO Delegate Email"
+                                            ],
+                                            "enterpriseArchitectEmail": [
+                                                "Domain EA Architect Email"
+                                            ],
+                                            "headEngineerEmail": [
+                                                "Domain Head Engineer Email"
+                                            ],
+                                            "principalArchitectEmail": [
+                                                "Domain Principal Architect Email"
+                                            ],
+                                            "mappedApplicationCount": 10
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/companyDomains/{domainId}/applications": {
+            "get": {
+                "tags": ["Company Domain APIs"],
+                "summary": "Get applications for a specific company domain",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "domainId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Applications for the domain",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Applications mapped to Company Domain retrieved successfully",
+                                        "data": [
+                                            {
+                                                "applicationId": "12345",
+                                                "applicationName": "Example Application"
+                                            }
+                                        ]
+                                    },
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Applications mapped to Company Domain retrieved successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "applicationId": {
+                                                        "type": "string",
+                                                        "example": "12345"
+                                                    },
+                                                    "applicationName": {
+                                                        "type": "string",
+                                                        "example": "Example Application"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/companyDomains/{domainId}/apis": {
+            "get": {
+                "tags": ["Company Domain APIs"],
+                "summary": "Get all the APIs that are domainARB approved for a given company domain",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "domainId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "APIs for the domain",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Company Domain API List retrieved successfully",
+                                        "data": [
+                                            {
+                                                "apiMetadataId": "123456",
+                                                "apiName": "GetUserDetails",
+                                                "apiDescription": "Fetches user details for a given user ID",
+                                                "sourceComponentName": "UserService",
+                                                "consumerComponentName": "ClientApp",
+                                                "apiInputParameters": "userId",
+                                                "apiOutput": "userDetails",
+                                                "apiType": "TYPE A/B/C",
+                                                "additionalData": "None",
+                                                "providerCompanyDomainNames": [
+                                                    "ProviderDomain1",
+                                                    "ProviderDomain2"
+                                                ],
+                                                "consumerCompanyDomainNames": [
+                                                    "ConsumerDomain1"
+                                                ],
+                                                "primaryCompanyDomainName": "PrimaryDomain",
+                                                "subCompanyDomainName": "SubDomain",
+                                                "proposedUserEmail": "proposeduser@example.com",
+                                                "proposedUserName": "Proposed User",
+                                                "darbEngineer": "APPROVED",
+                                                "darbEngineerUserEmail": "engineer@example.com",
+                                                "darbEngineerUserName": "Engineer Name",
+                                                "darbArchitect": "APPROVED",
+                                                "darbArchitectUserEmail": "architect@example.com",
+                                                "darbArchitectUserName": "Architect Name",
+                                                "earb": "APPROVED",
+                                                "earbUserEmail": "earb@example.com",
+                                                "earbUserName": "Earb User",
+                                                "precertification": "APPROVED",
+                                                "productionCertification": "APPROVED"
+                                            }
+                                        ]
+                                    },
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Company Domain API List retrieved successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "apiMetadataId": {
+                                                        "type": "string",
+                                                        "example": "123456"
+                                                    },
+                                                    "apiName": {
+                                                        "type": "string",
+                                                        "example": "GetUserDetails"
+                                                    },
+                                                    "apiDescription": {
+                                                        "type": "string",
+                                                        "example": "Fetches user details for a given user ID"
+                                                    },
+                                                    "sourceComponentName": {
+                                                        "type": "string",
+                                                        "example": "UserService"
+                                                    },
+                                                    "consumerComponentName": {
+                                                        "type": "string",
+                                                        "example": "ClientApp"
+                                                    },
+                                                    "apiInputParameters": {
+                                                        "type": "string",
+                                                        "example": "userId"
+                                                    },
+                                                    "apiOutput": {
+                                                        "type": "string",
+                                                        "example": "userDetails"
+                                                    },
+                                                    "apiType": {
+                                                        "type": "string",
+                                                        "example": "TYPE A/B/C"
+                                                    },
+                                                    "additionalData": {
+                                                        "type": "string",
+                                                        "example": "None"
+                                                    },
+                                                    "providerCompanyDomainNames": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "example": [
+                                                                "ProviderDomain1",
+                                                                "ProviderDomain2"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "consumerCompanyDomainNames": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "example": [
+                                                                "ConsumerDomain1"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "primaryCompanyDomainName": {
+                                                        "type": "string",
+                                                        "example": "PrimaryDomain"
+                                                    },
+                                                    "subCompanyDomainName": {
+                                                        "type": "string",
+                                                        "example": "SubDomain"
+                                                    },
+                                                    "proposedUserEmail": {
+                                                        "type": "string",
+                                                        "example": "[REDACTED_EMAIL_ADDRESS_2]"
+                                                    },
+                                                    "proposedUserName": {
+                                                        "type": "string",
+                                                        "example": "Proposed User"
+                                                    },
+                                                    "darbEngineer": {
+                                                        "type": "string",
+                                                        "example": "APPROVED"
+                                                    },
+                                                    "darbEngineerUserEmail": {
+                                                        "type": "string",
+                                                        "example": "[REDACTED_EMAIL_ADDRESS_3]"
+                                                    },
+                                                    "darbEngineerUserName": {
+                                                        "type": "string",
+                                                        "example": "Engineer Name"
+                                                    },
+                                                    "darbArchitect": {
+                                                        "type": "string",
+                                                        "example": "APPROVED"
+                                                    },
+                                                    "darbArchitectUserEmail": {
+                                                        "type": "string",
+                                                        "example": "[REDACTED_EMAIL_ADDRESS_4]"
+                                                    },
+                                                    "darbArchitectUserName": {
+                                                        "type": "string",
+                                                        "example": "Architect Name"
+                                                    },
+                                                    "earb": {
+                                                        "type": "string",
+                                                        "example": "APPROVED"
+                                                    },
+                                                    "earbUserEmail": {
+                                                        "type": "string",
+                                                        "example": "[REDACTED_EMAIL_ADDRESS_5]"
+                                                    },
+                                                    "earbUserName": {
+                                                        "type": "string",
+                                                        "example": "Earb User"
+                                                    },
+                                                    "precertification": {
+                                                        "type": "string",
+                                                        "example": "APPROVED"
+                                                    },
+                                                    "productionCertification": {
+                                                        "type": "string",
+                                                        "example": "APPROVED"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/companyDomains/{domainId}/apis/count": {
+            "get": {
+                "tags": ["Company Domain APIs"],
+                "summary": "Get API count for a specific company domain",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "domainId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "API count for the domain",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Domain APIs Fetched Successfully",
+                                        "count": 2
+                                    },
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Company Domain API List retrieved successfully"
+                                        },
+                                        "count": {
+                                            "type": "number",
+                                            "example": 2
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/applications/{carId}/company-domain": {
+            "get": {
+                "tags": ["Company Domain APIs"],
+                "summary": "Get company domain for application",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "carId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mapping retrieved Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Mapping retrieved Successfully",
+                                        "applicationId": "600002899",
+                                        "domain": "Foundational Technologies",
+                                        "domainId": "746259db-b86f-4a8b-b38d-5cad02596f29"
+                                    },
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Status message of the response."
+                                        },
+                                        "applicationId": {
+                                            "type": "string",
+                                            "description": "The application Id for which the domain mapping was retrieved."
+                                        },
+                                        "domain": {
+                                            "type": "string",
+                                            "description": "The name of the mapped domain."
+                                        },
+                                        "domainId": {
+                                            "type": "string",
+                                            "description": "The unique identifier of the mapped domain."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

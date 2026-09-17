@@ -1,0 +1,257 @@
+/* Global styles for the application */
+:root {
+    --bgColor-default: #ffffff;
+    --textColor-heading: #006fcf;
+    --navbar-height: 64px;
+    --maintenance-banner-height: 56px;
+    --footer-height: 170px;
+    --document-width-default: 900px;
+    --document-max-width: 1500px;
+    --api-docs-left-nav-width: 350px;
+    --api-docs-left-nav-collapsed-width: 48px;
+    --navbar-font-size: 14px;
+
+    /* Domain Colors */
+    --domains-desc-text-color: #53565a;
+    --domains-subheading-color: #006fcf;
+    --directory-title-container-color: #00175a;
+    --directory-bgColor: #ecedee;
+    --metrics-card-bgColor: white;
+    --directory-content-BG: white;
+    --directory-filter: #e6e6e6;
+    --directory-filter-color: #121212;
+    --platformsSubheading: #006fcf;
+    --platformStatTextColor: #121212;
+
+    /* Domain API variables */
+    --apiFontSizeBase: 14px;
+    --apiFontSize: 14px;
+    --rejectButton: #f44336;
+    --approveButton: #4caf50;
+    --tableBorderSideColor: rgb(240, 240, 240, 0.5);
+    --tableBorderTopBottomColor: rgb(211, 211, 211);
+    --nameFieldCharLimitBase: 15ch;
+    --apiParamsCharLimitBase: 15ch;
+    --nameFieldCharLimitMD: 20ch;
+    --apiParamsCharLimitMD: 20ch;
+    --tableContainerBorderBottom: rgba(128, 128, 128, 0.5);
+}
+
+:root.dark {
+    --bgColor-default: #121212;
+    --textColor-heading: #64b5f6;
+
+    /* Domain Colors */
+    --domains-desc-text-color: #c8c9c7;
+    --domains-subheading-color: #61c5ff;
+    --directory-title-container-color: #2a2a2a;
+    --directory-bgColor: #1c1c1c;
+    --metrics-card-bgColor: #333333;
+    --directory-content-BG: #2a2a2a;
+    --directory-filter: #53565a;
+    --directory-filter-color: white;
+}
+
+.body {
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bgColor-default);
+}
+
+.image-light {
+    display: block;
+}
+
+.image-dark {
+    display: none;
+}
+
+:root.dark .image-light {
+    display: none;
+}
+
+:root.dark .image-dark {
+    display: block;
+}
+
+/* Light scrollbar for light mode */
+::-webkit-scrollbar {
+    width: 8px; /* width of vertical scrollbar */
+    height: 8px; /* height of horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #999;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #b7b7b7;
+}
+
+/* Dark scrollbar for dark mode */
+:root.dark ::-webkit-scrollbar {
+    background: #181818;
+}
+
+:root.dark ::-webkit-scrollbar-track {
+    background: #1d1d1d;
+}
+
+:root.dark ::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
+:root.dark ::-webkit-scrollbar-thumb:hover {
+    background: #444;
+}
+
+.page-content {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100% - var(--footer-height));
+    align-items: center;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+*:not(code):not(code *) {
+    box-sizing: border-box;
+    font-family: Inter, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #0f1733;
+}
+
+.dashboard {
+    padding: 24px;
+    color: #ffffff;
+}
+
+/* Top stats */
+.stats {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.stat-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 4px solid #e3b676;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #cfd6ff;
+}
+
+/* Filters */
+.filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.filters input,
+.filters select {
+    background: #1a2450;
+    border: 1px solid #2a3570;
+    color: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    min-width: 200px;
+}
+
+.expansion {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a2450;
+    padding: 0 12px;
+    border-radius: 6px;
+}
+
+.expansion button {
+    background: #2a3570;
+    color: white;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Columns */
+.columns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.column {
+    background: #1a2450;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.column h3 {
+    margin: 0 0 12px;
+    font-size: 16px;
+}
+
+.column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.column li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #24306b;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+/* Badge */
+.badge {
+    background: #0f1733;
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 12px;
+}
+
+.code-block {
+    * {
+        font-family: inherit;
+    }
+}

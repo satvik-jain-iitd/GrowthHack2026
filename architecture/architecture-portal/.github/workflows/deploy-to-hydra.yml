@@ -1,0 +1,583 @@
+name: Deploy To Hydra
+run-name: ${{ (inputs.manual_op == 'Switch (b/g) - Switch between blue/green environments' && 'Blue/Green Switch for ' || '') }} ${{ (inputs.manual_op == 'Switch (b/g) - Switch between blue/green environments' && inputs.manual_env) || (inputs.manual_env == 'e1' && 'E1') || (inputs.manual_env == 'e2' && 'E2') || (inputs.manual_env == 'e3' && 'E3') || (github.ref_name == 'e2' && 'E2') || (github.ref_name == 'main' && 'E1 - main') || 'Default' }} Deployment ${{ (inputs.service == 'beta-architecture' && '(for Beta Service)') || '' }} by @${{ github.actor }}
+# See https://go.aexp.com/deploy-to-hydra for instructions on using this workflow and enhanced documentation
+
+on:
+    pull_request:
+        branches: ['main']
+    workflow_dispatch:
+        inputs:
+            rfc:
+                description: 'For operations requiring a change record, enter the CHG number(rfc) for Hydra. Leave unchanged if auto-RFC is configured'
+                default: 'CHG080810310'
+                required: false
+            service:
+                description: 'Specify the target deployment service'
+                required: true
+                default: 'architecture1'
+                type: choice
+                options:
+                    - architecture1
+                    - beta-architecture
+            manual_op:
+                description: 'Specify a specific operation to execute against an environment'
+                required: false
+                default: '-'
+                type: choice
+                options:
+                    - '-'
+                    - Deploy an image
+                    - Switch (b/g) - Switch between blue/green environments
+                    - Rollback - Rollback to n-1 or rollback_version in an environment
+            manual_env:
+                description: 'Specify the environment for the above operation'
+                required: false
+                default: '-'
+                type: choice
+                options:
+                    - '-'
+                    - e1
+                    - e2
+                    - e3
+            rollback_version:
+                description: 'Rollback version of deployment (eg: 10, 9 etc.) (defaults to n-1)'
+                required: false
+                type: string
+            image_sha256:
+                description: 'Specify the SHA256 of the image to use'
+                required: false
+                type: string
+            testing_completed:
+                description: 'Whether testing has been completed for this change (Yes or No)'
+                required: false
+                default: 'Yes'
+                type: choice
+                options:
+                    - 'Yes'
+                    - 'No'
+            testing_artifacts:
+                description: 'URL or reference to testing artifacts (required when testing_completed is Yes)'
+                required: false
+                type: string
+            impact_analysis:
+                description: 'Whether impact analysis has been performed (Yes or No)'
+                required: false
+                default: 'Yes'
+                type: choice
+                options:
+                    - 'Yes'
+                    - 'No'
+            detailed_explanation:
+                description: 'If testing_completed is No, provide a detailed explanation'
+                required: false
+                type: string
+
+concurrency: deploy_to_hydra_in_progress
+
+jobs:
+    set_env:
+        name: 🧬 Set Variables
+        runs-on: ${{ vars.RUNNER_MEDIUM_LABEL }}
+        outputs:
+            # ---------------------------------------------------------------------------------------------------------------
+            # MUST CHANGE
+            # To begin using this workflow, you are required to change the below `2` parameters AND
+            # Ensure your Service Account is added to your repository secrets as `HYDRA_USERNAME` and `HYDRA_PASSWORD`
+            # Hydra Configuration - Required
+            # ---------------------------------------------------------------------------------------------------------------
+            project: architecture-intra-hydra # the project of the Hydra platform
+            service: ${{ github.event.inputs.service }} # the service of the project in Hydra
+
+            # Standard Change Template Configuration
+            std_change: false # Should a standard change template be used to enable auto-RFC creation
+            chg_name: 'Name_of_std_change' # The name of the change template
+            chg_ci: 'CI - E3-Production' # The Change Template's Configuration Item (CI)
+            chg_group: 'Chg_group_name' # The Change Template's Assignment Group
+            chg_email: email.addr@aexp.com # An email address of a service account that is a member of the RFC assignment group (personal accounts are not valid)
+            manually_validate_ctask: false #  If false, auto-close validate CTASK after implementation complete. If true, requires manual closure of CTASK
+
+            # Deployment Configuration
+            e3_automated: false # On push to default branch, auto deploy to E3 (Requires Standard Change Template Configuration section to be completed)
+            e2_automated: false # On push to default branch, auto deploy to E2
+            e1_automated: true # On push to default branch, auto deploy to E1
+            e1_on_pullrequest: false # On PR to default branch, auto deploy to E1
+
+            # Notification Configuration
+            slack_channel: C0887PMFF3R # Enable Slack notifications by Changing to the ID of a Slack channel (must be public or invite the @Github Actions bot)
+
+            # Build-Push configuration
+            image_name: ${{ github.repository }}-image # The name of the image
+            buildfile_path: Dockerfile # The path to the project.toml/Dockerfile used in Buildpacks/Docker builds
+            build_path: . # The path to the code (build context)
+            artifactory_registry: artifactory.aexp.com/paas-registry # Registry to push image to
+
+            # Values file(s) Directory configuration
+            values_file_path: ./helm # Change if your values file(s) are not in './helm' directory
+            values_file_registry: https://artifactory.aexp.com/paas-raw-registry/com/aexp # Registry to push values file(s) to
+            # Values file(s) naming convention can be found here: https://enterprise-confluence.aexp.com/confluence/display/ED/Deployment+and+Value+File+Support
+
+            # Workflow Template Update Configuration
+            create_issue: true # Whether an issue should be created when there is an update to this template.
+
+            # Next Public Environment Configuration
+            next_public_env: ${{ steps.set_next_public_env.outputs.next_public_env }}
+
+            # Configuration End - DONT CHANGE BELOW THIS LINE
+            # ---------------------------------------------------------------------------------------------------------------------------------
+            template_name: deploy-to-hydra.yml # The name of the template
+            current_version: v2.11.0 # The current version of the workflow template (auto updates on releases)
+        steps:
+            # limitation defined at https://docs.github.com/en/enterprise-server@3.8/actions/using-workflows/reusing-workflows#limitations
+            - name: Workaround https://github.com/orgs/community/discussions/26671
+              id: workaround
+              run: echo
+            - name: Set next public environment
+              id: set_next_public_env
+              run: |
+                  if [[ "${{ github.event.inputs.manual_env }}" == "-" || -z "${{ github.event.inputs.manual_env }}" ]]; then
+                      echo "next_public_env=e1" >> $GITHUB_OUTPUT
+                  else
+                      echo "next_public_env=${{ github.event.inputs.manual_env }}" >> $GITHUB_OUTPUT
+                  fi
+                  printf '\n :: Deployment selections ::\n'
+                  echo "    ---------------------------------------------------------------"
+                  printf '    %-22s | %s\n' "INPUT" "VALUE"
+                  echo "    ------------------------+--------------------------------------"
+                  printf '    %-22s | %s\n' "RFC" "${{ github.event.inputs.rfc }}"
+                  printf '    %-22s | %s\n' "Service" "${{ github.event.inputs.service }}"
+                  printf '    %-22s | %s\n' "Manual Operation" "${{ github.event.inputs.manual_op }}"
+                  printf '    %-22s | %s\n' "Manual Environment" "${{ github.event.inputs.manual_env }}"
+                  printf '    %-22s | %s\n' "Rollback version" "${{ github.event.inputs.rollback_version }}"
+                  printf '    %-22s | %s\n' "Image SHA256" "${{ github.event.inputs.image_sha256 }}"
+                  echo "    ---------------------------------------------------------------"
+
+    # ---------------------------------------------------------------
+    # Always runs once set_env job completes its configuration
+    # Check if this file (the workflow template) is up to date
+    # Only runs against default branch
+    # ---------------------------------------------------------------
+    check_template_version:
+        name: 🔮 Template Update Check
+        if: ${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+        needs: [set_env]
+        uses: amex-eng/workflow-updater/.github/workflows/template-updater.yml@v1
+        with:
+            template: ${{ needs.set_env.outputs.template_name }}
+            current_version: ${{ needs.set_env.outputs.current_version }}
+            create_issue: ${{ needs.set_env.outputs.create_issue }}
+            issue_template_name: latest_update_hydra.md
+
+    # ---------------------------------------------------------------------------------------------------------
+    # Will not run if triggered manually for `deploy`, `rollback`, or `switch` operation
+    #   - Expects the e1 image has all scans completed and the E2/E3 operation is using the pre-scanned image
+    # Call the reusable workflow for Code Quality Scanning (SonarQube). This is currently a non-blocking step
+    # ---------------------------------------------------------------------------------------------------------
+    sonar:
+        name: ⛴ Run Tests & SonarQube
+        if: ${{ !contains(github.event.inputs.manual_env, 'e') }} # dont run when workflow triggered manually
+        needs: [set_env]
+        runs-on: aexp-ubuntu-latest-xlarge
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - uses: amex-eng/setup-node@v4
+              with:
+                  node-version-file: '.nvmrc'
+
+            - name: 🧪 Run Tests
+              run: |
+                  npm ci
+                  npm run test:coverage --maxWorkers=50% --unhandled-rejections=warn --forceExit
+            
+            - name: 📊 Get report stats
+              if: ${{ always() && github.event_name == 'pull_request' }}
+              id: report-stats
+              run: node src/scripts/get-unit-test-results.js
+              continue-on-error: true # We don't want to block PR if gathering stats fail.
+
+            - name: 🗣️ Comment Coverage
+              if: ${{ always() && github.event_name == 'pull_request' }}
+              uses: actions/github-script@v7
+              with:
+                  github-token: ${{secrets.BOT_TOKEN}}
+                  script: |
+                      const commentIdentifier = '<? coverage-bot-comment ?>'
+                      const commentBody =
+                          '## ${{ fromJson(steps.report-stats.outputs.unit_test_results).title }}\n ### Lines: ${{ fromJson(steps.report-stats.outputs.unit_test_results).lines }}%\n ### Statements: ${{ fromJson(steps.report-stats.outputs.unit_test_results).statements }}%\n ### Functions: ${{ fromJson(steps.report-stats.outputs.unit_test_results).functions }}%\n ### Branches: ${{ fromJson(steps.report-stats.outputs.unit_test_results).branches }}% <? coverage-bot-comment ?> '
+                      const { data: comments } = await github.rest.issues.listComments({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: context.issue.number
+                      })
+
+                      const existingComment = comments.find(comment =>
+                          comment.body.includes(commentIdentifier)
+                      )
+
+                      if (existingComment) {
+                          await github.rest.issues.updateComment({
+                              owner: context.repo.owner,
+                              repo: context.repo.repo,
+                              comment_id: existingComment.id,
+                              body: commentBody
+                          })
+                      } else {
+                          await github.rest.issues.createComment({
+                              issue_number: context.issue.number,
+                              owner: context.repo.owner,
+                              repo: context.repo.repo,
+                              body: commentBody
+                          })
+                      }
+              continue-on-error: true # We don't want to block PR if commenting fails.
+
+            - name: Upload Coverage Report
+              uses: actions/upload-artifact@v4
+              with:
+                  name: lcov-report
+                  path: coverage/lcov.info
+
+            - name: SonarQube Scan
+              uses: amex-eng/sonar-scan@v3
+              with:
+                  args: >
+                      -Dsonar.sources=src
+                      -Dsonar.tests=src
+                      -Dsonar.test.inclusions=**/*.test.js,**/*.test.jsx,**/*.test.ts,**/*.test.tsx
+                      -Dsonar.exclusions=**/node_modules/**,**/*.d.ts,**/*.md,**/*.mdx,docs/**,public/**,src/constants/**,src/components/icons/**
+                      -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+                      -Dsonar.coverage.exclusions=**/*.test.js,**/*.test.jsx,**/*.test.ts,**/*.test.tsx,**/types/**,**/mocks/**,**/test-ids/**,**/test-data/**,**/index.*,**/*.md,**/*.mdx,docs/**,public/**,src/constants/**,src/components/icons/**
+              env:
+                  SONARQUBE_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+                  SONAR_HOST_URL: ${{ vars.SONAR_URL }}
+                  LC_ALL: 'C.UTF-8'
+
+    # ---------------------------------------------------------------------------------------------------------------------------
+    # Will not run if triggered manually for `deploy`, `rollback`, or `switch` operation
+    #   - Expects the e1 image has all scans completed and the E2/E3 operation is using the pre-scanned image
+    # Call the reusable workflow for Secrets Scanning (EarlyBird). This is a blocking step.
+    # ⛔ Earlybird job is a mandated Amex Way Guardrail and should not be modified/removed under any circumstance as this will
+    # ⛔ diverge your project from Info Sec standard requirements.
+    # ---------------------------------------------------------------------------------------------------------------------------
+    earlybird:
+        name: ⛔GUARDRAIL⛔ - 🔐 Earlybird
+        if: ${{ !contains(github.event.inputs.manual_env, 'e') || contains(github.event.inputs.manual_op, 'deploy') }}
+        uses: amex-eng/earlybird-scan/.github/workflows/earlybird-scan.yml@v3
+        secrets:
+            EB_USERNAME: ${{ secrets.EB_USERNAME }}
+            EB_PASSWORD: ${{ secrets.EB_PASSWORD }}
+
+    # ---------------------------------------------------------------------------------------------------------------
+    # Will not run if triggered manually for `deploy`, `rollback`, or `switch` operation
+    #   - Expects the e1 image has all scans completed and the E2/E3 operation is using the pre-scanned image
+    # Call the reusable workflow for building and publishing the image with Twistlock scanning.
+    # ⛔ Twistlock job is a mandated Amex Way Guardrail.
+    # ---------------------------------------------------------------------------------------------------------------
+    build_push:
+        name: 🏗 Build and push Buildpacks/Docker image with Twistlock Scanning
+        if: ${{ !contains(github.event.inputs.manual_env, 'e') || contains(github.event.inputs.manual_op, 'deploy') }}
+        needs: [set_env, earlybird]
+        uses: amex-eng/build-and-push/.github/workflows/build-and-push.yml@v4
+        with:
+            tags: ${{ needs.set_env.outputs.artifactory_registry }}/${{ needs.set_env.outputs.image_name }}:${{ github.sha }}
+            file: ${{ needs.set_env.outputs.buildfile_path }}
+            context: ${{ needs.set_env.outputs.build_path }}
+            build-args: |
+                NEXT_PUBLIC_ENV=${{ needs.set_env.outputs.next_public_env }}
+        secrets:
+            SECRETS: |
+                IDAAS_APP_ID=${{ (needs.set_env.outputs.next_public_env == 'e1' && secrets.IDAAS_APP_ID_E1) || (needs.set_env.outputs.next_public_env == 'e2' && secrets.IDAAS_APP_ID_E2) || (needs.set_env.outputs.next_public_env == 'e3' && secrets.IDAAS_APP_ID_E3) }}
+                IDAAS_HOST=${{ (needs.set_env.outputs.next_public_env == 'e1' && secrets.IDAAS_HOST_E1) || (needs.set_env.outputs.next_public_env == 'e2' && secrets.IDAAS_HOST_E2) || (needs.set_env.outputs.next_public_env == 'e3' && secrets.IDAAS_HOST_E3) }}
+                IDAAS_SECRET=${{ (needs.set_env.outputs.next_public_env == 'e1' && secrets.IDAAS_SECRET_E1) || (needs.set_env.outputs.next_public_env == 'e2' && secrets.IDAAS_SECRET_E2) || (needs.set_env.outputs.next_public_env == 'e3' && secrets.IDAAS_SECRET_E3) }}
+            REGISTRY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+            REGISTRY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+            TWISTCLI_E3_USERNAME: ${{ secrets.TWISTCLI_E3_USERNAME }}
+            TWISTCLI_E3_PASSWORD: ${{ secrets.TWISTCLI_E3_PASSWORD }}
+
+    # ---------------------------------------------------------------------------------------------------------
+    # Testing evidence job - runs after build/push and before RFC creation.
+    # Tests + coverage are executed once in the `sonar` job (which also uploads the lcov-report artifact), so
+    # this job depends on `sonar` purely to guarantee the suite has passed before the RFC is created. It records
+    # the run URL as the testing_artifacts reference passed to the RFC.
+    # ---------------------------------------------------------------------------------------------------------
+    testing_evidence:
+        name: 🧪 Testing Evidence
+        if: ${{ !contains(github.event.inputs.manual_env, 'e') }}
+        needs: [set_env, build_push, sonar]
+        runs-on: ${{ vars.RUNNER_MEDIUM_LABEL }}
+        outputs:
+            testing_artifacts: ${{ steps.testing.outputs.testing_artifacts }}
+            testing_completed: ${{ steps.testing.outputs.testing_completed }}
+            impact_analysis: ${{ steps.testing.outputs.impact_analysis }}
+        steps:
+            - name: Output
+              id: testing
+              shell: bash
+              run: |
+                  echo "testing_artifacts=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" >> $GITHUB_OUTPUT
+                  echo "testing_completed=Yes" >> $GITHUB_OUTPUT
+                  echo "impact_analysis=Yes" >> $GITHUB_OUTPUT
+
+    # ---------------------------------------------------------------------------------------------------------
+    # Call the reusable workflow for automatic RFC creation
+    # Will ALWAYS run if:
+    #  - No earlier jobs have failed AND
+    #  - The workflow run has not been cancelled AND
+    #  - Automatic RFCs are configured via std_change configuration AND
+    #   - The event is a `push` to the `default` branch, and the `e3_automated` configuration is enabled OR
+    #   - Workflow is triggered manually AND
+    #    - RFC/Ctask field is left unchanged (still includes the default) OR
+    #    - The operation requires a valid RFC (e.g. any E3 step or E2 rollback)
+    # ---------------------------------------------------------------------------------------------------------
+    create_rfc_set_inprogress:
+        name: 📋 Auto-Create RFC
+        needs: [set_env, testing_evidence]
+        if: ${{
+            !failure() &&
+            !cancelled() &&
+            (needs.set_env.outputs.std_change == 'true' &&
+            (github.event_name == 'workflow_dispatch' &&
+            (contains(github.event.inputs.rfc, '080810310') &&
+            github.event.inputs.manual_env == 'e3')) ||
+            (github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && needs.set_env.outputs.e3_automated == 'true'))}}
+        uses: amex-eng/rfc/.github/workflows/open-std-rfc.yml@v2
+        with:
+            change_template_name: ${{ needs.set_env.outputs.chg_name }}
+            configuration_item: ${{ needs.set_env.outputs.chg_ci }}
+            assignment_group: ${{ needs.set_env.outputs.chg_group }}
+            email: ${{ needs.set_env.outputs.chg_email }}
+            testing_completed: ${{ needs.testing_evidence.outputs.testing_completed || github.event.inputs.testing_completed }}
+            testing_artifacts: ${{ needs.testing_evidence.outputs.testing_artifacts || github.event.inputs.testing_artifacts }}
+            impact_analysis: ${{ needs.testing_evidence.outputs.impact_analysis || github.event.inputs.impact_analysis }}
+            detailed_explanation: ${{ github.event.inputs.detailed_explanation || '' }}
+
+    # ---------------------------------------------------------------------------------------------------------------------------
+    # Will always run
+    #   - Expects the image to have been built as part of the build_push step
+    #   - Optionally accepts RFC to allow for RFC validation as part of Permit to Operate
+    # Call the reusable workflow for Permit to Operate Compliance validation. This is not yet a blocking step.
+    # ⛔ Permit to Operate job is a mandated Amex Way Guardrail and should not be modified/removed under any circumstance as this will
+    # ⛔ diverge your project from American Express requirements.
+    # ---------------------------------------------------------------------------------------------------------------------------
+    permit_to_operate:
+        name: ⛔GUARDRAIL⛔ - Permit To Operate
+        if: ${{ !failure() && !cancelled() && always() }}
+        needs: [set_env, build_push, create_rfc_set_inprogress]
+        uses: amex-eng/ptx/.github/workflows/pto.yml@v2
+        with:
+            image_name: ${{ needs.set_env.outputs.image_name }}
+            sha256: ${{ needs.build_push.outputs.digest || format('sha256:{0}', github.event.inputs.image_sha256) }}
+            rfc: ${{ needs.create_rfc_set_inprogress.outputs.rfc || (!contains(github.event.inputs.rfc, '080810310') && github.event.inputs.rfc || '') }}
+            project: ${{ needs.set_env.outputs.project }}
+            service: ${{ needs.set_env.outputs.service }}
+            slack_channel: ${{ needs.set_env.outputs.slack_channel }}
+
+    # ------------------------------------------------------------------------------
+    # Call the reusable workflow switch.
+    # Will ALWAYS run if:
+    #  - No earlier jobs have failed AND
+    #  - The workflow run has not been cancelled AND
+    #  - The manual trigger operation for `rollback` OR `switch` was selected
+    # ------------------------------------------------------------------------------
+    rollback_switch:
+        name: 🔙/🔵⮂🟢 Rollback/Switch
+        if: ${{
+            !failure() &&
+            !cancelled() &&
+            contains(github.event.inputs.manual_op, 'switch') || contains(github.event.inputs.manual_op, 'rollback') }}
+        needs: [set_env, create_rfc_set_inprogress]
+        uses: amex-eng/deploy-hydra/.github/workflows/hydra.yml@v2
+        with:
+            project: ${{ needs.set_env.outputs.project }}
+            service: ${{ needs.set_env.outputs.service }}
+            switch: ${{ contains(github.event.inputs.manual_op, 'Switch') }}
+            rollback: ${{ contains(github.event.inputs.manual_op, 'Rollback') }}
+            rollback_version: ${{ github.event.inputs.rollback_version }}
+            env: ${{ github.event.inputs.manual_env }}
+            rfc: ${{ needs.create_rfc_set_inprogress.outputs.rfc || (!contains(github.event.inputs.rfc, '080810310') && github.event.inputs.rfc || '') }}
+        secrets:
+            USERNAME: ${{ secrets.HYDRA_USERNAME }}
+            PASSWORD: ${{ secrets.HYDRA_PASSWORD }}
+
+    # ----------------------------------------------------------------------------------------------------------
+    # Call the reusable workflow for deploying to E1
+    # Will ALWAYS run if:
+    #  - The event is a `pull_request` to the default branch AND `e1_on_pullrequest` is configured as `true` OR
+    #  - The event is a `push` to the default branch AND `e1_automated` is configured as `true` OR
+    #  - The manual trigger operation for `deploy` was selected with the target env as `e1`
+    # ----------------------------------------------------------------------------------------------------------
+    deploy_e1:
+        if: ${{
+            !failure() &&
+            !cancelled() &&
+            (github.event_name == 'pull_request' && needs.set_env.outputs.e1_on_pullrequest == 'true') ||
+            (github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && needs.set_env.outputs.e1_automated == 'true') ||
+            (contains(github.event.inputs.manual_op, 'deploy')  && (github.event.inputs.manual_env == 'e1' || github.event.inputs.manual_env == 'e3')) }}
+        name: 📦⮕➊ Deploy image to E1
+        needs: [set_env, build_push]
+        uses: amex-eng/deploy-hydra/.github/workflows/hydra.yml@v2
+        with:
+            image: ${{ needs.set_env.outputs.artifactory_registry }}/${{ needs.set_env.outputs.image_name }}
+            sha256: ${{ needs.build_push.outputs.digest || format('sha256:{0}', github.event.inputs.image_sha256) }}
+            env: e1
+            project: ${{ needs.set_env.outputs.project }}
+            service: ${{ needs.set_env.outputs.service }}
+            values_file_path: ${{ needs.set_env.outputs.values_file_path }}
+        secrets:
+            USERNAME: ${{ secrets.HYDRA_USERNAME }}
+            PASSWORD: ${{ secrets.HYDRA_PASSWORD }}
+            ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+            ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+
+    # ------------------------------------------------------------------------------------------------------
+    # Call the reusable workflow to deploy an image to E2.
+    # Will ALWAYS run if:
+    #  - No earlier jobs have failed AND
+    #  - The workflow run has not been cancelled AND
+    #  - The event is a `push` to the default branch AND `e2_automated` is configured as `true` OR
+    #  - The manual trigger operation for `deploy` was selected with the target env as `e2`
+    # ------------------------------------------------------------------------------------------------------
+    deploy_e2:
+        name: ➊⮕➋ Deploy image to E2
+        if: ${{
+            !failure() &&
+            !cancelled() &&
+            (github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && needs.set_env.outputs.e2_automated == 'true') ||
+            (contains(github.event.inputs.manual_op, 'deploy') && github.event.inputs.manual_env == 'e2') }}
+        needs: [set_env, deploy_e1, build_push]
+        uses: amex-eng/deploy-hydra/.github/workflows/hydra.yml@v2
+        with:
+            image: ${{ needs.set_env.outputs.artifactory_registry }}/${{ needs.set_env.outputs.image_name }}
+            sha256: ${{ needs.build_push.outputs.digest || format('sha256:{0}', github.event.inputs.image_sha256) }}
+            env: e2
+            project: ${{ needs.set_env.outputs.project }}
+            service: ${{ needs.set_env.outputs.service }}
+            values_file_path: ${{ needs.set_env.outputs.values_file_path }}
+        secrets:
+            USERNAME: ${{ secrets.HYDRA_USERNAME }}
+            PASSWORD: ${{ secrets.HYDRA_PASSWORD }}
+            ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+            ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+
+    # ---------------------------------------------------------------------------------------------------------------------------------------------
+    # Call the reusable workflow to deploy an image to E3.
+    # Will ALWAYS run if:
+    #  - No earlier jobs have failed AND
+    #  - The workflow run has not been cancelled AND
+    #  - The event is a `push` to the default branch AND `e3_automated` is configured as `true` AND `std_change` is configured as `true` OR
+    #  - The manual trigger operation for `deploy` was selected with the target env as `e3`
+    # ---------------------------------------------------------------------------------------------------------------------------------------------
+
+    deploy_e3:
+        name: ➋⮕➌ Deploy image to E3
+        if: ${{
+            !failure() &&
+            !cancelled() &&
+            ((needs.set_env.outputs.std_change == 'true' && needs.set_env.outputs.e3_automated == 'true' && github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)) ||
+            (github.event.inputs.manual_env == 'e3' && contains(github.event.inputs.manual_op, 'deploy') && github.event_name == 'workflow_dispatch')) }}
+        # if no prior jobs failed, and the job isnt cancelled
+        # configured for fully automatic e3 release on push to main (requires std changes), OR
+        # manually triggered deploy to e3 env
+        needs:
+            [
+                set_env,
+                deploy_e2,
+                build_push,
+                create_rfc_set_inprogress,
+                permit_to_operate
+            ]
+        uses: amex-eng/deploy-hydra/.github/workflows/hydra.yml@v2
+        with:
+            image: ${{ needs.set_env.outputs.artifactory_registry }}/${{ needs.set_env.outputs.image_name }}
+            sha256: ${{ needs.build_push.outputs.digest || format('sha256:{0}', github.event.inputs.image_sha256) }}
+            env: e3
+            project: ${{ needs.set_env.outputs.project }}
+            service: ${{ needs.set_env.outputs.service }}
+            values_file_path: ${{ needs.set_env.outputs.values_file_path }}
+            rfc: ${{ needs.create_rfc_set_inprogress.outputs.rfc || (!contains(github.event.inputs.rfc, '080810310') && github.event.inputs.rfc || '') }}
+        secrets:
+            USERNAME: ${{ secrets.HYDRA_USERNAME }}
+            PASSWORD: ${{ secrets.HYDRA_PASSWORD }}
+            ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+            ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+
+    # ------------------------------------------------------------------------------------------------------------
+    # Call the reusable workflow for automatic RFC closure
+    # Will ALWAYS run if:
+    #  - No earlier jobs have failed AND
+    #  - The workflow run has not been cancelled AND
+    #  - Automatic RFCs are configured via std_change configuration AND
+    #   - The event is a `push` to the `default` branch, and the `e3_automated` configuration is enabled OR
+    #   - Workflow is triggered manually AND
+    #    - RFC/Ctask field is left unchanged (still includes the default) OR
+    #    - The operation requires a valid RFC (e.g. any E3 step or E2 rollback)
+    # ------------------------------------------------------------------------------------------------------------
+    close_rfc:
+        name: ☑️ Close RFC Task(s)
+        needs:
+            [
+                set_env,
+                deploy_e2,
+                deploy_e3,
+                rollback_switch,
+                create_rfc_set_inprogress
+            ]
+        if: ${{
+            always() &&
+            needs.create_rfc_set_inprogress.result == 'success' &&
+            (needs.set_env.outputs.std_change == 'true' &&
+            (github.event_name == 'workflow_dispatch' &&
+            (contains(github.event.inputs.rfc, '080810310') &&
+            (contains(github.event.inputs.manual_op, 'rollback') || github.event.inputs.manual_env == 'e3'))) ||
+            (github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && needs.set_env.outputs.e3_automated == 'true')) }}
+        uses: amex-eng/rfc/.github/workflows/close-std-rfc.yml@v2
+        with:
+            change_template_name: ${{ needs.set_env.outputs.chg_name }}
+            rfc: ${{ needs.create_rfc_set_inprogress.outputs.rfc }}
+            notes: ${{ ((needs.rollback_switch.result == 'failure' || needs.rollback_switch.result == 'cancelled') || (needs.deploy_e2.result == 'failure' || needs.deploy_e2.result == 'cancelled') || (needs.deploy_e3.result == 'failure' || needs.deploy_e3.result == 'cancelled')) && 'pipeline failure or cancellation' || ((needs.set_env.outputs.manually_validate_ctask == 'true') && 'E3 promotion completed' || 'E3 promotion completed and validation passed') }}
+
+    # ---------------------------------------------------------------------------------------------------------
+    # Always runs at the end of all jobs to post to Slack (if `slack_channel` configured)
+    # Documents the resulting status from all preceding jobs in the workflow file. Posts as `@Github Actions`
+    # ---------------------------------------------------------------------------------------------------------
+    slack-notifications:
+        name: 📨 Post To slack
+        if: ${{ always() }}
+        needs:
+            [
+                set_env,
+                check_template_version,
+                sonar,
+                earlybird,
+                build_push,
+                testing_evidence,
+                rollback_switch,
+                deploy_e1,
+                deploy_e2,
+                deploy_e3,
+                create_rfc_set_inprogress,
+                close_rfc
+            ]
+        uses: amex-eng/github-actions-slack/.github/workflows/message-slack.yml@v2
+        with:
+            slack_channel: ${{ needs.set_env.outputs.slack_channel }}
+            slack_text: |
+                Enterprise Workflow triggered via trigger type `"${{ github.event_name }}"` in repo `"${{ github.repository }}"` by `"${{ github.actor }}"`
+                Job Breakdown:
+                ```
+                  Set env Scan: ${{ needs.set_env.result }}
+                  Template Updater: ${{ needs.check_template_version.result }}
+                  SonarQube Scan: ${{ needs.sonar.result }}
+                  EarlyBird Scan: ${{ needs.earlybird.result }}
+                  Build / Push / Twistlock: ${{ needs.build_push.result }}
+                  Testing Evidence: ${{ needs.testing_evidence.result }}
+                  Deploy to E1: ${{ needs.deploy_e1.result }}
+                  Deploy to E2: ${{ needs.deploy_e2.result }}
+                  Deploy to E3: ${{ needs.deploy_e3.result }}
+                  Auto RFC Create: ${{ needs.create_rfc_set_inprogress.result }}
+                  Auto RFC Closure: ${{ needs.close_rfc.result }}
+                ```
+                Job Execution URL: https://github.aexp.com/${{github.repository}}/actions/runs/${{github.run_id}}
+        secrets:
+            SLACK_BOT_USER_OAUTH_ACCESS_TOKEN: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+# (CICD/DX Requirement, do NOT remove): 5c8aa5aa8be6516fc12f5348fe267a39

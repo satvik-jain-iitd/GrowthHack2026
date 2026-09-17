@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "skills": {
+    "design-system": {
+      "source": "https://github.aexp.com/amex-eng/one-amex-skills.git",
+      "sourceUrl": "https://github.aexp.com/amex-eng/one-amex-skills.git",
+      "sourceType": "git",
+      "skillPath": "skills/design-system/SKILL.md",
+      "computedHash": "26f80efe2c7858f22fc82bb4a61fb23617483b99b01d9e9e203d1d0547c24a8b"
+    }
+  }
+}

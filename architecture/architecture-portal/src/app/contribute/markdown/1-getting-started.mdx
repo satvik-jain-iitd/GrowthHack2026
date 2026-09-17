@@ -1,0 +1,94 @@
+# Getting Started
+
+## Step 1: Review Templates
+
+Go through the [**_EA Design Playbook_**](https://GitHub.aexp.com/amex-eng/ea-design-playbook) and
+[**_EA Design Playbook examples_**](https://GitHub.aexp.com/amex-eng/ea-design-playbook-examples) before documenting the workproducts.
+
+## Step 2: Create Playbook Directory Structure
+
+You can use either of the following options to create the necessary directory structure.
+
+**A. Using an Existing GitHub repo**
+
+Copy the directory contents from [EA Playbook Template](https://GitHub.aexp.com/amex-eng/ea-design-playbook).
+Place it in any location designated for architecture in your git repo. We suggest naming the location `initiative_name`.
+
+For Example : [Zelle](https://GitHub.aexp.com/amex-eng/enterprise-architecture-money-movement/tree/main/docs/Zelle),
+[EBnc](https://github.aexp.com/amex-eng/ebnc-design-playbook/tree/main/eBnC)
+
+**B. Generate a New Template GitHub Repo**
+
+Alternately, if you are starting off with a brand-new GitHub repository for your architecture initiative, then:
+
+1. Go to [EA Design Playbook](https://GitHub.aexp.com/amex-eng/ea-design-playbook) and click on "Use this template"
+
+    <img
+        src='/how-to-contribute/template.png'
+        alt=''
+        style={{ maxWidth: '100%', height: 'auto' }}
+    />
+
+2. Use owner as `amex-eng` and give a proper name for the Initiatives / Blueprint / Customer Journey.
+
+3. This will create a new repository for your architecture initiative with the prescribed playbook structure.
+
+For Example : [APT](https://GitHub.aexp.com/amex-eng/apt-architecture)
+
+4. Once you have created the GitHub repository, you will need to replace the `central-id` in the `.amex/buildblocks.yaml` file. If the `central-id` is not removed, a GitHub actions will automatically run and remove the `central-id` (and itself) and raise a PR. Please merge this PR and then add your own `central-id`. If the `central-id` is already removed, the GitHub actions will automatically remove itself and raise a PR. Kindly merge this PR to complete the removal process.
+
+## Step 3: Create Documentation
+
+1. After creating the GitHub repository for architecture documentation, move forward with writing the content.
+   Template is the framework for what you need to include, so this step is about fleshing out each relevant section with the details.
+
+2. Review the below projects which have good examples of different architecture artifacts.
+    - [Zelle](https://architecture1.aexp.com/docs/7b7a3b4b-e20a-4cfc-9b8e-a72326f15528)
+    - [Financial Crimes KYC Refresh](https://architecture1.aexp.com/docs/87e2605c-19c2-4a88-b40a-484bbc4294bf)
+    - [Acquirer Platform Transformation APT](https://architecture1.aexp.com/docs/96661355-e2d8-4f1d-80fd-7bdbc06a14f9)
+    - [Marketing Ecosystem BvB](https://architecture1.aexp.com/docs/b907da40-13e6-496d-8fbc-9b48145295c6)
+
+3. Below are a few suggestions / best practices for your architecture documentation.
+    - Use [DrawIO](https://drawio.aexp.com/) to draw architecture diagrams. Export to an SVG before linking it to an Markdown file.
+    - Place all image files in `img` folder.
+    - Follow the folder structure recommended in the playbook.
+    - Please remove or rename any `template.md` files. (Be advised, that any file named `template.md` would not be rendered and thus will not appear on the portal when onboarded.)
+    - Replace `[initiative_name]` H1 tags with proper initiative name before publishing.
+    - Ensure to check all grammar and linting before committing the changes.
+
+## Step 4: Request To Publish
+
+1. Once you are ready to **_publish_** your architecture documentation,
+   please use the [onboarding link](https://architecture1.aexp.com/onboarding-form) to request
+   project to display on [The Architecture Portal](https://architecture1.aexp.com/).
+2. Portal team will review your submission and will publish on Architecture Portal.
+3. If there are errors we will be contacting you using the emailId provided.
+
+<h1 align='center'>
+    <p align='center'> &nbsp; </p>
+</h1>
+
+<h1 align='center'>
+    <p align='center'> &nbsp; DevCon 2023 </p>
+</h1>
+
+<iframe
+    width='900'
+    height='768'
+    frameBorder='0'
+    src='https://amex.qumucloud.com/view/qUtO6uhgPfiZQPSaZ6DiSZ?inline=true'
+    allowFullScreen
+></iframe>
+
+<h1 align='center'>
+    <p align='center'> &nbsp; </p>
+</h1>
+
+:::note
+
+Any help on portal can be requested at [#arch-portal-help](https://my.slack.com/archives/C05655U6GMC) and
+for playbook [#ea-design-playbook](https://my.slack.com/archives/C0565A59YAZ).
+
+Email: archportal@aexp.com
+
+:::

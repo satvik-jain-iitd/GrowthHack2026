@@ -1,0 +1,14 @@
+/* istanbul ignore file */
+import React from 'react'
+
+export function ConditionalWrapper({
+    condition,
+    wrapper,
+    children
+}: {
+    condition: boolean
+    wrapper: (children: React.ReactNode) => React.ReactNode
+    children: React.ReactNode
+}) {
+    return condition ? wrapper(children) : <>{children}</>
+}

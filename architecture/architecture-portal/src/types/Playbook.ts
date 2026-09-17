@@ -1,0 +1,33 @@
+export interface Playbook {
+    playbook_id: string
+    playbook_type_nm: string
+    playbook_type_id: string
+    playbook_nm: string
+    req_id: string
+    repst_nm: string
+    doc_fldr_path_tx: string
+    ctgy_nm: string
+    prim_pfrm_nm: string[]
+    impct_pfrm_nm: string[]
+    ctc_email_ad_tx: string[]
+    cntrb_user_id: string[]
+    playbook_dply_in: boolean
+    playbook_comments?: string
+    req_aprv_sta_nm: string
+    lst_suc_comt_sha_tx: string
+    lst_suc_bld_ts: string
+    portal_url_slug_tx: string
+    cntrl_id: string[]
+    etp_id: string
+    add_da: object
+    playbook_mtda_id: string
+    creat_user_id: string
+    creat_ts: string
+    lst_updt_user_id: string
+    lst_updt_ts: string
+    ecmi_prod_in: boolean
+    parnt_playbook_id: string
+    amex_way_url_tx: string
+    disp_sort_ord: number
+    initiative_id?: string
+}

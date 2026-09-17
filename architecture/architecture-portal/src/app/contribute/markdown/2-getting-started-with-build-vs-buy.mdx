@@ -1,0 +1,205 @@
+# Getting Started with Build vs Buy
+---
+
+## Step 1: Onboarding Form
+
+1. Navigate to the [**Onboarding Link**](https://architecture1.aexp.com/onboarding-form?type=8d5c9f86-90dc-4ff6-8e36-edcff0b4af21) in the
+   Architecture Portal and submit a new or existing Build vs. Buy
+   request.
+
+2. **New BvB**
+    - If you do **not** have existing documentation or a repository, select **No** under **Existing Documentation**.
+    - Submitting with “No” will automatically generate a GitHub repository with the required BvB structure, including a
+      top-level `buildvsbuy` directory.
+    - The person who creates (onboards) the BvB request will be granted **Admin** access to this newly created
+      repository.
+3. **Existing BvB**
+    - If you already have documentation and a repository where you want to store your BvB materials, select **Yes**
+      under **Existing Documentation**.
+
+    - Provide the repository URL in the onboarding form so that the Architecture Portal team can reference it directly.
+
+4. **Field Descriptions**
+    | Field Name   | Band level | Description                                           |
+    |-------------|------------|-------------------------------------------------------|
+    | Requester   | Anyone     | Person who onboarded BvB to Portal                    |
+    |Stakeholder  | Band 45+   | List of Band 45+ leaders who are invested in this BvB |
+    | Owner       | Band 35+   | Who owns the Build vs Buy Assessment                  |
+    |Reviewers    | Anyone     | List of people who will review the BvB assessment and provide comments and feedback |
+    |Deciders     | Band 45+   | List of people who will either approve or reject the Build vs Buy Assessment |
+    |EA Architects| Band 35+     | Assigned EA Architects of this Build vs Buy. (If BvB is tied to an company domain, the company domains Architect should be assigned to the BvB) |
+
+5. **Review & Approval**
+
+    - Once submitted, the **BvB Team** will review your request for eligibility.
+    - After the BvB Team’s approval, the **Architecture Portal Team** will perform a final review and approve the request in
+  the portal.
+
+---
+
+## Step 2: Templates
+
+Before you begin writing content, review and gather the necessary templates and framework guidelines:
+
+1. **Build vs. Buy Template Docs**
+
+    - [Build vs. Buy Template Documentation](https://architecture1.aexp.com/docs/8781eadc-bf25-47d6-938d-df9338a57036)
+    - [Build vs. Buy Repository Structure](https://github.aexp.com/amex-eng/ea-build-buy-partner-reuse)
+
+2. **Scorecard Template**
+
+    - Locate, review, and utilize the [Scorecard Template](https://spaces.aexp.com/:x:/r/teams/GR%20Architecture/_layouts/15/Doc.aspx?sourcedoc=%7B282eb8cb-0e22-4ec7-8609-d028f5270374%7D&action=viewm)
+      - For Foundational Technology Public Cloud Adoption Build-vs-Buy, use the following [FT Public Cloud Adoption Scorecard Template](https://spaces.aexp.com/:x:/r/teams/GR%20Architecture/_layouts/15/Doc.aspx?sourcedoc=%7B1B2E19CF-FC50-4319-8D31-70C734EF4551%7D&file=FT%20Public%20Clould%20BvBScorecard_v1.xlsx&fromShare=true&action=default&mobileredirect=true)
+    - Use this template to document your evaluation criteria and scoring methodology. The dimensions and questions for the BvB assessment should be reviewed with the assigned EA Architect to ensure all relevant aspects are covered including mandatory/optional sections.
+
+    **IMPORTANT: Please ensure that no competitively sensitive cost information is included in the BvB Scorecard or any BvB artifacts (including ADR).**
+
+    **The BvB scorecard must be hosted either on a Project-level Sharepoint space or amex-eng github repository, and NEVER on a personal one-drive location or personal github space that would be dependent on a particular user's profile.**
+3. **Enterprise Architecture BvB Framework Guide**
+
+    - Review the [Enterprise Architecture Build vs. Buy Framework Guide](https://architecture1.aexp.com/docs/0f95a9e2-fd12-42f2-bec5-00e547097e43) for guidance on best practices,
+  decision criteria, risk assessment, and approval thresholds.
+
+---
+
+## Step 3: Assessment & ADR
+
+Once your repository is available:
+
+1. **Write Your Assessment**
+
+    - Navigate to `assessment-template.md` in your repository.
+    - Populate all required sections, including:
+        - Business Vision and Objectives
+        - Functional Requirements
+        - Non-Functional Requirements
+        - Assessment (Scorecard)
+        - Recommendation
+        - Related Decisions
+    - Use the [**Scorecard Template**](https://spaces.aexp.com/:x:/r/teams/GR%20Architecture/_layouts/15/Doc.aspx?sourcedoc=%7B282eb8cb-0e22-4ec7-8609-d028f5270374%7D&action=view) to capture your quantitative evaluation.
+
+
+2. **Set Up Scorecard Template**
+
+    - You will need to manage the access on your scorecard so that the relevant people within American Express can view the scorecard by following the steps below.
+    - Manage access on your scorecard and add the specific people or groups that should have access (e.g., your reviewers, deciders, EA Architects, stakeholders, or any relevant distribution lists). The "Everyone except external users" group is no longer available, so you must add individuals or groups explicitly. Ensure you do this without sending notifications.
+      <div style={{textAlign: 'left'}}>
+        <img src="/how-to-contribute-bvb/share-manage-access.png" alt="Manage Access" style={{width: 420, margin: '16px 6px', display: 'inline', verticalAlign: 'top'}} />
+        <img src="/how-to-contribute-bvb/grant-access.png" alt="Grant Access" style={{width: 420, margin: '16px 0', display: 'inline', verticalAlign: 'top'}} />
+      </div>
+
+   - You will then need to get the editable iframe and embed it into your assessment
+      <div style={{textAlign: 'left'}}>
+        <img src="/how-to-contribute-bvb/embed-workbook.png" alt="Embed Workbook" style={{width: 420, margin: '16px 6px', display: 'inline', verticalAlign: 'top'}} />
+        <img src="/how-to-contribute-bvb/copy-iframe.png" alt="Copy Iframe" style={{width: 420, margin: '16px 0', display: 'inline', verticalAlign: 'top'}} />
+      </div>
+
+    - Copy the iframe code and paste it into your assessment file where you want the scorecard to appear.
+3. **Write your ADR (Architecture Decision Record)**
+
+    - After completing the assessment and scorecard, fill out the ADR template:
+
+    ```
+    adr-template.md
+    ```
+
+    - The ADR should provide a concise summary of your assessment findings, including:
+        - Context and Problem Statement
+        - Decision Drivers
+        - Options Considered
+        - Decision Outcome
+
+4. **Quality Checks**
+
+    - Verify that all required sections are complete, well-written, and include supporting data (tables, links, or
+  appendices if needed).
+    - Ensure your Markdown files render correctly within the portal and that all links (to vendor sites, internal documents,
+  etc.) are accurate.
+
+---
+
+## Step 4: Review Process
+
+After finishing all documentation (Assessment, Scorecard, ADR):
+
+1. **Verify Content in the Architecture Portal**
+
+    - Go to your BvB page on the Architecture Portal.
+    - Confirm that all Markdown files (Assessment, ADR) are rendered correctly.
+    - If any md files are missing or incorrectly structured, correct them before proceeding.
+
+2. **Manage Reviewers and Deciders**
+
+    - Click **View Reviewers** on your BvB page.
+    - Add or remove reviewers and deciders as necessary.
+    - **Important:** Once the BvB is submitted for review, the reviewer list is locked and cannot be changed. Similarly, once the workflow advances to the decider stage, the decider list is locked. Make sure your lists are correct before proceeding.
+
+3. **Submit for Review**
+
+    - Once your content is verified and reviewers are configured, click **Submit for Review**.
+    - **Only the Requester or an assigned EA Architect can submit the BvB for review.** The button is not available to other roles.
+    - The workflow transitions from **In Progress** to **Waiting for Reviewers**.
+    - All assigned reviewers will be notified in two ways:
+        - An **email** is sent to each reviewer with a link to your BvB page.
+        - An **Amex Actions request** is created for each reviewer.
+
+4. **Reviewer Feedback**
+
+    - Each reviewer can take one of the following actions:
+        - **Approve** — The reviewer agrees the BvB assessment and ADR are satisfactory.
+        - **Reject** — The reviewer flags issues that need to be addressed.
+        - **Abstain** — The reviewer opts out of providing a decision.
+    - Each reviewer can only submit their review once. Duplicate submissions are not allowed.
+    - **75% Threshold:** The workflow automatically advances to the **Decider** stage once at least **75%** of assigned reviewers have submitted their review (any non-pending response counts). You do not need to wait for all reviewers to respond.
+    - When the 75% threshold is met, all assigned **Decider(s)** are notified in two ways:
+        - An **email** is sent to each decider with a link to your BvB page.
+        - An **Amex Actions request** is created for each decider.
+
+5. **Decider Approval**
+
+    - Deciders are the final decision-makers (Band 45+) who will either **Approve** or **Reject** the BvB.
+    - Decider rules:
+        - **Rejection is immediate:** If **any single Decider rejects**, the BvB is immediately marked as rejected. All remaining pending Decider action requests are automatically cancelled. No further approvals can be submitted.
+        - **Approval requires all Deciders:** The BvB is approved only when **all** assigned Deciders have submitted an Approval. If some Deciders have approved but others haven't responded yet, the workflow remains in the **Waiting for Deciders** state.
+    - Each Decider can only submit their decision once.
+
+6. **ARB Approval**
+
+    - The Build-vs-Buy ADR must be presented on the appropriate ARB (Architecture Review Board) to seek alignment and approval. This could either be (a) Enterprise ARB (if the BvB decision is considered to be Enterprise impacting) or (b) UCIO/Domain ARB (if the BvB decision is considered to impact only a specific domain that the BvB ADR lines up with).
+    If unsure, the assigned EA Architect will help you to determine the appropriate ARB.
+    - Once the BvB ADR is presented on the ARB, the requestor should ensure that the minutes of the decision are obtained and retained for auditability reasons.
+7. **Outcomes**
+
+    - **If Approved:** The BvB status changes to **Approved**. No further edits to the documentation are allowed. An **email** is sent to the **Requester** and the assigned **EA Architect(s)** notifying them of the approval, with a link to the BvB.
+    - **If Rejected:** The BvB status changes to **Rejected**. An **email** is sent to the **Requester** and the assigned **EA Architect(s)** notifying them of the rejection, with a link to the BvB. You will receive feedback from the Decider(s). Address the comments, update your documentation as needed, and coordinate with your EA Architect to resubmit (the BvB returns to **In Progress** for iteration).
+
+8. **Workflow Summary**
+
+    | Stage | Status | Who Acts | Notification | Transition Rule |
+    |---|---|---|---|---|
+    | In Progress | Documentation being prepared | Requester / EA Architect | — | Requester or EA Architect clicks "Submit for Review" |
+    | Waiting for Reviewers | Under review | Reviewers | Email + Amex Actions request | Auto-advances when 75% of reviewers respond |
+    | Waiting for Deciders | Awaiting approval | Deciders (Band 45+) | Email + Amex Actions request | All Deciders approve → Approved; Any Decider rejects → Rejected |
+    | Approved | Complete | — | Email to Requester + EA Architect | Final state, documentation is locked |
+    | Rejected | Needs rework | Requester / EA Architect | Email to Requester + EA Architect | Return to In Progress, address feedback, resubmit |
+
+<br/>
+<br/>
+<br/>
+<iframe src="https://spaces.aexp.com/teams/GR Architecture/_layouts/15/embed.aspx?UniqueId=cdb42d41-7735-4d09-a017-fa7de2a81919&embed=%7B%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="853" height="480" frameBorder="0" scrolling="no" allowFullScreen title="BvB_Portal_Training_Video.mp4"></iframe><h1 align="center">
+    <p align="center"> &nbsp; </p>
+</h1>
+
+<h1 align="center">
+    <p align="center"> &nbsp; </p>
+</h1>
+
+---
+
+---
+:::note
+
+Any help on portal can be requested at [#arch-portal-help](https://my.slack.com/archives/C05655U6GMC)
+Email: archportal@aexp.com
+
+:::

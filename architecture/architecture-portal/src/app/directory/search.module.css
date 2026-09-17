@@ -1,0 +1,50 @@
+.searchContainer {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+}
+
+.searchBox {
+    flex: 0 1 auto;
+    min-width: 280px;
+    width: 60%;
+}
+
+.filterSection {
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: flex-end;
+    margin-left: auto;
+    max-width: 100%;
+    width: 280px;
+}
+
+.filterField {
+    width: 100%;
+}
+
+.filterLabel {
+    font-weight: 700;
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.searchBox > div > div > span > svg {
+    fill: black !important;
+    height: 1.5em;
+    width: 1.5em;
+}
+
+@media (max-width: 48rem) {
+    .searchBox {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .filterSection {
+        width: 100%;
+    }
+}

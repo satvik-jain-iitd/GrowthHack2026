@@ -1,0 +1,451 @@
+.directoryTitle {
+    width: 50%;
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 44px;
+    color: #ffffff;
+}
+.directorySubTitle {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    color: #ffffff;
+    width: 85%;
+}
+.appChartText {
+    padding-top: 44px;
+    font-size: 14px;
+    color: white;
+    font-weight: 400;
+    width: 100%;
+    line-height: 19px;
+    text-align: center;
+}
+.appChartTotal {
+    font-size: 48px;
+    color: white;
+    padding-bottom: 45px;
+    font-weight: 400;
+}
+
+.applicationsDirectoryMapped {
+    padding-bottom: 5px;
+}
+
+.applicationsDirectoryMapped > .mappedCount {
+    color: #4299e1;
+    line-height: 1.25;
+}
+
+.applicationsDirectoryActive > .activeCount {
+    color: #0167c0;
+    line-height: 1.25;
+}
+
+.applicationsDirectoryMapped > .mappedCount,
+.applicationsDirectoryActive > .activeCount {
+    font-weight: 700;
+    font-size: 48px;
+}
+
+.applicationsDirectoryMapped > .mappedTitle,
+.applicationsDirectoryActive > .activeTitle {
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.applicationsDirectoryMapped > .mappedTitle,
+.applicationsDirectoryMapped > .mappedCount,
+.applicationsDirectoryActive > .activeTitle,
+.applicationsDirectoryActive > .activeCount {
+    text-align: left;
+}
+
+.cardContainer {
+    /*--ifm-heading-color: var(--ifm-color-primary);*/
+    background: transparent;
+    padding: 25px;
+}
+.directoryContainer {
+    width: 100%;
+    background: transparent;
+    padding-top: 25px;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    overflow: hidden;
+}
+
+.directoryTabs {
+    height: fit-content;
+    width: fit-content;
+    font-size: 15px !important;
+    margin-right: 12px !important;
+}
+
+.directoryTabsActive {
+    border-color: #006fcf !important;
+    background-color: #006fcf !important;
+    color: #006fcf !important;
+}
+
+.directoryTabsActive {
+    color: white !important;
+}
+
+:root.dark .directoryTabsActive {
+    color: white !important;
+}
+
+.directoryTabsInactive {
+    border-color: #006fcf !important;
+    color: #006fcf !important;
+    background-color: white !important;
+}
+
+:root.dark .directoryTabsInactive {
+    border-color: #555555 !important;
+    color: white !important;
+    background-color: black !important;
+}
+
+.errorMessage {
+    color: red;
+    margin-top: 2px;
+}
+
+.directoryResultsBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.directoryResultsBar > * {
+    min-width: 0;
+}
+
+.directoryResultsCount {
+    margin-left: 0 !important;
+    flex: 0 1 auto;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: right;
+}
+
+@media (max-width: 62rem) {
+    .directoryResultsBar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .directoryResultsCount {
+        width: 100%;
+        text-align: left;
+    }
+}
+
+.logsModalContent {
+    width: 100%;
+    max-width: min(96vw, 72rem);
+    max-height: 92vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.logsModalBody {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0 1.5rem 1.5rem;
+}
+
+.logsResultsContainer {
+    flex: 1;
+    min-height: 24rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.logsResultsShell {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden;
+    opacity: 1;
+    transition: opacity 0.15s ease;
+}
+
+.logsResultsShellLoading {
+    opacity: 0.55;
+}
+
+.logsResultsTableScroll {
+    width: 100%;
+    max-width: 100%;
+    flex: 0 1 auto;
+    min-height: 0;
+    max-height: min(48vh, 100%);
+    overflow: auto;
+}
+
+.logsPaginationSection {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    padding-top: 0.5rem;
+}
+
+.logsPaginationGrid {
+    width: 100%;
+}
+
+.logsPaginationScroll {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.logsPaginationButtons {
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    white-space: nowrap;
+}
+
+.logsStateBox {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.logsEmptyState {
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    padding-top: 0.5rem;
+}
+
+.logsErrorState {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 1rem;
+}
+
+.logsLoadingOverlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(1px);
+    z-index: 1;
+}
+
+.logsTable {
+    min-width: 960px;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.logsTableHeaderCell {
+    white-space: normal;
+    word-break: break-word;
+}
+
+.logsTableHeaderInner {
+    align-items: center;
+    min-width: 0;
+    flex-wrap: wrap;
+}
+
+.logsTableCell {
+    max-width: 0;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    vertical-align: top;
+}
+
+.logsTableUserCell {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2rem;
+}
+
+.logsTableUserName {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    min-height: 2rem;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.logsTableColumnAppName {
+    width: 32%;
+}
+
+.logsTableColumnTimeStamp {
+    width: 24%;
+}
+
+.logsTableColumnUserName {
+    width: 24%;
+}
+
+.logsTableColumnDefault {
+    width: 20%;
+}
+
+.historySearchInput,
+.historyDateInput {
+    border: 1px solid #6b7280 !important;
+    border-radius: 8px;
+    background-color: var(--bgColor-default) !important;
+    color: inherit !important;
+}
+
+.historySearchInput:hover,
+.historyDateInput:hover {
+    border-color: #4b5563 !important;
+}
+
+.historySearchInput:focus,
+.historySearchInput:focus-visible,
+.historyDateInput:focus,
+.historyDateInput:focus-visible {
+    border-color: #006fcf !important;
+    box-shadow: 0 0 0 1px #006fcf !important;
+    outline: none !important;
+}
+
+:root.dark .historySearchInput,
+:root.dark .historyDateInput {
+    border-color: #9ca3af !important;
+    background-color: #111827 !important;
+    color: #f9fafb !important;
+}
+
+:root.dark .historySearchInput::placeholder,
+:root.dark .historyDateInput::placeholder {
+    color: #d1d5db !important;
+}
+
+:root.dark .historySearchInput:hover,
+:root.dark .historyDateInput:hover {
+    border-color: #d1d5db !important;
+}
+
+:root.dark .historySearchInput:focus,
+:root.dark .historySearchInput:focus-visible,
+:root.dark .historyDateInput:focus,
+:root.dark .historyDateInput:focus-visible {
+    border-color: #60a5fa !important;
+    box-shadow: 0 0 0 1px #60a5fa !important;
+}
+
+.historyDateField {
+    width: 100%;
+    min-width: 0;
+}
+
+.historyDateField > div {
+    position: relative;
+    display: flex;
+    width: 100% !important;
+    min-width: 0;
+}
+
+.historyDateField > div > div:first-child {
+    flex: 1 1 auto;
+    width: 100% !important;
+    min-width: 0;
+}
+
+.historyDateInput {
+    width: 100% !important;
+    min-width: 0;
+    padding-right: 4.75rem !important;
+}
+
+.historyDateCalendarButton {
+    position: absolute !important;
+    right: 0.35rem !important;
+    left: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%);
+    margin-right: 0 !important;
+    z-index: 1;
+}
+
+.historyDateClearButton {
+    position: absolute;
+    right: 2.15rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.historyFiltersRow {
+    width: 100%;
+}
+
+.historySearchBox {
+    min-width: 16rem;
+}
+
+.historyDateBox {
+    min-width: 13rem;
+}
+
+.historyFilterBox {
+    min-width: 16rem;
+}
+
+@media (max-width: 62rem) {
+    .historyFiltersRow {
+        justify-content: flex-start !important;
+        align-items: stretch;
+    }
+
+    .historySearchBox,
+    .historyDateBox,
+    .historyFilterBox {
+        flex-basis: 100%;
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 48rem) {
+    .logsModalBody {
+        padding: 0 1rem 1rem;
+    }
+
+    .logsResultsContainer {
+        min-height: 18rem;
+    }
+
+    .logsPaginationGrid {
+        grid-template-rows: auto auto;
+    }
+
+    .historyDateClearButton {
+        right: 2rem;
+    }
+}

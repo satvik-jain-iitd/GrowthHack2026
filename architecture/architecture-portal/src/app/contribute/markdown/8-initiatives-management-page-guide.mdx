@@ -1,0 +1,97 @@
+# Initiative Management
+
+## Overview
+
+The Initiative page gives you a complete view of a single initiative registered in the Architecture Portal. It shows planning dates, the people responsible for the initiative, and its architecture classifications — including ADRs, Build vs. Buy decisions, linked initiatives, and impacted company domains. If you are listed as an owner or have admin access, you can also edit the initiative directly from this page.
+
+---
+
+## Accessing an Initiative
+
+Navigate to an initiative from the initiatives list or any linked tag elsewhere in the portal. If an initiative is not yet part of the pilot program, you will see a "Not Found" page instead.
+
+---
+
+## What You'll See
+
+### Summary Bar
+
+At the top of the page, a four-column strip shows key scheduling details:
+
+| Field      | Description                              |
+| ---------- | ---------------------------------------- |
+| ETP        | The associated Clarity / ETP project ID  |
+| Start Date | When the initiative began                |
+| End Date   | The tentative end date                   |
+| Years      | The calendar years this initiative spans |
+
+### Owners
+
+A grid listing all people responsible for the initiative, shown with their name and avatar. The following roles are displayed:
+
+- Unit CIO
+- Head Engineer
+- Principal Architect
+- Tech Owner
+- UCIO Delegate
+- Enterprise Architect
+- Status Report Owner (Primary)
+- Status Report Owner (Secondary)
+- Additional Delegates
+
+### Additional Information
+
+A supplementary details grid covering:
+
+| Field                      | Description                                                            |
+| -------------------------- | ---------------------------------------------------------------------- |
+| Onboarding Date            | The date the initiative was onboarded                                  |
+| Impacted Company Domain(s) | Company domains affected by this initiative                            |
+| Foundational Technologies  | Core technology frameworks used                                        |
+| ADR                        | Associated Architecture Decision Records, split into core and non-core |
+| BvB                        | Associated Build vs. Buy decisions, split into core and non-core       |
+| Linked Initiative          | Other initiatives related to this one, split into core and non-core    |
+| Business Unit              | The business unit(s) associated with the initiative                    |
+| Business Capabilities      | Enterprise business capabilities linked to this initiative             |
+| Markets                    | The markets this initiative applies to                                 |
+| Tech Stacks                | Technology stacks in use                                               |
+| Technical Capabilities     | Technical capabilities enabled by this initiative                      |
+
+ADR, BvB, and Linked Initiative values are displayed as clickable tags that navigate to the relevant detail pages.
+
+---
+
+## Editing an Initiative
+
+### Who Can Edit
+
+The **Edit** button appears if you are listed as one of the initiative's owners (Head Engineer, Tech Owner, Unit CIO, EA Lead, Engineering Lead, Enterprise Architect, or UCIO Delegate)
+
+### Editable Fields
+
+When you click **Edit**, the page switches to an edit form where you can update:
+
+- Ownership contacts other than Tech Owner and Head Engineer (Unit CIO, Principal Architect, UCIO Delegate, Enterprise Architect, Status Report Owners, Additional Delegates)
+- Impacted company domain(s)
+- Foundational technologies
+- ADRs (core and non-core)
+- Build vs. Buy decisions (core and non-core)
+- Linked initiatives (core and non-core)
+- Markets
+- Business capabilities
+
+### Read-Only Fields
+
+The following fields are sourced from apptio and are shown for reference only; they cannot be changed in the edit form:
+
+- Start and end dates
+- Applicable years
+- ETP / Clarity ID
+- Tech Owner
+- Head Engineer
+
+### Saving and Cancelling
+
+Click **Save** to apply your changes. The page will reload with the updated information automatically.
+
+Click **Cancel** to discard any changes and return to the read-only view.

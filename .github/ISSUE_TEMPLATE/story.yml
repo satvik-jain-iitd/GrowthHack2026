@@ -1,0 +1,127 @@
+name: Story
+description: One implementable piece of work under an Epic. Includes flows and Gherkin acceptance criteria.
+title: "[Story]: "
+labels:
+  - "type:story"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **How to fill this out:** write each box in **English first**. Then, on the next line,
+        add the same thing again in *italic Romanised Hindi*, using `> *...*` (a quote + italics) —
+        do NOT put Hindi in a code block. Keep it short enough that any engineer, or any coding
+        agent, can pick this up without needing chat history or local notes.
+
+        New to this? See the step-by-step picture-guide:
+        `.github/HOW_TO_CREATE_EPICS_AND_STORIES.md`
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What needs to be built or changed, and why.
+      value: |
+        <What & why.>
+
+        > *🗣️ Hindi: <Wahi baat Romanised Hindi mein.>*
+    validations:
+      required: true
+  - type: textarea
+    id: happy-path
+    attributes:
+      label: Happy Path
+      description: The main successful flow, step by step.
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: sad-path
+    attributes:
+      label: Sad Path
+      description: What happens when the user does something wrong or gives up partway.
+      value: |
+        -
+    validations:
+      required: false
+  - type: textarea
+    id: edge-cases
+    attributes:
+      label: Edge Cases
+      description: Unusual but valid situations this Story must still handle correctly.
+      value: |
+        -
+    validations:
+      required: false
+  - type: textarea
+    id: error-scenarios
+    attributes:
+      label: Error Scenarios
+      description: Failure conditions (network errors, invalid data, timeouts, etc.) and how they should be handled.
+      value: |
+        -
+    validations:
+      required: false
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria (Gherkin)
+      description: Given / When / Then — one scenario per block. This is what "done" means.
+      value: |
+        Scenario: <short name>
+          Given <starting context>
+          When <action taken>
+          Then <expected result>
+
+        Scenario: <another case>
+          Given <starting context>
+          When <action taken>
+          Then <expected result>
+    validations:
+      required: true
+  - type: textarea
+    id: in-scope
+    attributes:
+      label: In Scope
+      value: |
+        -
+    validations:
+      required: false
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of Scope
+      value: |
+        -
+    validations:
+      required: false
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: Other Stories, systems, credentials, or decisions this needs first.
+      value: |
+        -
+    validations:
+      required: false
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks
+      value: |
+        -
+    validations:
+      required: false
+  - type: input
+    id: epic-fallback
+    attributes:
+      label: Related Epic (fallback only)
+      description: >
+        Only fill this in if native GitHub Sub-issues are unavailable.
+        Sub-issues ARE confirmed available in this repo — prefer adding this Story as a
+        sub-issue of its Epic instead (open the Epic → "Create sub-issue" / "Add sub-issue")
+        and leave this blank.
+      placeholder: "#12"
+    validations:
+      required: false

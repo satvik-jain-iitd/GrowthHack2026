@@ -1,0 +1,278 @@
+.modalContent {
+    text-align: center;
+    max-width: 800px !important;
+    img {
+        width: 72px;
+        position: relative;
+        margin-top: 40px;
+    }
+    .linkedMessage {
+        color: green;
+    }
+    .unlinkedMessage {
+        color: red;
+    }
+    .errorMessage {
+        font-size: 3.375rem;
+        padding-top: 18px;
+        svg {
+            fill: red;
+        }
+    }
+    .confirmButton {
+        position: relative;
+        right: 42%;
+    }
+    .buttonContent {
+        position: relative;
+        right: 25%;
+    }
+    .modalHeader {
+        text-align: left;
+        padding-left: 24px;
+        font-weight: bold;
+        padding-right: 40px;
+        line-height: normal;
+    }
+    .mappingContent {
+        label {
+            margin-top: 25px;
+        }
+    }
+    .linkedButtonContent {
+        position: relative;
+        img {
+            width: 22px;
+            position: relative;
+            left: 0%;
+            margin-top: 0px;
+            margin-right: 7px;
+        }
+    }
+    .CompanyDomainDetails {
+        display: flex;
+    }
+    .companyDetails {
+        flex: 1 1 70%;
+        p {
+            text-align: left;
+            margin-bottom: 20px;
+            color: rgba(0, 0, 0, 0.838);
+        }
+    }
+    .ownerDetails {
+        text-align: left;
+        margin-top: 35px;
+        display: flex;
+        gap: 15px;
+        .ownerInfo {
+            display: flex !important;
+            width: 100%;
+            img {
+                width: 32px;
+                position: unset;
+                left: 0px;
+                margin-top: 50%;
+                margin-top: 0px !important;
+            }
+            .ownerName {
+                margin-left: 6px !important;
+                color: rgba(0, 0, 0, 0.786);
+            }
+        }
+    }
+
+    .applicationDetails {
+        margin-top: 0px;
+        flex: 1 1 30%;
+        img {
+            width: 60px;
+            position: unset;
+            left: 0px;
+            margin-top: 0px;
+        }
+        strong {
+            margin-left: 13px !important;
+            font-size: 45px;
+            font-weight: 700;
+            position: relative;
+            top: 8px;
+            color: rgb(4, 4, 130);
+        }
+        .applicationType {
+            color: rgb(2, 2, 44);
+            font-weight: 700;
+            margin-left: 135px;
+        }
+        .techPlatforms {
+            color: rgb(2, 2, 44);
+            font-weight: 700;
+            text-align: left;
+            position: relative;
+            left: 55%;
+            bottom: 5px;
+        }
+    }
+    .closeButton {
+        justify-content: flex-start;
+    }
+    .ebcmInfo {
+        text-align: left;
+    }
+    .displayLevels {
+        display: inline-block;
+        width: 100% !important;
+    }
+    .levelImage {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-right: -47px;
+        margin-bottom: 50px;
+        line-height: 30px;
+        padding-bottom: 10px;
+
+        strong {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1px;
+            text-align: center;
+            padding-bottom: 20px;
+            text-decoration-skip-ink: none;
+        }
+        p {
+            font-size: 40px;
+            font-weight: 700;
+            line-height: 24px;
+            text-align: center;
+            text-decoration-skip-ink: none;
+        }
+    }
+    .levelsAction {
+        text-align: left;
+        padding: 0px;
+        .ebcmLevel {
+            padding: 15px;
+            border: 1px solid #c8c9c7;
+            font-weight: 400;
+            strong {
+                font-weight: 400;
+            }
+            cursor: pointer;
+        }
+        .ebcmLevelActive {
+            padding: 15px;
+            border: 1px solid #c8c9c7;
+            border-right: none;
+            border-left: 3px solid #006fcf;
+            color: #006fcf;
+            font-weight: 700;
+            strong {
+                font-weight: 700;
+            }
+            cursor: pointer;
+        }
+    }
+    .ebcmInfo {
+        margin-left: 15px;
+        img {
+            width: 35px;
+            position: unset;
+            margin: 0px;
+        }
+        strong {
+            display: inline-flex;
+            margin-top: 40px !important;
+            margin-left: 11px;
+            color: rgb(23, 23, 116);
+            font-size: large;
+            font-weight: 650;
+        }
+        p {
+            margin-left: 50px;
+        }
+    }
+    .col {
+        flex: 0 0 25%;
+        max-width: 22% !important;
+    }
+
+    @media (max-width: 655px) {
+        .CompanyDomainDetails {
+            flex-direction: column;
+        }
+        .companyDetails,
+        .applicationDetails {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+        .applicationDetails {
+            margin-top: 16px;
+        }
+    }
+}
+
+:root.dark .modalContent {
+    background-color: #2d3748 !important;
+    .applicationDetails {
+        strong {
+            color: rgb(255, 255, 255) !important;
+        }
+        .applicationType {
+            color: rgb(255, 255, 255) !important;
+        }
+    }
+    .modalHeader {
+        color: rgb(255, 255, 255) !important;
+    }
+    .companyDomainLabel {
+        color: rgb(255, 255, 255) !important;
+    }
+    .companyDetails p {
+        color: rgb(255, 255, 255) !important;
+    }
+    .ownerName {
+        color: rgb(255, 255, 255) !important;
+    }
+    .modalTitle {
+        color: rgb(255, 255, 255) !important;
+    }
+    .modalBody {
+        color: rgb(255, 255, 255) !important;
+    }
+}
+
+.timeoutModalClose {
+    border: 1px solid #2b6cb0 !important;
+    padding: 16px;
+    border-radius: 8px;
+    color: #2b6cb0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.timeoutModalRefresh {
+    display: inline-flex;
+    min-width: 80px;
+    height: 43px;
+    font-weight: 600;
+    padding: 20px;
+    border-radius: 7px;
+    background-color: #3182ce;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+:root.dark .timeoutModal {
+    background-color: #2d3748 !important;
+}
+
+.timoutModalHeader {
+    text-align: left;
+    padding-left: 24px;
+    font-weight: bold;
+    padding-right: 40px;
+    line-height: normal;
+    font-size: 16px;
+    margin-bottom: 9px;
+}

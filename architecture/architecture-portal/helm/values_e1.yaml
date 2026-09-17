@@ -1,0 +1,54 @@
+configMap:
+    EPAAS_ENV: e1
+deployment:
+    livenessProbe:
+        httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        timeoutSeconds: 15
+        failureThreshold: 3
+        successThreshold: 1
+    privileged: false
+    readOnlyRootFileSystem: true
+    readinessProbe:
+        httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        timeoutSeconds: 15
+        failureThreshold: 3
+        successThreshold: 1
+    podSecurityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+    securityContext:
+        allowPrivilegeEscalation: false
+        privileged: false
+        readOnlyRootFilesystem: true
+        runAsUser: 1000
+        runAsGroup: 1000
+    resourcesLimitsCPU: '2'
+    resourcesLimitsMemory: 8G
+    resourcesRequestsCPU: '1'
+    resourcesRequestsMemory: 4G
+    scratchvolume:
+        - mountName: tmp-mount
+          mountPath: /tmp
+        - mountName: next-cache
+          mountPath: /usr/src/app/.next/cache
+    volumeMounts:
+        - mountPath: /tmp
+          name: tmp-mount
+        - mountPath: /usr/src/app/.next/cache
+          name: next-cache
+hpa:
+    cpuUtilizationPercentage: 40
+    enabled: true
+    maxReplicas: 4
+    minReplicas: 1

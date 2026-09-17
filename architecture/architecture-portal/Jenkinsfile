@@ -1,0 +1,77 @@
+#!/usr/bin/env groovy
+
+@Library('EnterpriseSharedLibrary') _
+def utils = new com.aexp.jenkins.library.Utils()
+println "Pipeline to run - ${utils.pipelineToRun}"
+
+def branch = env.BRANCH_NAME
+println "Branch - ${branch}"
+
+def ve = utils.versionNumber
+def snapVe = utils.snapshotVersionNumber
+def relVe = utils.releaseVersionNumber
+def value_artifactURLs = [:]
+
+
+// Add CorrelationId and APP_DEPLOYMENT String parameters
+properties([parameters([string(description: 'This value will be populated by XLR', name: 'CorrelationId'), booleanParam(defaultValue: true, description: 'By default, App Deployment is true. This value will be populated when it is triggered from XLR', name: 'APP_DEPLOYMENT')])])
+def isAppDeployment = params.APP_DEPLOYMENT
+
+node('cicd-build') {
+  try {
+    stage("Checkout") {
+        scmCheckout {
+        }
+    }
+
+
+
+   stage("Build") {
+        env.SASS_BINARY_SITE='https://artifactory.aexp.com/github-node-sass/download'
+        env.PHANTOMJS_CDNURL='https://artifactory.aexp.com/npm-remotes/ariya/phantomjs/downloads/'
+        env.NODEJS_ORG_MIRROR='https://artifactory.aexp.com/nodejs-proxy/'
+        npmUtils.npm "install"
+        npmUtils.npm "test"
+    }
+
+
+    stage("Publish Artifacts") {
+        npmDeploy {
+            url = "https://artifactory.aexp.com/epaas-snapshots"
+            repositoryId = "epaas-snapshots"
+            targetRepo = "epaas-snapshots"
+        }
+    }
+
+
+
+
+     def imageData =  buildPacksBuildPushImage{
+          builder_image = "artifactory.aexp.com/paas-registry/buildpacks/rhel-nodejs-22-builder:22.x.latest"
+          image_name = "architecture-portal"
+          image_tag = ve
+          publish = true
+          build_environment ="hydra_app"
+      }
+
+    value_artifactURLs =  uploadHelmValues {
+            values_location = 'helm'
+            registry = 'paas-raw-registry'
+            groupId = "com.aexp.hydra.architecture-portal.cloudready"
+            version = "1.0.0"
+            redeploy = true
+      }
+  } catch (Exception err){
+    println err.getMessage()
+    currentBuild.result = 'FAILED'
+  } catch (Error err){
+    println err.getMessage()
+    currentBuild.result = 'FAILED'
+  } finally {
+    stage("Send Feedback to XLR") {
+        println "artifact urls: ${value_artifactURLs}"
+        utils.sendFeedbackToXLR("","${env.IMAGE_WITH_SHA}",value_artifactURLs)
+    }
+
+  }
+}

@@ -1,0 +1,219 @@
+# Initiative Consumer APIs Page Guide
+
+## Overview
+
+The Initiative Consumer APIs page gives you a full view of the cross-domain API operations registered against a specific initiative. It tracks which APIs your initiative consumes across company domains, surfaces their certification status, and lets authorized owners add, update, or remove entries — all from a single place.
+
+The page is reached by navigating to an initiative and selecting the **Architecture Docs -> 2 Business Architecture -> 2.3 Business Apis** workproduct (playbook section 2.3).
+
+---
+
+# Training Video
+
+<video width="100%" height="auto" controls>
+  <source src="https://cdaas.aexp.com/enterprise-architecture/Cross-Domain-APIs-for-Initiatives.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
+## Reference Links
+
+- <a href="https://architecture1.aexp.com/company-domains" target="_blank">Company Domains</a>
+- <a href="https://architecture1.aexp.com/resources/metrics/2370f164-af18-411b-92e1-5f5213b07c82" target="_blank">Metrics Dashboard</a>
+
+---
+
+## Who Can Access This Page
+
+All portal users can view the Consumer APIs page for any initiative. No special role is required to read the table.
+
+**Editing** (adding, updating, or deleting entries) is restricted to users in any of the following roles on the initiative:
+
+| Role | Can Edit |
+|---|---|
+| Unit CIO | Yes |
+| Head Engineer | Yes |
+| Principal Architect | Yes |
+| Tech Owner | Yes |
+| UCIO Delegate | Yes |
+| Enterprise Architect | Yes |
+| Status Report Owner | Yes |
+| Additional Architect / Delegate | Yes |
+| Portal Admin | Yes |
+| All other users | View only |
+
+Users without an authorized role will see the table in read-only mode. The **Add API** button and row-level **Edit** / **Delete** actions will not appear.
+
+---
+
+## Page Layout
+
+### Header
+
+The header banner displays:
+
+- **Initiative name** — shown as _"Initiative: \<name\> Cross-Domain APIs"_
+- **Add API button** — visible only to authorized editors; toggles the Add API form open or closed
+- **Cross-Domain Metric** — a progress bar and fraction (e.g. `3 / 10`) showing how many unique operations out of the total are Type A or Type B and **Production Certified**. Hover over the bar to see the exact counts in a tooltip.
+
+The metric is a quick health indicator for API governance compliance. A higher percentage means more of the initiative's consumed APIs have reached production certification.
+
+---
+
+## The Consumer API Table
+
+The table lists every API operation associated with this initiative. Each row represents one operation registered as a consumer API.
+
+### Table Columns
+
+| Column | Description |
+|---|---|
+| **Provider Company Domain** | The company domain that owns and provides the API. Shown as a clickable link that navigates to that domain's portal page. Displays `--` if not available. |
+| **API Name** | The name of the API. Shown as a clickable link to the API's portal detail page. Displays `--` if not available. |
+| **Operation** | The specific operation name within the API. Shown as a clickable link to the operation's portal detail page. Displays `--` if not available. |
+| **Type** | The API type badge — **Type A**, **Type B**, or **Type C**. |
+| **Status** | The certification lifecycle status badge (see Status Values section below). |
+| **Consumer Company Domain** | The company domain within your initiative that is consuming this API. In edit mode this becomes a dropdown to change the domain. Displays `N/A` if not set. |
+| **Catalog Link / API** | A link to the API Catalog entry (for portal-sourced APIs) or to the API Explorer (for Explorer-sourced APIs). Displays `N/A` if neither is available. |
+| **Actions** | Edit and Delete buttons — visible only to authorized editors. |
+
+### Default Sort Order
+
+Rows are automatically sorted as follows:
+
+1. **Type A** and **Type B** rows appear first, ordered by certification status (Production Certified → Design Certified → API Catalog → EARB Approved → ARB Approved → Proposed → Draft → Not Registered).
+2. Within the same status, **Type A** rows appear before **Type B**.
+3. **Type C** rows always appear last, regardless of status.
+
+### Searching the Table
+
+A search box above the table filters rows in real time. The search matches against any field value in a row — including API name, operation name, type, status, domain name, and catalog link.
+
+---
+
+## Status Values
+
+Status values reflect the API operation's position in the architecture governance lifecycle:
+
+| Status | Description |
+|---|---|
+| **Production Certified** | The API has completed all governance gates and is certified for production use. |
+| **Design Certified** | The API design has been design certified. |
+| **API Catalog** | The API is registered in the catalog but has not yet entered the full certification flow. |
+| **EARB Approved** | Approved by the Enterprise Architecture Review Board. |
+| **ARB Approved** | Approved by the Domain Architecture Review Board. |
+| **Proposed** | The API has been proposed but not yet formally reviewed. |
+| **Draft** | The API is in draft state. |
+| **Not Registered** | The API has not been registered in Architecture Portal but exists in explorer. |
+
+---
+
+## Adding a Consumer API
+
+Authorized users click **Add API** in the header to open the Add API form below the header. The form contains the following fields.
+
+### API Type Filter (checkboxes)
+
+Filters the search results by API type. All three types — **Type A**, **Type B**, and **Type C** — are selected by default.
+
+- Check or uncheck each type to narrow the search dropdown to only APIs of that type.
+- At least one type must remain checked at all times. Attempting to deselect all types shows a validation error: _"At least one API type must be selected."_
+
+### Select APIs (search input) — required
+
+A typeahead search field that queries two sources simultaneously:
+
+- **Architecture Portal** — returns Type A and Type B operations already registered in the portal. Results are filtered by the API Type Filter checkboxes and match against API name, operation name, and provider company domain.
+- **API Explorer** — returns Type C operations when the Type C checkbox is selected and at least one character has been typed. Results are fetched from the Explorer service.
+
+Type to search, then click a result in the dropdown to select it. Use the **↑** and **↓** arrow keys to navigate the dropdown, and **Enter** to confirm a selection. Clicking outside the dropdown closes it.
+
+When more portal results are available than the initial page, a **"Load more"** item appears at the bottom of the dropdown. Scrolling to the bottom of the dropdown automatically loads the next page of Explorer results.
+
+### Consumer Company Domain (dropdown) — required for submission
+
+A dropdown listing all registered company domains. Select the domain within your initiative that is consuming the chosen API. This field is required before the API can be added.
+
+### API Preview Panel
+
+Once you select an API from the search dropdown, a preview panel appears showing the details of the selected operation before you commit to adding it:
+
+**For Portal (Type A / Type B) results:**
+
+| Field | Description |
+|---|---|
+| API Name | The name of the API |
+| Operation Name | The name of the specific operation |
+| Operation Type | The type classification (Type A, Type B, etc.) |
+| Operation Status | The current governance certification status |
+| Operation Path | The URL path of the operation |
+| Provider Company Domain | The domain that owns the API |
+| Consumer Company Domain | The domain you selected as the consumer |
+
+**For Explorer (Type C) results:**
+
+| Field | Description |
+|---|---|
+| Operation Name | The name of the operation from Explorer |
+| Operation Type | Shown as Type C |
+| Operation Description | A description of the operation |
+| Operation Path | The base path of the operation |
+| Consumer Company Domain | The domain you selected as the consumer |
+
+> **Note:** If you select a Type A operation from the API Explorer and that operation already exists in the Architecture Portal, the preview automatically switches to show the portal version of that operation. A notice appears: _"The API you have selected is associated with an existing Type A Operation. The details shown are from the existing Type A API. Please review before adding."_ A **"View more details"** link is shown to navigate to the full portal or Explorer record.
+
+### Add API / Cancel buttons
+
+- **Add API** — submits the new consumer API entry. The button is disabled until a valid API and consumer domain are selected. While saving, the button label changes to _"Adding API…"_
+- **Cancel** — closes the Add API form without saving. Any unsaved selections are discarded.
+
+---
+
+## Editing a Consumer API
+
+For each row in the table, authorized users see **Edit** and **Delete** buttons in the Actions column.
+
+Clicking **Edit** on a row switches the **Consumer Company Domain** cell for that row into a dropdown. Select the new domain and click **Save** to apply the change.
+
+- If the new selection is identical to the existing value, a notification _"No changes detected. Consumer API is up to date."_ is shown and the row returns to read mode.
+- On success, a _"Consumer API updated successfully!"_ notification appears and the table refreshes.
+- Click **Cancel** in the Actions cell to discard the change and return to read mode.
+
+Only one row can be in edit mode at a time.
+
+---
+
+## Deleting a Consumer API
+
+Clicking **Delete** on a row opens a confirmation dialog. The dialog explains which operation is about to be removed. Click **Delete** in the dialog to confirm, or **Cancel** to abort.
+
+On successful deletion, a _"Consumer API deleted successfully!"_ notification appears and the table refreshes. If the deletion fails, an error notification is shown.
+
+---
+
+## Scenarios
+
+### I can see the page but there are no rows in the table
+
+No consumer APIs have been added to this initiative yet. If you are an authorized owner, click **Add API** to register the first one.
+
+### The Add API button is not visible
+
+You are viewing the page in read-only mode because your user account is not listed as an owner role on this initiative and you do not have portal admin access. Contact the initiative's Head Engineer, Tech Owner, or Enterprise Architect to request access.
+
+### I searched for an API but it does not appear in the dropdown
+
+- Check that the **API Type Filter** includes the type of API you are looking for. If you are searching for a third-party or Explorer-only API, ensure **Type C** is checked.
+- For Portal APIs, the search matches against API name, operation name, and provider company domain. Try a shorter or different keyword.
+- For Explorer APIs (Type C), the search only triggers after you have typed at least one character. Wait a moment for the debounce to fire and results to load.
+
+### I selected an Explorer API and the preview shows different details than expected
+
+If the Explorer API you selected is already registered in the Architecture Portal as a Type A operation, the preview automatically shows the portal version. This is intentional — it prevents duplicate entries and ensures the portal record is used as the source of truth.
+
+### The cross-domain metric is lower than expected
+
+The metric counts operations that are **Type A or Type B** and have a status of **Production Certified**. Type C APIs, and any Type A/B APIs that have not yet reached Production Certified status, do not count toward this metric. Work with your team to progress uncertified APIs through the governance lifecycle.
+
+### A row shows "N/A" for Consumer Company Domain
+
+The entry was added without selecting a consumer domain, or the domain was removed from the registry. Click **Edit** on the row to assign the correct domain.

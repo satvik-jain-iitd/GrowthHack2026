@@ -1,0 +1,95 @@
+.domainLandingPage {
+    background: transparent;
+}
+
+.domainLandingPage .domainLandingPageTitle {
+    font-family: BentonSans;
+    font-size: 3em;
+    font-weight: 500;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.downIconBox {
+    display: flex;
+    justify-content: center;
+}
+
+.downIcon {
+    fill: #0167c0;
+    border: 1px solid #0167c0;
+    border-radius: 65px;
+    padding: 7px;
+    padding-bottom: 4px;
+    top: -22px;
+    position: relative;
+    background: white;
+}
+
+.downIcon:hover {
+    transform: scale(1.1);
+}
+
+.downIcon:active {
+    transform: scale(1);
+}
+.companyDetailTable {
+    max-height: calc(100vh - 660px);
+}
+
+.companyDetailTable thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: #ecedee;
+    border: 0;
+    height: 3rem;
+}
+
+.domainLandingPageTitle th {
+    width: 1%;
+}
+
+.companyDetailTable th.empty {
+    width: 14.14%;
+}
+
+.companyDetailTable {
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: scroll;
+    max-height: 350px;
+    width: 100%;
+    min-width: 100%;
+
+    &::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 7px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.5);
+        -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+    }
+}
+
+.companyDetailTable td:last-child,
+.companyDetailTable th:last-child {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.companyDetailTable thead th:last-child {
+    width: 0.01%;
+}
+
+.applicationTableHeaderFlex {
+    font-weight: bold;
+    font-size: 12px;
+    align-items: center !important;
+}
+
+.applicationTableHeaderFlex > div > span > svg {
+    fill: black;
+}

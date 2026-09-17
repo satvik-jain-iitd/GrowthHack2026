@@ -1,0 +1,18 @@
+$api-docs-font-size: 14px;
+
+.searchList {
+    font-size: $api-docs-font-size;
+}
+
+.uri {
+    font-family: 'Source Code Pro', Menlo, Monaco, monospace;
+    font-size: 12px;
+}
+
+.clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

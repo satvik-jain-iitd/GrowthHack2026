@@ -1,0 +1,84 @@
+name: Continuous Integration
+
+on:
+    pull_request:
+    push:
+        branches: ['main']
+
+permissions:
+    contents: read
+
+jobs:
+    lint:
+        runs-on: aexp-ubuntu-latest-medium
+
+        # registry.npmjs.org is blocked on these runners (403 URLBlocked), so npm
+        # has to go through artifactory — the same registry architecture-portal
+        # pins in its .npmrc. Set as a job env rather than a repo-level .npmrc
+        # because the reachability is inverted locally: developer and agent
+        # sandboxes reach npmjs.org but not artifactory.
+        env:
+            NPM_CONFIG_REGISTRY: https://artifactory.aexp.com/api/npm/npm-virtual
+
+        steps:
+            - uses: actions/checkout@v4
+            - uses: amex-eng/setup-node@v4
+              with:
+                  node-version: '22'
+
+            # No root package.json by design — this is a zero-build repo, so the
+            # linters are pinned inline rather than installed from a lockfile.
+            - name: ESLint (demo JS)
+              run: npx --yes eslint@10 .
+
+            - name: markdownlint (first-party docs)
+              run: npx --yes markdownlint-cli2
+
+    demo-selfcheck:
+        runs-on: aexp-ubuntu-latest-medium
+        steps:
+            - uses: actions/checkout@v4
+            - uses: amex-eng/setup-node@v4
+              with:
+                  node-version: '22'
+
+            # Fails if INTENTS/JOURNEYS drift out of sync with each other.
+            - name: Intent matcher + journey data self-check
+              run: node prototype/walkthrough-assistant/js/intents.js
+
+    python:
+        runs-on: aexp-ubuntu-latest-medium
+        steps:
+            - uses: actions/checkout@v4
+
+            # uv comes from artifactory (the index pinned in pyproject.toml) rather
+            # than astral-sh/setup-uv, which pulls binaries from GitHub releases —
+            # the same distribution problem that makes AmEx fork setup-node.
+            #
+            # --break-system-packages: the runner's Python is Debian-managed and
+            # PEP 668 marks it externally-managed. The runner is ephemeral, so
+            # there is no system Python worth protecting here.
+            #
+            # The system site-packages dir isn't writable by the runner user, so
+            # pip falls back to a user install and drops the `uv` binary in the
+            # user scripts dir, which is not on PATH by default.
+            - name: Install uv
+              run: |
+                  pip install --break-system-packages \
+                    --index-url https://artifactory.aexp.com/artifactory/api/pypi/pypi/simple \
+                    uv
+                  echo "$(python3 -m site --user-base)/bin" >> "$GITHUB_PATH"
+
+            - name: Verify uv is on PATH
+              run: uv --version
+
+            - name: Sync dev toolchain
+              run: uv sync
+
+            - name: Ruff
+              run: |
+                  uv run ruff check .
+                  uv run ruff format --check .
+
+            - name: Pytest
+              run: uv run pytest

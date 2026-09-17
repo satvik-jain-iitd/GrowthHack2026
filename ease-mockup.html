@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EASE — Add a Floor Plan · Journey Mock-up (Amex DLS)</title>
+<style>
+  :root {
+    /* Amex DLS v7 tokens */
+    --brand: #0073BE;            /* dls-bright-blue */
+    --brand-hover: #005A95;
+    --brand-active: #00436E;
+    --deep: #00285F;
+    --red: #B02418;              /* dls-red / attention */
+    --green: #006941;            /* dls-green / success */
+    --orange: #C26A00;           /* dls-color-warning */
+    --gold: #A65A00;
+    --ink: #181818;
+    --gray-1: #E9E9E9;
+    --gray-2: #D0D0D0;
+    --gray-3: #B8B8B8;
+    --gray-4: #909090;
+    --gray-5: #6D6D6D;
+    --paper: #FFFFFF;
+    --field: #F7F7F7;
+    --shadow: 0 1px 3px rgba(0,0,0,.14), 0 2px 8px rgba(0,0,0,.08);
+    --radius: 8px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Avenir Next", "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: #F4F4F4;
+    line-height: 1.5;
+  }
+  h1,h2,h3,h4,h5,h6 { margin: 0 0 .5rem; }
+  .heading-1 { font-size: 32px; line-height: 1.2; font-weight: 700; letter-spacing: -.01em; }
+  .heading-2 { font-size: 24px; line-height: 1.3; font-weight: 700; }
+  .heading-3 { font-size: 19px; line-height: 1.35; font-weight: 700; }
+  .heading-4 { font-size: 16px; font-weight: 700; }
+  .body-1 { font-size: 16px; }
+  .body-2 { font-size: 14px; }
+  .body-3 { font-size: 12px; }
+  .legal-1 { font-size: 11px; }
+  .label-1 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+  .font-weight-normal { font-weight: 400; }
+  .font-weight-medium { font-weight: 500; }
+  .font-weight-bold { font-weight: 700; }
+
+  /* Token color utilities (DLS naming) */
+  .color-text-regular { color: var(--ink); }
+  .color-text-subtle { color: var(--gray-5); }
+  .color-text-brand { color: var(--brand); }
+  .color-text-link { color: var(--brand); }
+  .color-status-text-critical { color: var(--red); }
+  .color-status-text-success { color: var(--green); }
+  .color-status-text-caution { color: var(--gold); }
+  .color-status-text-neutral { color: var(--gray-5); }
+  .color-border-regular { border: 1px solid var(--gray-2); }
+  .color-border-brand { border: 1px solid var(--brand); }
+  .color-border-subtle { border: 1px solid var(--gray-1); }
+  .dls-white-bg { background: var(--paper); }
+  .dls-gray-01-bg { background: var(--gray-1); }
+  .dls-gray-02-bg { background: var(--gray-2); }
+  .dls-gray-04-bg { background: var(--gray-4); }
+  .dls-field-bg { background: var(--field); }
+  .dls-bright-blue-bg { background: var(--brand); }
+  .dls-bright-blue-bg-hvr:hover { background: var(--brand-hover); }
+  .dls-deep-blue-bg { background: var(--deep); }
+  .dls-red-bg { background: var(--red); }
+  .dls-green-bg { background: var(--green); }
+  .dls-color-warning-bg { background: var(--gold); }
+  .dls-white { color: #fff; }
+
+  .skeleton, .skeleton-bg {
+    background: linear-gradient(90deg, var(--gray-1) 25%, #F6F6F6 50%, var(--gray-1) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 4px;
+  }
+  @keyframes shimmer { 0% {background-position: 200% 0;} 100% {background-position: -200% 0;} }
+
+  .spinner {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid currentColor; border-right-color: transparent;
+    animation: spin .7s linear infinite; display: inline-block; vertical-align: -4px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px 80px; }
+  .topnav {
+    position: sticky; top: 0; z-index: 50;
+    background: #fff; box-shadow: var(--shadow);
+    padding: 12px 20px; display: flex; gap: 8px; flex-wrap: wrap;
+    border-bottom: 3px solid var(--deep);
+  }
+  .topnav a {
+    color: var(--brand); text-decoration: none;
+    font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 20px;
+    border: 1px solid var(--gray-2);
+  }
+  .topnav a:hover { background: #EAF4FC; border-color: var(--brand); }
+  .section { margin-top: 48px; }
+  .section-head {
+    display: flex; align-items: flex-end; gap: 12px;
+    border-bottom: 3px solid var(--deep); padding-bottom: 8px; margin-bottom: 24px;
+  }
+  .section-head .count { color: var(--gray-5); font-size: 13px; margin-bottom: 6px; }
+  .state-panel {
+    background: #fff; border-radius: var(--radius); border: 1px solid var(--gray-1);
+    box-shadow: var(--shadow); padding: 20px; margin-bottom: 20px;
+  }
+  .state-label {
+    font-size: 13px; font-weight: 700; color: var(--brand);
+    text-transform: uppercase; letter-spacing: .05em; display: flex; align-items: center; gap: 8px;
+  }
+  .state-label .tag {
+    background: var(--deep); color: #fff; border-radius: 4px;
+    padding: 2px 8px; font-size: 11px; letter-spacing: .06em;
+  }
+  .state-caption { color: var(--gray-5); font-size: 13px; margin: 4px 0 14px; }
+  .legend { display:flex; gap:16px; flex-wrap:wrap; margin:16px 0 8px; }
+  .legend div { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--gray-5); }
+  .swatch { width:14px; height:14px; border-radius:3px; border:1px solid rgba(0,0,0,.15); }
+
+  /* Reusable component primitives (static mock-up equivalents of DLS components) */
+  .button {
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:inherit; font-size:14px; font-weight:600;
+    padding:10px 20px; border-radius:var(--radius);
+    border:1px solid transparent; cursor:default; text-decoration:none;
+  }
+  .button-primary { background:var(--brand); color:#fff; }
+  .button-primary:hover { background:var(--brand-hover); }
+  .button-secondary { background:transparent; color:var(--brand); border-color:var(--brand); }
+  .button-tertiary { background:transparent; color:var(--brand); border-color:transparent; text-decoration:underline; }
+  .button-quiet { background:var(--gray-1); color:var(--ink); }
+  .button-disabled { background:var(--gray-2); color:var(--gray-5); cursor:not-allowed; }
+  .button-busy { background:var(--brand); color:#fff; }
+  .button-danger { background:var(--red); color:#fff; }
+
+  .input, .select {
+    width:100%; max-width:420px; font-family:inherit; font-size:14px;
+    padding:10px 12px; border:1px solid var(--gray-2); border-radius:var(--radius);
+    background:var(--field);
+  }
+  .input:focus, .select:focus { outline:2px solid var(--brand); outline-offset:1px; border-color:var(--brand); }
+  .input-error { border:1px solid var(--red); }
+  .input-disabled { background:var(--gray-1); color:var(--gray-4); }
+  .char-count { font-size:12px; color:var(--gray-5); text-align:right; }
+  .field { margin-bottom:14px; }
+  .field .label-row { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px; }
+  .field .label { font-size:13px; font-weight:600; }
+  .required::after { content:" *"; color: var(--red); }
+  .hint { font-size:12px; color:var(--gray-5); margin-top:4px; }
+  .hint-error { color:var(--red); }
+  .hint-success { color:var(--green); }
+
+  .card {
+    background:#fff; border:1px solid var(--gray-1); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:16px;
+  }
+  .badge { display:inline-block; font-size:11px; font-weight:700; padding:2px 8px; border-radius:10px; }
+  .badge-new { background:var(--green); color:#fff; }
+  .badge-draft { background:var(--gray-1); color:var(--gray-5); }
+  .badge-published { background:#EAF4FC; color:var(--brand); }
+  .badge-archived { background:var(--gray-2); color:var(--gray-5); }
+  .chip {
+    display:inline-block; padding:5px 14px; border-radius:18px;
+    border:1px solid var(--gray-2); font-size:13px; font-weight:600; background:#fff; color:var(--gray-5);
+  }
+  .chip-active { border:2px solid var(--brand); color:var(--brand); background:#EAF4FC; font-weight:700; }
+
+  .banner { display:flex; gap:12px; align-items:flex-start; padding:12px 16px; border-radius:var(--radius); margin-bottom:16px; font-size:14px; }
+  .banner-error { background:#FBEAE8; border:1px solid var(--red); color:var(--red); }
+  .banner-warning { background:#FCF1E0; border:1px solid var(--gold); color:var(--gold); }
+  .banner-success { background:#E4F2EC; border:1px solid var(--green); color:var(--green); }
+  .banner-info { background:#EAF4FC; border:1px solid var(--brand); color:var(--deep); }
+
+  .notification-inline-error { color:var(--red); font-size:12px; margin-top:4px; display:flex; gap:6px; align-items:center; }
+  .notification-inline-success { color:var(--green); font-size:12px; margin-top:4px; }
+
+  .dropzone {
+    border:2px dashed var(--gray-3); border-radius:var(--radius);
+    background:var(--field); padding:36px 20px; text-align:center;
+  }
+  .dropzone-active { border-color:var(--brand); background:#EAF4FC; }
+  .progress { height:8px; border-radius:4px; background:var(--gray-1); overflow:hidden; width:100%; max-width:420px; }
+  .progress > div { height:100%; background:var(--brand); border-radius:4px; }
+  .progress-warn > div { background:var(--gold); }
+  .progress-error > div { background:var(--red); }
+  .progress-success > div { background:var(--green); }
+
+  .table-mini { width:100%; border-collapse:collapse; font-size:13px; }
+  .table-mini th { text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--gray-5); border-bottom:2px solid var(--gray-1); padding:6px 8px; }
+  .table-mini td { padding:8px; border-bottom:1px solid var(--gray-1); }
+
+  .toast {
+    display:flex; gap:12px; align-items:center; padding:12px 16px; border-radius:var(--radius);
+    background:var(--deep); color:#fff; box-shadow:var(--shadow); font-size:14px;
+  }
+  .modal-card {
+    max-width:340px; margin:0 auto; background:#fff; border-radius:var(--radius);
+    box-shadow:0 8px 30px rgba(0,0,0,.25); padding:20px;
+  }
+  .stale-banner { background:#FFF4E5; border-left:4px solid var(--gold); }
+
+  /* focus-visible ring for static demonstration */
+  .focus-ring { outline:3px solid var(--brand); outline-offset:2px; border-radius:4px; }
+  .hidden-text { position:absolute; width:1px; height:1px; clip-path:inset(50%); overflow:hidden; }
+  .grid-2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
+  .grid-3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+  .flex-row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+  .stack > * { margin-bottom:10px; }
+  .muted { color:var(--gray-5); }
+  .blocked-strip { display:inline-block; }
+  .note { font-size:12px; color:var(--gray-5); background:var(--gray-1); padding:4px 10px; border-radius:20px; }
+  footer { color:var(--gray-5); font-size:12px; text-align:center; margin-top:48px; padding-top:20px; border-top:1px solid var(--gray-1); }
+</style>
+</head>
+<body>
+
+<nav class="topnav" aria-label="Section index">
+  <a href="#sec-A">A · Entry &amp; Catalog</a>
+  <a href="#sec-B">B · Building &amp; Context</a>
+  <a href="#sec-C">C · Metadata</a>
+  <a href="#sec-D">D · Upload</a>
+  <a href="#sec-E">E · Processing &amp; Review</a>
+  <a href="#sec-F">F · Success &amp; Post-Add</a>
+  <a href="#sec-G">G · System &amp; Errors</a>
+</nav>
+
+<div class="container">
+
+  <header>
+    <h1 class="heading-1">Add a Floor Plan</h1>
+    <p class="body-2 color-text-subtle" style="margin-bottom:4px;">EASE · Experience Assistance for Simplified Execution — journey mock-up rendered per Amex DLS v7 tokens. Every interactive element carries a stable <code>data-testid</code> for automation; all states are static and replica-ready.</p>
+    <div class="legend" role="list" aria-label="Color legend">
+      <div role="listitem"><span class="swatch dls-bright-blue-bg"></span> Brand / primary</div>
+      <div role="listitem"><span class="swatch" style="background:var(--deep)"></span> Deep blue</div>
+      <div role="listitem"><span class="swatch" style="background:var(--red)"></span> Error / critical</div>
+      <div role="listitem"><span class="swatch" style="background:var(--gold)"></span> Caution / warning</div>
+      <div role="listitem"><span class="swatch" style="background:var(--green)"></span> Success</div>
+      <div role="listitem"><span class="swatch" style="background:var(--gray-2)"></span> Disabled</div>
+      <div role="listitem"><span class="swatch" style="background:var(--gray-1)"></span> Surface</div>
+    </div>
+  </header>
+
+  <!-- ============================ A: ENTRY & CATALOG ============================ -->
+  <section id="sec-A" class="section" aria-labelledby="h-A">
+    <div class="section-head">
+      <h2 class="heading-2" id="h-A">A · Entry &amp; Catalog</h2>
+      <span class="count">6 states</span>
+    </div>
+
+    <div class="state-panel" data-state="A1">
+      <div class="state-label"><span class="tag">A1</span> Empty catalog state</div>
+      <p class="state-caption">No plans exist yet — primary CTA plus a quiet helper link.</p>
+      <div class="card" style="text-align:center;padding:44px 20px;">
+        <div class="skeleton-bg" style="width:72px;height:72px;margin:0 auto 16px;border-radius:50%;"></div>
+        <h3 class="heading-3">No floor plans yet</h3>
+        <p class="body-2 muted" style="max-width:380px;margin:0 auto 20px;">Add your first floor plan to start organizing your building.</p>
+        <div class="flex-row" style="justify-content:center;">
+          <button class="button button-primary" data-testid="add-plan-cta-empty">Add floor plan</button>
+          <a href="#" class="button button-tertiary" data-testid="learn-more-link">Learn more</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="A2">
+      <div class="state-label"><span class="tag">A2</span> Populated catalog</div>
+      <p class="state-caption">Existing plans shown as cards with thumbnail, name, building/level and meta.</p>
+      <div class="grid-2">
+        <div class="card" data-testid="plan-card">
+          <div class="flex-row" style="align-items:flex-start;gap:14px;">
+            <div class="dls-gray-02-bg" style="width:88px;height:64px;border-radius:6px;flex:none;"></div>
+            <div style="flex:1;">
+              <div class="flex-row" style="justify-content:space-between;">
+                <h4 class="heading-4" data-testid="plan-name">Main Lobby</h4>
+                <span class="badge badge-published" data-testid="plan-status">Published</span>
+              </div>
+              <p class="body-3 muted" data-testid="plan-meta">Building A · Level 1 · 1,240 m² · 3 rooms</p>
+              <div class="flex-row" style="margin-top:8px;">
+                <a href="#" class="button button-tertiary" style="font-size:13px;padding:2px 0;" data-testid="plan-view">View</a>
+                <a href="#" class="button button-tertiary" style="font-size:13px;padding:2px 0;" data-testid="plan-edit">Edit</a>
+                <button class="button button-tertiary" style="font-size:13px;padding:2px 0;" data-testid="plan-menu">More…</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card" data-testid="plan-card">
+          <div class="flex-row" style="align-items:flex-start;gap:14px;">
+            <div class="dls-gray-02-bg" style="width:88px;height:64px;border-radius:6px;flex:none;"></div>
+            <div style="flex:1;">
+              <div class="flex-row" style="justify-content:space-between;">
+                <h4 class="heading-4" data-testid="plan-name">Conference Center</h4>
+                <span class="badge badge-draft" data-testid="plan-status">Draft</span>
+              </div>
+              <p class="body-3 muted" data-testid="plan-meta">Building B · Level 2 · 3,010 m² · 12 rooms</p>
+              <div class="flex-row" style="margin-top:8px;">
+                <a href="#" class="button button-tertiary" style="font-size:13px;padding:2px 0;" data-testid="plan-view">View</a>
+                <a href="#" class="button button-tertiary" style="font-size:13px;padding:2px 0;" data-testid="plan-edit">Edit</a>
+                <button class="button button-tertiary" style="font-size:13px;padding:2px 0;" data-testid="plan-menu">More…</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="A3">
+      <div class="state-label"><span class="tag">A3</span> Search + filter chips</div>
+      <p class="state-caption">Active filter on "Published"; search box with input text and live result count.</p>
+      <div class="stack">
+        <div class="flex-row" role="group" aria-label="Filter by status">
+          <button class="chip" data-testid="filter-all">All</button>
+          <button class="chip chip-active" data-testid="filter-draft">Draft</button>
+          <button class="chip" data-testid="filter-published">Published</button>
+          <button class="chip" data-testid="filter-archived">Archived</button>
+        </div>
+        <div class="field" style="max-width:420px;">
+          <label class="label" for="search-a3">Search plans</label>
+          <input id="search-a3" class="input" type="search" value="Lobby" data-testid="search-input">
+          <p class="hint" data-testid="search-summary">2 results for “Lobby” · 18 total</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="A4">
+      <div class="state-label"><span class="tag">A4</span> First-time vs pre-filled form</div>
+      <p class="state-caption">Pristine empty form next to a pre-filled (recent values) form.</p>
+      <div class="grid-2">
+        <div class="card" data-testid="form-first-time">
+          <h4 class="heading-4 color-text-brand">First time</h4>
+          <div class="field">
+            <div class="label-row"><label class="label required" for="a4-name-empty">Floor plan name</label></div>
+            <input id="a4-name-empty" class="input" placeholder="e.g. Level 1" data-testid="name-empty" value="">
+          </div>
+          <div class="field">
+            <label class="label required" for="a4-bldg-empty">Building</label>
+            <select id="a4-bldg-empty" class="select" data-testid="building-empty"><option value="">Select building</option></select>
+          </div>
+          <button class="button button-disabled" data-testid="next-empty">Next</button>
+        </div>
+        <div class="card" data-testid="form-prefilled">
+          <h4 class="heading-4 color-text-brand">Pre-filled (recent)</h4>
+          <div class="field">
+            <div class="label-row"><label class="label required" for="a4-name-pref">Floor plan name</label><span class="note">Last used</span></div>
+            <input id="a4-name-pref" class="input" value="Main Lobby" data-testid="name-prefilled">
+          </div>
+          <div class="field">
+            <label class="label required" for="a4-bldg-pref">Building</label>
+            <select id="a4-bldg-pref" class="select" data-testid="building-prefilled"><option>Building A</option></select>
+          </div>
+          <button class="button button-primary" data-testid="next-prefilled">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="A5">
+      <div class="state-label"><span class="tag">A5</span> Post-cancel pristine form</div>
+      <p class="state-caption">After cancelling mid-flow nothing persists — fields are empty again.</p>
+      <div class="card" style="max-width:460px;" data-testid="form-post-cancel">
+        <h4 class="heading-4 color-text-brand">Add floor plan</h4>
+        <div class="field">
+          <div class="label-row"><label class="label required" for="a5-name">Floor plan name</label></div>
+          <input id="a5-name" class="input" value="" data-testid="name-post-cancel">
+        </div>
+        <div class="field">
+          <label class="label required" for="a5-bldg">Building</label>
+          <select id="a5-bldg" class="select" data-testid="building-post-cancel"><option value="">Select building</option></select>
+        </div>
+        <div class="flex-row">
+          <button class="button button-primary" data-testid="next-post-cancel">Next</button>
+          <button class="button button-quiet" data-testid="cancel-post-cancel">Cancel</button>
+        </div>
+        <p class="hint">Cancel on the previous attempt left this form blank.</p>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="A6">
+      <div class="state-label"><span class="tag">A6</span> Three entry points</div>
+      <p class="state-caption">Hero, header, and empty-state CTAs reach the same flow.</p>
+      <div class="grid-3">
+        <div class="card" style="text-align:center;">
+          <p class="label-1 color-text-subtle">Hero</p>
+          <button class="button button-primary" style="width:100%;justify-content:center;" data-testid="add-plan-cta-hero">Add a floor plan</button>
+        </div>
+        <div class="card" style="text-align:center;">
+          <p class="label-1 color-text-subtle">Header</p>
+          <button class="button button-secondary" style="width:100%;justify-content:center;" data-testid="add-plan-cta-header">+ Add plan</button>
+        </div>
+        <div class="card" style="text-align:center;">
+          <p class="label-1 color-text-subtle">Empty state</p>
+          <button class="button button-primary" style="width:100%;justify-content:center;" data-testid="add-plan-cta-emptystate">Create first plan</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ B: BUILDING & CONTEXT ============================ -->
+  <section id="sec-B" class="section" aria-labelledby="h-B">
+    <div class="section-head">
+      <h2 class="heading-2" id="h-B">B · Building &amp; Context</h2>
+      <span class="count">8 states</span>
+    </div>
+
+    <div class="state-panel" data-state="B1">
+      <div class="state-label"><span class="tag">B1</span> Building required — unselected</div>
+      <p class="state-caption">Submit with no building → field-level error and summary.</p>
+      <div class="card" style="max-width:460px;">
+        <div class="banner banner-error" data-testid="error-summary"><strong>Fix 1 issue:</strong> Building is required.</div>
+        <div class="field">
+          <div class="label-row"><label class="label required" for="b1-bldg">Building</label></div>
+          <select id="b1-bldg" class="select input-error" data-testid="building-unselected"><option value="">Select building</option></select>
+          <p class="hint hint-error" data-testid="building-error-hint">Please select a building.</p>
+        </div>
+        <button class="button button-primary" data-testid="next-b1">Next</button>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="B2">
+      <div class="state-label"><span class="tag">B2</span> Archived building — dimmed + tooltip</div>
+      <p class="state-caption">Archived buildings are greyed and carry an explanation.</p>
+      <div class="card" style="max-width:460px;">
+        <label class="label required" for="b2-bldg">Building</label>
+        <select id="b2-bldg" class="select" data-testid="building-select-with-archived">
+          <option>Building A — active</option>
+          <option disabled>Windmill Works — archived</option>
+        </select>
+        <p class="notification-inline-error" data-testid="archived-bldg-tooltip">ⓘ Archived buildings can’t receive new plans. Restore to reuse.</p>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="B3">
+      <div class="state-label"><span class="tag">B3</span> No buildings exist — blocked</div>
+      <p class="state-caption">Catalog empty; user must create a building first.</p>
+      <div class="card" style="max-width:480px;text-align:center;padding:36px;">
+        <div class="skeleton-bg" style="width:56px;height:56px;margin:0 auto 12px;border-radius:12px;"></div>
+        <h4 class="heading-4">You need a building first</h4>
+        <p class="body-2 muted">Floor plans attach to a building. Create a building to continue.</p>
+        <div class="flex-row" style="justify-content:center;margin-top:14px;">
+          <button class="button button-primary" data-testid="create-building-cta">Create building</button>
+          <button class="button button-disabled" disabled data-testid="add-plan-blocked">Add a floor plan</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="B4">
+      <div class="state-label"><span class="tag">B4</span> Level notation — basement / ground</div>
+      <p class="state-caption">Level selector supports L-2, L-1, Ground (G/0), Upper 1… with helper.</p>
+      <div class="card" style="max-width:460px;">
+        <label class="label required" for="b4-level">Level</label>
+        <select id="b4-level" class="select" data-testid="level-select">
+          <option value="-2">L-2 · Sub-basement</option>
+          <option value="-1">L-1 · Basement</option>
+          <option value="G">Ground (G)</option>
+          <option value="1">Level 1</option>
+        </select>
+        <p class="hint">Basements use L-*, ground is <strong>G</strong> or <strong>0</strong>.</p>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="B5">
+      <div class="state-label"><span class="tag">B5</span> Ambiguous floor number rejected</div>
+      <p class="state-caption">“10a” is ambiguous → inline error with a valid suggestion.</p>
+      <div class="card" style="max-width:460px;">
+        <div class="field">
+          <div class="label-row"><label class="label required" for="b5-floor">Floor number</label></div>
+          <input id="b5-floor" class="input input-error" value="10a" data-testid="floor-number-ambiguous">
+          <p class="hint hint-error" data-testid="floor-number-error">Enter a whole number (e.g. 10) or a level code (e.g. G, L-1).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="B6">
+      <div class="state-label"><span class="tag">B6</span> Duplicate floor in same building</div>
+      <p class="state-caption">“Level 1” already exists in Building A → inline error + existing hint.</p>
+      <div class="card" style="max-width:460px;">
+        <div class="field">
+          <div class="label-row"><label class="label required" for="b6-name">Floor plan name</label></div>
+          <input id="b6-name" class="input input-error" value="Level 1" data-testid="name-duplicate">
+          <p class="hint hint-error" data-testid="duplicate-name-error">ALREADY_EXISTS: Level 1 (Building A) is already in the catalog.</p>
+          <a href="#" class="body-3 color-text-link" data-testid="dup-existing-plan-link">View existing plan</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="B7">
+      <div class="state-label"><span class="tag">B7</span> Same number allowed in other building</div>
+      <p class="state-caption">“Level 1” is fine in Building B — uniqueness is scoped per building.</p>
+      <div class="card" style="max-width:460px;">
+        <div class="field">
+          <div class="label-row"><label class="label required" for="b7-name">Floor plan name</label></div>
+          <input id="b7-name" class="input" value="Level 1" data-testid="name-other-building">
+          <p class="hint hint-success" data-testid="name-ok-hint">Available — “Level 1” is unique in Building B.</p>
+        </div>
+        <div class="field">
+          <label class="label required" for="b7-bldg">Building</label>
+          <select id="b7-bldg" class="select" data-testid="building-b7"><option selected>Building B</option></select>
+        </div>
+        <button class="button button-primary" data-testid="next-b7">Next</button>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="B8">
+      <div class="state-label"><span class="tag">B8</span> Context-dependent fields</div>
+      <p class="state-caption">Rooms/units are disabled until a building is selected.</p>
+      <div class="card" style="max-width:460px;">
+        <div class="field">
+          <label class="label required" for="b8-bldg">Building</label>
+          <select id="b8-bldg" class="select" data-testid="building-gate"><option value="">Select building</option></select>
+        </div>
+        <div class="field" data-testid="rooms-gated">
+          <div class="label-row"><label class="label" for="b8-rooms">Rooms</label></div>
+          <input id="b8-rooms" class="input input-disabled" value="" disabled placeholder="Select a building first" data-testid="rooms-input-gated">
+          <p class="hint">Enable by choosing a building.</p>
+        </div>
+        <button class="button button-disabled" disabled data-testid="next-gated">Next</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ C: METADATA ENTRY ============================ -->
+  <section id="sec-C" class="section" aria-labelledby="h-C">
+    <div class="section-head">
+      <h2 class="heading-2" id="h-C">C · Floor Metadata Entry</h2>
+      <span class="count">14 states</span>
+    </div>
+
+    <div class="state-panel" data-state="C1">
+      <div class="state-label"><span class="tag">C1</span> Name — pristine / filled / focus</div>
+      <p class="state-caption">Three appearances of the same field.</p>
+      <div class="grid-3">
+        <div class="field"><label class="label required" for="c1a">Pristine</label><input id="c1a" class="input" data-testid="name-pristine"></div>
+        <div class="field"><label class="label required" for="c1b">Filled</label><input id="c1b" class="input" value="Executive Suite" data-testid="name-filled"></div>
+        <div class="field"><label class="label required" for="c1c">Focus</label><input id="c1c" class="input focus-ring" value="Executive Suite" data-testid="name-focus"></div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="C2">
+      <div class="state-label"><span class="tag">C2</span> Name empty on submit</div>
+      <p class="state-caption">Top-of-form error summary + inline field error.</p>
+      <div class="card" style="max-width:460px;">
+        <div class="banner banner-error" data-testid="error-summary-c2"><strong>Fix 1 issue</strong> — Floor plan name is required.</div>
+        <div class="field">
+          <div class="label-row"><label class="label required" for="c2-name">Floor plan name</label></div>
+          <input id="c2-name" class="input input-error" value="" data-testid="name-empty-error">
+          <p class="hint hint-error" data-testid="name-required-error">This field is required.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="C3">
+      <div class="state-label"><span class="tag">C3</span> Whitespace-only name</div>
+      <p class="state-caption">Spaces only → treated as empty.</p>
+      <div class="card" style="max-width:460px;">
+        <div class="field">
+          <label class="label required" for="c3-name">Floor plan name</label>
+          <input id="c3-name" class="input input-error" value="     " data-testid="name-whitespace">
+          <p class="hint hint-error" data-testid="name-whitespace-error">Whitespace isn’t a valid name. Enter text.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="C4">
+      <div class="state-label"><span class="tag">C4</span> Max-length reached / over limit</div>
+      <p class="state-caption">Counter at cap (blocked) vs over cap (rejected input).</p>
+      <div class="grid-2">
+        <div class="field">
+          <div class="label-row"><label class="label" for="c4a">At 60/60</label></div>
+          <input id="c4a" class="input input-error" value="Level One West Wing Extended Fitness and Wellness Center of Excellence" data-testid="name-at-cap">
+          <p class="char-count">60/60</p>
+          <p class="hint hint-error" data-testid="name-cap-error">Character limit reached.</p>
+        </div>
+        <div class="field">
+          <div class="label-row"><label class="label" for="c4b">Blocked paste</label></div>
+          <input id="c4b" class="input" value="Level One West Wing Extended Fitness and Wellness Center" data-testid="name-blocked-paste">
+          <p class="char-count">58/60</p>
+          <p class="hint">Paste of longer value was truncated then locked.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="C5">
+      <div class="state-label"><span class="tag">C5</span> Unicode &amp; special characters</div>
+      <p class="state-caption">Accepted: accents, non-Latin, em-dash, parentheses.</p>
+      <div class="field" style="max-width:420px;">
+        <label class="label" for="c5-name">Floor plan name</label>
+        <input id="c5-name" class="input" value="Piso 1 — 高层 / (North Wing)" data-testid="name-unicode">
+        <p class="hint hint-success" data-testid="name-unicode-ok">Valid · 1,024 max characters.</p>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="C6">
+      <div class="state-label"><span class="tag">C6</span> Case-insensitive duplicate</div>
+      <p class="state-caption">“lobby” collides with “Lobby” → flagged; distinct casing only.</p>
+      <div class="grid-2">
+        <div class="card">
+          <h4 class="heading-4">Hit</h4>
+          <div class="field">
+            <input class="input input-error" value="lobby" data-testid="name-case-dup">
+            <p class="hint hint-error" data-testid="name-case-dup-error">“Lobby” already exists (case-insensitive).</p>
+          </div>
+        </div>
+        <div class="card">
+          <h4 class="heading-4">Allowed</h4>
+          <div class="field">
+            <input class="input" value="LOBBY - Annex" data-testid="name-case-ok">
+            <p class="hint hint-success">Unique.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="C7">
+      <div class="state-label"><span class="tag">C7</span> Reserved-name collision</div>
+      <p class="state-caption">“new”, “default”, “template” are rejected.</p>
+      <div class="card" style="max-width:460px;">
+        <div class="field">
+          <label class="label" for="c7-name">Floor plan name</label>
+          <input id="c7-name" class="input input-error" value="new" data-testid="name-reserved">
+          <p class="hint hint-error" data-testid="name-reserved-error">“new” is reserved by EASE. Choose another name.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="C8">
+      <div class="state-label"><span class="tag">C8</span> Floor number bounds</div>
+      <p class="state-caption">Negative rejected · zero warns · large warns but allowed.</p>
+      <div class="grid-3">
+        <div class="card"><div class="field"><label class="label">−1</label><input class="input input-error" value="-1" data-testid="floor-neg"><p class="hint hint-error">Use L-1 instead.</p></div></div>
+        <div class="card"><div class="field"><label class="label">0</label><input class="input" value="0" data-testid="floor-zero"><p class="hint hint" style="color:var(--gold)">Warning: 0 = Ground/G.</p></div></div>
+        <div class="card"><div class="field"><label class="label">121</label><input class="input" value="121" data-testid="floor-high"><p class="hint hint" style="color:var(--gold)">Above 100 — unusual.</p></div></div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="C9">
+      <div class="state-label"><span class="tag">C9</span> Non-numeric floor rejected</div>
+      <p class="state-caption">Letters without a level code → error.</p>
+      <div class="card" style="max-width:460px;">
+        <div class="field">
+          <label class="label" for="c9-floor">Floor number</label>
+          <input id="c9-floor" class="input input-error" value="Level" data-testid="floor-non-numeric">
+          <p class="hint hint-error" data-testid="floor-non-numeric-error">Numbers only, or codes G / L-1 / L-2.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="C10">
+      <div class="state-label"><span class="tag">C10</span> Area (m²) — four cases</div>
+      <p class="state-caption">Required empty · 0 warns · negative rejected · decimals accepted.</p>
+      <div class="grid-2">
+        <div class="card"><div class="field"><label class="label required">Area</label><input class="input input-error" value="" data-testid="area-empty"><p class="hint hint-error">Required.</p></div></div>
+        <div class="card"><div class="field"><label class="label">Area</label><input class="input" value="0" data-testid="area-zero"><p class="hint hint" style="color:var(--gold)">0 m² — confirm intention.</p></div></div>
+        <div class="card"><div class="field"><label class="label">Area</label><input class="input input-error" value="-100" data-testid="area-negative"><p class="hint hint-error">Can’t be negative.</p></div></div>
+        <div class="card"><div class="field"><label class="label">Area</label><input class="input" value="1,240.75" data-testid="area-decimal"><p class="hint hint-success">Valid.</p></div></div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="C11">
+      <div class="state-label"><span class="tag">C11</span> Room / unit counts</div>
+      <p class="state-caption">0 allowed (open-plan) · negative rejected.</p>
+      <div class="grid-2">
+        <div class="card"><div class="field"><label class="label" for="c11a">Rooms</label><input id="c11a" class="input" value="0" data-testid="rooms-zero"><p class="hint hint-success">Open-plan — valid.</p></div></div>
+        <div class="card"><div class="field"><label class="label" for="c11b">Rooms</label><input id="c11b" class="input input-error" value="-3" data-testid="rooms-negative"><p class="hint hint-error">Count can’t be negative.</p></div></div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="C12">
+      <div class="state-label"><span class="tag">C12</span> Description — optional / at-cap / overflow</div>
+      <p class="state-caption">Empty ok · counter capping · scroll overflow.</p>
+      <div class="grid-3">
+        <div class="card"><div class="field"><label class="label">Description (optional)</label><textarea class="input" rowspan="2" data-testid="desc-optional"></textarea><p class="hint">Optional.</p></div></div>
+        <div class="card"><div class="field"><label class="label">Description</label><textarea class="input" data-testid="desc-cap">Café mezzanine with glass rail and two stair cores.</textarea><p class="char-count">64/64</p></div></div>
+        <div class="card"><div class="field"><label class="label">Overflow</label><div style="max-height:64px;overflow:auto;border:1px solid var(--gray-2);border-radius:6px;padding:8px;" data-testid="desc-overflow"><p class="body-3" style="width:300px;">Long description that scrolls… long description that scrolls… long description that scrolls… long description that scrolls…</p></div></div></div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="C13">
+      <div class="state-label"><span class="tag">C13</span> Required / optional legend</div>
+      <p class="state-caption">Asterisk legend and per-field markers.</p>
+      <div class="card" style="max-width:480px;">
+        <div class="legend">
+          <span class="note">* required</span>
+          <span class="note">optional</span>
+        </div>
+        <div class="field"><div class="label-row"><label class="label required" for="c13a">Floor plan name</label></div><input id="c13a" class="input" data-testid="c13-name"></div>
+        <div class="field"><div class="label-row"><label class="label" for="c13b">Description <span class="muted font-weight-normal">(optional)</span></label></div><input id="c13b" class="input" data-testid="c13-desc"></div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="C14">
+      <div class="state-label"><span class="tag">C14</span> Destructive edit — confirm dialog</div>
+      <p class="state-caption">Deleting a room from review asks for confirmation.</p>
+      <div class="modal-card" data-testid="destructive-confirm-mock">
+        <h4 class="heading-4">Remove “Lobby café”?</h4>
+        <p class="body-2 muted">This removes the room from the floor plan. This action can’t be undone.</p>
+        <div class="flex-row" style="justify-content:flex-end;margin-top:14px;">
+          <button class="button button-quiet" data-testid="confirm-cancel">Cancel</button>
+          <button class="button button-danger" data-testid="confirm-remove">Remove</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ D: FILE UPLOAD ============================ -->
+  <section id="sec-D" class="section" aria-labelledby="h-D">
+    <div class="section-head">
+      <h2 class="heading-2" id="h-D">D · File Upload</h2>
+      <span class="count">16 states</span>
+    </div>
+
+    <div class="state-panel" data-state="D1">
+      <div class="state-label"><span class="tag">D1</span> Dropzone — idle</div>
+      <p class="state-caption">Resting dropzone enumerating accepted types.</p>
+      <div class="dropzone" data-testid="dropzone-idle">
+        <div style="font-size:30px;">⤓</div>
+        <p class="heading-4">Drag a floor plan here</p>
+        <p class="body-3 muted">or <a href="#" class="color-text-link" data-testid="browse-file">browse</a> · DWG, PDF, PNG, JPG · max 50 MB</p>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="D2">
+      <div class="state-label"><span class="tag">D2</span> Dropzone — drag-over</div>
+      <p class="state-caption">Highlighted boundary while dragging.</p>
+      <div class="dropzone dropzone-active" data-testid="dropzone-dragover">
+        <p class="heading-4 color-text-brand">Release to upload</p>
+        <p class="body-3 muted">level-1-layout.dwg</p>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="D3">
+      <div class="state-label"><span class="tag">D3</span> Dropzone — drag-leave revert</div>
+      <p class="state-caption">Leaving the zone returns it to the idle state (chip indicates revert).</p>
+      <div class="dropzone" data-testid="dropzone-reverted">
+        <p class="body-3 muted">← drag left · zone reverted to idle</p>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="D4">
+      <div class="state-label"><span class="tag">D4</span> Accepted types enumerated</div>
+      <p class="state-caption">Always-visible accepted-format guidance.</p>
+      <div class="flex-row">
+        <span class="note">.dwg</span><span class="note">.dxf</span><span class="note">.pdf</span><span class="note">.png</span><span class="note">.jpg</span>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="D5">
+      <div class="state-label"><span class="tag">D5</span> Unsupported type</div>
+      <p class="state-caption">Rejected extension with allowed list reminder.</p>
+      <div class="banner banner-error" data-testid="type-error-banner">Unsupported file type <strong>floor-plan.zip</strong>.</div>
+      <div class="note">Accepted: .dwg .dxf .pdf .png .jpg</div>
+    </div>
+
+    <div class="state-panel" data-state="D6">
+      <div class="state-label"><span class="tag">D6</span> Accepted file — preview chip</div>
+      <p class="state-caption">Chip with name, size, and remove control.</p>
+      <div class="card" style="max-width:460px;">
+        <div class="flex-row" style="justify-content:space-between;">
+          <div class="flex-row"><div class="skeleton-bg" style="width:40px;height:40px;"></div><div><p class="body-2 font-weight-bold" data-testid="file-name">level-1-layout.dwg</p><p class="body-3 muted" data-testid="file-size">4.2 MB</p></div></div>
+          <button class="button button-quiet" data-testid="file-remove">Remove</button>
+        </div>
+        <p class="hint hint-success" data-testid="file-ready-hint">Ready to add.</p>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="D7">
+      <div class="state-label"><span class="tag">D7</span> File too large</div>
+      <p class="state-caption">Over the 50 MB limit.</p>
+      <div class="banner banner-error" data-testid="size-error-banner">level-1-layout.dwg is 61 MB. Max upload is 50 MB.</div>
+    </div>
+
+    <div class="state-panel" data-state="D8">
+      <div class="state-label"><span class="tag">D8</span> Zero-byte / empty file</div>
+      <p class="state-caption">Empty file rejected.</p>
+      <div class="banner banner-error" data-testid="empty-file-error">empty-plan.dwg is 0 bytes. Choose a non-empty file.</div>
+    </div>
+
+    <div class="state-panel" data-state="D9">
+      <div class="state-label"><span class="tag">D9</span> Corrupt file</div>
+      <p class="state-caption">Unreadable content.</p>
+      <div class="banner banner-error" data-testid="corrupt-file-error">FILE_CORRUPT: level-1-layout.dwg can’t be parsed. Re-export from your CAD tool.</div>
+    </div>
+
+    <div class="state-panel" data-state="D10">
+      <div class="state-label"><span class="tag">D10</span> Password-protected PDF</div>
+      <p class="state-caption">Encrypted PDF hint.</p>
+      <div class="banner banner-error" data-testid="pdf-password-error">encrypted.pdf is password-protected. Remove the password and try again.</div>
+    </div>
+
+    <div class="state-panel" data-state="D11">
+      <div class="state-label"><span class="tag">D11</span> Progress: 0 / mid / stalled / complete</div>
+      <p class="state-caption">Four upload progress milestones.</p>
+      <div class="grid-2">
+        <div class="card"><div class="flex-row" style="justify-content:space-between;"><span class="body-2">0%</span></div><div class="progress"><div style="width:0%"></div></div></div>
+        <div class="card"><div class="flex-row" style="justify-content:space-between;"><span class="body-2">Uploading…</span><span class="body-3 muted">46%</span></div><div class="progress"><div style="width:46%"></div></div></div>
+        <div class="card"><div class="flex-row" style="justify-content:space-between;"><span class="body-2 color-status-text-critical">Stalled</span><span class="body-3 muted">99%</span></div><div class="progress progress-warn"><div style="width:99%"></div></div><p class="hint hint-error">Slow connection — still retrying.</p></div>
+        <div class="card"><div class="flex-row" style="justify-content:space-between;"><span class="body-2 color-status-text-success">Complete</span><span class="body-3 muted">100%</span></div><div class="progress progress-success"><div style="width:100%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="D12">
+      <div class="state-label"><span class="tag">D12</span> Network failure — retry / cancel</div>
+      <p class="state-caption">Upload error with recovery actions.</p>
+      <div class="card" style="max-width:460px;">
+        <div class="banner banner-error" data-testid="network-error">Upload failed — NetworkError. Your file wasn’t uploaded.</div>
+        <div class="flex-row">
+          <button class="button button-primary" data-testid="upload-retry">Retry</button>
+          <button class="button button-quiet" data-testid="upload-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="D13">
+      <div class="state-label"><span class="tag">D13</span> Cancelled mid-flight</div>
+      <p class="state-caption">Cancel during upload resets the dropzone.</p>
+      <div class="dropzone" data-testid="dropzone-reset">
+        <p class="body-3 muted">Upload cancelled — dropzone reset to idle.</p>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="D14">
+      <div class="state-label"><span class="tag">D14</span> Multiple files dropped</div>
+      <p class="state-caption">First accepted, rest explicitly rejected.</p>
+      <div class="banner banner-warning" data-testid="multi-drop-warning"><strong>2 of 3 skipped.</strong> One file per floor plan. Accepted only: <strong>main.dwg</strong>.</div>
+      <div class="note">Rejected: copy-1.dwg, copy-2.dwg</div>
+    </div>
+
+    <div class="state-panel" data-state="D15">
+      <div class="state-label"><span class="tag">D15</span> Duplicate plan file detected</div>
+      <p class="state-caption">Same file already uploaded to this building.</p>
+      <div class="banner banner-warning" data-testid="dup-file-warning">DUPLICATE_CONTENT: main.dwg already exists for Building A (added Jul 2).</div>
+    </div>
+
+    <div class="state-panel" data-state="D16">
+      <div class="state-label"><span class="tag">D16</span> Orientation ambiguity</div>
+      <p class="state-caption">Review-stage confirm when the authoritative level is unclear.</p>
+      <div class="modal-card" data-testid="orientation-confirm">
+        <h4 class="heading-4">Which level is this?</h4>
+        <p class="body-2 muted">File title says “01” but the drawing block reads “G”. Choose the authoritative level.</p>
+        <div class="flex-row">
+          <button class="button button-secondary" data-testid="orientation-g">Ground (G)</button>
+          <button class="button button-secondary" data-testid="orientation-1">Level 1</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ E: PROCESSING + REVIEW ============================ -->
+  <section id="sec-E" class="section" aria-labelledby="h-E">
+    <div class="section-head">
+      <h2 class="heading-2" id="h-E">E · Processing &amp; Review</h2>
+      <span class="count">8 states</span>
+    </div>
+
+    <div class="state-panel" data-state="E1">
+      <div class="state-label"><span class="tag">E1</span> Parsing — spinner + skeleton</div>
+      <p class="state-caption">Progress steps while geometry is analysed.</p>
+      <div class="card" data-testid="processing-skeleton">
+        <div class="flex-row"><span class="spinner" style="color:var(--brand)"></span><span class="body-2 font-weight-bold">Parsing geometry…</span></div>
+        <ol class="body-3 muted" style="margin:10px 0 0;">
+          <li>Reading file — <span class="color-status-text-success">done</span></li>
+          <li>Detecting boundaries — <span class="color-status-text-caution">in progress</span></li>
+          <li>Identifying rooms — <span class="muted">pending</span></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="E2">
+      <div class="state-label"><span class="tag">E2</span> Extraction success</div>
+      <p class="state-caption">Data auto-extracted from the file — editable later.</p>
+      <div class="card" data-testid="extract-summary">
+        <div class="banner banner-success" data-testid="extract-banner">Parsed successfully.</div>
+        <table class="table-mini">
+          <tr><th>Field</th><th>Extracted</th><th></th></tr>
+          <tr><td>Area</td><td data-testid="extract-area">1,240.75 m²</td><td><a class="color-text-link" data-testid="edit-area">Edit</a></td></tr>
+          <tr><td>Rooms</td><td data-testid="extract-rooms">3</td><td><a class="color-text-link" data-testid="edit-rooms">Edit</a></td></tr>
+          <tr><td>Regions</td><td data-testid="extract-regions">6</td><td><a class="color-text-link" data-testid="edit-regions">Edit</a></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="E3">
+      <div class="state-label"><span class="tag">E3</span> Partial parse — rooms = 0</div>
+      <p class="state-caption">Warning with a proceed option.</p>
+      <div class="card" style="max-width:460px;">
+        <div class="banner banner-warning" data-testid="partial-banner">Area found but <strong>0 rooms</strong> detected. Confirm to continue.</div>
+        <div class="flex-row">
+          <button class="button button-primary" data-testid="partial-proceed">Continue anyway</button>
+          <button class="button button-quiet" data-testid="partial-back">Review file</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="E4">
+      <div class="state-label"><span class="tag">E4</span> Multiple floors in one file</div>
+      <p class="state-caption">Disambiguation when several levels are detected.</p>
+      <div class="card" style="max-width:460px;">
+        <label class="label required" for="e4-floor">Floors detected in <strong>tower.dwg</strong></label>
+        <select id="e4-floor" class="select" data-testid="multi-floor-select">
+          <option>Level 1</option>
+          <option>Level 2</option>
+          <option>Level 3</option>
+        </select>
+        <p class="hint">Pick the level this file represents.</p>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="E5">
+      <div class="state-label"><span class="tag">E5</span> Review card — per-field edit</div>
+      <p class="state-caption">Full summary with edit affordances.</p>
+      <div class="card" data-testid="review-card">
+        <div class="flex-row" style="justify-content:space-between;">
+          <h4 class="heading-4">Review before adding</h4>
+          <a href="#" class="button button-tertiary" style="padding:0;" data-testid="review-edit-all">Edit all</a>
+        </div>
+        <table class="table-mini" style="margin-top:8px;">
+          <tr><th>Field</th><th>Value</th><th></th></tr>
+          <tr><td>Name</td><td data-testid="rv-name">Level 1</td><td><a class="color-text-link" data-testid="rv-edit-name">Edit</a></td></tr>
+          <tr><td>Building</td><td data-testid="rv-building">Building A</td><td><a class="color-text-link" data-testid="rv-edit-building">Edit</a></td></tr>
+          <tr><td>File</td><td data-testid="rv-file">main.dwg</td><td><a class="color-text-link" data-testid="rv-edit-file">Change</a></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="E6">
+      <div class="state-label"><span class="tag">E6</span> Review with unresolved error</div>
+      <p class="state-caption">A field is invalid; Back is suggested.</p>
+      <div class="card" style="max-width:480px;">
+        <div class="banner banner-error" data-testid="review-error-banner">Name conflicts with an existing plan.</div>
+        <div class="notification-inline-error" data-testid="review-inline-error">Name: “Level 1” not unique in Building A.</div>
+        <div class="flex-row">
+          <button class="button button-secondary" data-testid="review-back">Back</button>
+          <button class="button button-disabled" disabled data-testid="review-confirm-locked">Confirm</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="E7">
+      <div class="state-label"><span class="tag">E7</span> Review — Back / Cancel / Confirm</div>
+      <p class="state-caption">All three actions available.</p>
+      <div class="flex-row">
+        <button class="button button-secondary" data-testid="review-back-enabled">Back</button>
+        <button class="button button-quiet" data-testid="review-cancel-enabled">Cancel</button>
+        <button class="button button-primary" data-testid="review-confirm-enabled">Confirm &amp; add</button>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="E8">
+      <div class="state-label"><span class="tag">E8</span> Confirm blocked (unresolved duplicate)</div>
+      <p class="state-caption">Tooltip explains why Confirm is disabled.</p>
+      <div class="card" style="max-width:480px;">
+        <div class="banner banner-warning" data-testid="dup-unresolved-banner">Duplicate warning hasn’t been resolved.</div>
+        <div class="flex-row">
+          <button class="button button-primary" data-testid="confirm-bypass">Use anyway</button>
+          <button class="button button-disabled" disabled aria-disabled="true" title="Resolve the duplicate warning first" data-testid="confirm-disabled">Confirm</button>
+          <span class="note">ⓘ Resolve duplicate first</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ F: SUCCESS + POST-ADD ============================ -->
+  <section id="sec-F" class="section" aria-labelledby="h-F">
+    <div class="section-head">
+      <h2 class="heading-2" id="h-F">F · Success &amp; Post-Add</h2>
+      <span class="count">9 states</span>
+    </div>
+
+    <div class="state-panel" data-state="F1">
+      <div class="state-label"><span class="tag">F1</span> Success screen</div>
+      <p class="state-caption">Completion with actions.</p>
+      <div class="card" style="text-align:center;padding:40px 20px;" data-testid="success-screen">
+        <div style="width:56px;height:56px;margin:0 auto 14px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;">✓</div>
+        <h3 class="heading-3">Floor plan added</h3>
+        <p class="body-2 muted">Building A · Level 1 · main.dwg</p>
+        <div class="flex-row" style="justify-content:center;margin-top:18px;">
+          <button class="button button-primary" data-testid="success-view-plan">View floor plan</button>
+          <button class="button button-secondary" data-testid="success-add-another">Add another</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="F2">
+      <div class="state-label"><span class="tag">F2</span> Success toast</div>
+      <p class="state-caption">Transient toast on the catalog.</p>
+      <div class="toast" data-testid="success-toast">✓ Level 1 added to Building A.</div>
+    </div>
+
+    <div class="state-panel" data-state="F3">
+      <div class="state-label"><span class="tag">F3</span> New card with “New” badge</div>
+      <p class="state-caption">Newest plan is pinned to the top.</p>
+      <div class="card" style="max-width:420px;" data-testid="plan-card-new">
+        <div class="flex-row" style="justify-content:space-between;">
+          <h4 class="heading-4">Level 1 <span class="badge badge-new" data-testid="new-badge">New</span></h4>
+          <span class="badge badge-published" data-testid="plan-status-new">Published</span>
+        </div>
+        <p class="body-3 muted">Building A · main.dwg · 1,240 m²</p>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="F4">
+      <div class="state-label"><span class="tag">F4</span> Edit — pre-populated + version note</div>
+      <p class="state-caption">Editing an existing plan loads stored values and a version stamp.</p>
+      <div class="card" style="max-width:460px;" data-testid="edit-form">
+        <div class="note">Version 3 · last edited Jul 2, 2026</div>
+        <div class="field" style="margin-top:10px;">
+          <label class="label required" for="f4-name">Floor plan name</label>
+          <input id="f4-name" class="input" value="Level 1" data-testid="edit-name">
+        </div>
+        <div class="field">
+          <label class="label" for="f4-bldg">Building</label>
+          <select id="f4-bldg" class="select" data-testid="edit-building"><option>Building A</option></select>
+        </div>
+        <div class="flex-row">
+          <button class="button button-primary" data-testid="edit-save">Save changes</button>
+          <button class="button button-quiet" data-testid="edit-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="F5">
+      <div class="state-label"><span class="tag">F5</span> Clone — copy collision</div>
+      <p class="state-caption">Cloning suggests “- Copy” suffix and flags a re-clone collision.</p>
+      <div class="card" style="max-width:460px;" data-testid="clone-form">
+        <div class="flex-row" style="justify-content:space-between;">
+          <h4 class="heading-4">Clone “Level 1”</h4><span class="note">copies geometry</span>
+        </div>
+        <div class="field">
+          <label class="label required" for="f5-name">New name</label>
+          <input id="f5-name" class="input input-error" value="Level 1 - Copy" data-testid="clone-name">
+          <p class="hint hint-error" data-testid="clone-name-error">“Level 1 - Copy” exists. Try “Level 1 - Copy 2”.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="F6">
+      <div class="state-label"><span class="tag">F6</span> Archive + restore</div>
+      <p class="state-caption">Archive confirm and the archived/restore states.</p>
+      <div class="grid-2">
+        <div class="modal-card">
+          <h4 class="heading-4">Archive “Level 1”?</h4>
+          <p class="body-2 muted">It won’t appear in the active catalog.</p>
+          <div class="flex-row" style="justify-content:flex-end;">
+            <button class="button button-quiet" data-testid="archive-cancel">Cancel</button>
+            <button class="button button-primary" data-testid="archive-confirm">Archive</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="flex-row" style="justify-content:space-between;">
+            <span class="badge badge-archived" data-testid="archived-badge">Archived</span>
+          </div>
+          <h4 class="heading-4">Level 1</h4>
+          <p class="body-3 muted">Building A</p>
+          <button class="button button-secondary" data-testid="restore-plan">Restore</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="F7">
+      <div class="state-label"><span class="tag">F7</span> Delete — two-step typed confirm</div>
+      <p class="state-caption">Type the name to enable deletion.</p>
+      <div class="modal-card" data-testid="delete-dialog">
+        <h4 class="heading-4">Delete “Level 1” permanently?</h4>
+        <p class="body-2 muted">Type <strong>Level 1</strong> to confirm.</p>
+        <div class="field">
+          <input class="input input-error" value="Level " data-testid="delete-type-input">
+          <p class="hint hint-error">Text doesn’t match yet.</p>
+        </div>
+        <div class="flex-row" style="justify-content:flex-end;">
+          <button class="button button-quiet" data-testid="delete-cancel">Cancel</button>
+          <button class="button button-disabled" disabled data-testid="delete-confirm">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="F8">
+      <div class="state-label"><span class="tag">F8</span> No-results empty state</div>
+      <p class="state-caption">Search with zero matches and a clear action.</p>
+      <div class="card" style="text-align:center;padding:36px;" data-testid="no-results">
+        <p class="heading-4">No plans match “xyz”</p>
+        <p class="body-2 muted">Try different keywords or filters.</p>
+        <button class="button button-quiet" data-testid="clear-search">Clear search</button>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="F9">
+      <div class="state-label"><span class="tag">F9</span> Skeletons — catalog + panel</div>
+      <p class="state-caption">Loading placeholders while data is fetched.</p>
+      <div class="grid-2">
+        <div class="card" data-testid="skeleton-card"><div class="skeleton" style="height:70px;"></div><div class="skeleton" style="height:16px;width:60%;margin-top:10px;"></div></div>
+        <div class="card" data-testid="skeleton-card"><div class="skeleton" style="height:70px;"></div><div class="skeleton" style="height:16px;width:60%;margin-top:10px;"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ G: SYSTEM & ERRORS ============================ -->
+  <section id="sec-G" class="section" aria-labelledby="h-G">
+    <div class="section-head">
+      <h2 class="heading-2" id="h-G">G · System &amp; Errors</h2>
+      <span class="count">8 states</span>
+    </div>
+
+    <div class="state-panel" data-state="G1">
+      <div class="state-label"><span class="tag">G1</span> Global error banner</div>
+      <p class="state-caption">Page-level failure with dismiss.</p>
+      <div class="banner banner-error" data-testid="global-error-banner">
+        <span>We couldn’t load the catalog. Reload to try again.</span>
+        <button class="button button-quiet" style="margin-left:auto;padding:2px 10px;" data-testid="global-error-dismiss">✕</button>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="G2">
+      <div class="state-label"><span class="tag">G2</span> Session expired</div>
+      <p class="state-caption">Interstitial to sign back in.</p>
+      <div class="modal-card" style="text-align:center;" data-testid="session-expired">
+        <div style="font-size:30px;">🔒</div>
+        <h4 class="heading-4">Your session expired</h4>
+        <p class="body-2 muted">Sign back in to continue adding floor plans.</p>
+        <div class="flex-row" style="justify-content:center;margin-top:12px;">
+          <button class="button button-primary" data-testid="session-signin">Sign in</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="G3">
+      <div class="state-label"><span class="tag">G3</span> Stale data — concurrency</div>
+      <p class="state-caption">Another session modified this plan.</p>
+      <div class="banner stale-banner" data-testid="stale-banner">STALE_DATA: This plan was edited in another tab. Reload to see the latest version.</div>
+    </div>
+
+    <div class="state-panel" data-state="G4">
+      <div class="state-label"><span class="tag">G4</span> Submit error summary</div>
+      <p class="state-caption">Linked list of all field errors.</p>
+      <div class="card" style="max-width:480px;">
+        <div class="banner banner-error" data-testid="form-error-summary"><strong>Please fix 3 issues:</strong>
+          <ul style="margin:6px 0 0 18px;">
+            <li><a href="#" class="color-text-link" data-testid="err-link-name">Floor plan name is required</a></li>
+            <li><a href="#" class="color-text-link" data-testid="err-link-building">Building is required</a></li>
+            <li><a href="#" class="color-text-link" data-testid="err-link-area">Area can’t be negative</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="G5">
+      <div class="state-label"><span class="tag">G5</span> Disabled states</div>
+      <p class="state-caption">Every control is disabled here until inputs are valid.</p>
+      <div class="card" style="max-width:460px;" data-testid="disabled-demo">
+        <div class="field"><div class="label-row"><label class="label required">Name</label></div><input class="input input-disabled" value="" disabled data-testid="disabled-name"></div>
+        <div class="field"><label class="label required">Building</label><input class="input input-disabled" value="" disabled data-testid="disabled-building"></div>
+        <button class="button button-disabled" disabled data-testid="disabled-next">Next</button>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="G6">
+      <div class="state-label"><span class="tag">G6</span> Tooltips on disabled controls</div>
+      <p class="state-caption">Why each control is unavailable, shown inline (no hover needed).</p>
+      <div class="card" style="max-width:460px;">
+        <button class="button button-disabled" disabled aria-describedby="tip-rooms" title="Select a building first" data-testid="gated-rooms-tip">Add rooms</button>
+        <p class="hint" id="tip-rooms">ⓘ Requires a building.</p>
+        <button class="button button-disabled" disabled aria-describedby="tip-confirm" title="Resolve duplicate warning first" data-testid="gated-confirm-tip">Confirm</button>
+        <p class="hint" id="tip-confirm">ⓘ Duplicate warning unresolved.</p>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="G7">
+      <div class="state-label"><span class="tag">G7</span> Helper text everywhere</div>
+      <p class="state-caption">Inline guidance under each field.</p>
+      <div class="card" style="max-width:460px;">
+        <div class="field"><div class="label-row"><label class="label required" for="g7-name">Floor plan name</label></div><input id="g7-name" class="input" data-testid="g7-name"><p class="hint">Max 60 characters · unique per building.</p></div>
+        <div class="field"><label class="label" for="g7-area">Area (m²)</label><input id="g7-area" class="input" data-testid="g7-area"><p class="hint">Auto-filled from the file. Override if needed.</p></div>
+      </div>
+    </div>
+
+    <div class="state-panel" data-state="G8">
+      <div class="state-label"><span class="tag">G8</span> Spinner-in-button</div>
+      <p class="state-caption">Busy action buttons.</p>
+      <div class="flex-row">
+        <button class="button button-busy" data-testid="next-busy"><span class="spinner" style="color:#fff"></span> Saving…</button>
+        <button class="button button-primary" data-testid="upload-busy"><span class="spinner"></span> Uploading…</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    EASE · Add-a-Floor-Plan journey mock-up · 69 states (A1–G8) · Built to Amex DLS v7 design tokens · static fixture, no JavaScript
+  </footer>
+</div>
+</body>
+</html>

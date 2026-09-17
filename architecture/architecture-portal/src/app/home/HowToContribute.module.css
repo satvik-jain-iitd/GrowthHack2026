@@ -1,0 +1,16 @@
+.how-to-contribute {
+    display: flex;
+    justify-content: center;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+:global(html.light) .how-to-contribute {
+    background-image: url('https://cdaas.aexp.com/enterprise-architecture/ContributeBg.svg');
+}
+
+:global(html.dark) .how-to-contribute {
+    background-image: none;
+    background-color: #000 !important;
+}
